@@ -62,15 +62,21 @@ void View::Update(int fps)
 {
 	SDL_RenderClear(Renderer);
 
-	SDL_Rect renderQuad = { 0, 0, 900, 180 };
-
-	//Background
-	SDL_RenderCopy(Renderer, Background, NULL, &renderQuad);
+	DrawBackground(Renderer);
 
 	//Update screen
 	SDL_RenderPresent(Renderer);
 
 	//SDL_UpdateWindowSurface(Window);
+}
+
+void View::DrawBackground(SDL_Renderer* renderer)
+{
+	float zoom = 0.25f;
+	int h = (int)(WINDOW_HEIGHT*zoom);
+	SDL_Rect sRect = {2, 300/2 - h/2, (int)(WINDOW_WIDTH*zoom), h};
+	SDL_Rect dRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+	SDL_RenderCopy(renderer, Background, &sRect, &dRect);
 }
 
 int View::CreateWindow()
