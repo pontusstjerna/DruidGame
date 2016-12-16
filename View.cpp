@@ -49,7 +49,8 @@ int View::InitView()
 		return -1;
 
 	Background = LoadTexture("data/background1.png");
-	if (Background == NULL)
+	Foreground = LoadTexture("data/foreground1.png");
+	if (Background == NULL || Foreground == NULL)
 	{
 		return -1;
 	}
@@ -63,6 +64,7 @@ void View::Update(int fps)
 	SDL_RenderClear(Renderer);
 
 	DrawBackground(Renderer);
+	DrawForeground(Renderer);
 
 	//Update screen
 	SDL_RenderPresent(Renderer);
@@ -77,6 +79,15 @@ void View::DrawBackground(SDL_Renderer* renderer)
 	SDL_Rect sRect = {2, 300/2 - h/2, (int)(WINDOW_WIDTH*zoom), h};
 	SDL_Rect dRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 	SDL_RenderCopy(renderer, Background, &sRect, &dRect);
+}
+
+void View::DrawForeground(SDL_Renderer* renderer)
+{
+	float zoom = 0.5f;
+	int h = (int)(WINDOW_HEIGHT*zoom);
+	SDL_Rect sRect = { 50, (int)(900 - h - 300*zoom), (int)(WINDOW_WIDTH*zoom), h };
+	SDL_Rect dRect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
+	SDL_RenderCopy(renderer, Foreground, &sRect, &dRect);
 }
 
 int View::CreateWindow()

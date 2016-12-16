@@ -20,6 +20,7 @@ class View
 		int View::InitSDLImage();
 
 		void DrawBackground(SDL_Renderer* renderer);
+		void DrawForeground(SDL_Renderer* renderer);
 
 		const unsigned int WINDOW_WIDTH;
 		const unsigned int WINDOW_HEIGHT;
