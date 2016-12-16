@@ -1,12 +1,6 @@
 #include "View.h"
 #include <stdio.h>
 
-int CreateWindow();
-int CreateSurface();
-int CreateRenderer();
-SDL_Texture* LoadTexture(char*);
-
-
 SDL_Window* Window = NULL;
 SDL_Surface* MainSurface = NULL;
 
@@ -32,6 +26,7 @@ View::~View()
 	SDL_DestroyTexture(Background);
 	SDL_DestroyRenderer(Renderer);
 
+	IMG_Quit();
 	SDL_Quit();
 }
 
@@ -47,22 +42,40 @@ int View::InitView()
 	if (CreateWindow() == -1)
 		return -1;
 
-	if (CreateSurface() == -1)
+	if (CreateRenderer() == -1)
 		return -1;
 
+	if (InitSDLImage() == -1)
+		return -1;
+
+	Background = LoadTexture("data/background1.png");
+	if (Background == NULL)
+	{
+		return -1;
+	}
+
+	printf("View successfully initialized.\n");
 	return 0;
 }
 
 void View::Update(int fps)
 {
-	SDL_FillRect(MainSurface, NULL, SDL_MapRGB((*MainSurface).format, 100, 10, 200));
+	SDL_RenderClear(Renderer);
 
-	SDL_UpdateWindowSurface(Window);
+	SDL_Rect renderQuad = { 0, 0, 900, 180 };
+
+	//Background
+	SDL_RenderCopy(Renderer, Background, NULL, &renderQuad);
+
+	//Update screen
+	SDL_RenderPresent(Renderer);
+
+	//SDL_UpdateWindowSurface(Window);
 }
 
 int View::CreateWindow()
 {
-	View = SDL_CreateWindow(
+	Window = SDL_CreateWindow(
 		WINDOW_TITLE,
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
@@ -70,7 +83,7 @@ int View::CreateWindow()
 		WINDOW_HEIGHT,
 		SDL_WINDOW_SHOWN);
 
-	if (View == NULL)
+	if (Window == NULL)
 	{
 		printf("Could not create window. \nCause: %s\n", SDL_GetError());
 		return -1;
@@ -81,9 +94,9 @@ int View::CreateWindow()
 
 int View::CreateSurface()
 {
-	mainSurface = SDL_GetWindowSurface(View);
+	MainSurface = SDL_GetWindowSurface(Window);
 
-	if (View == NULL)
+	if (Window == NULL)
 	{
 		printf("Could not create surface. \nCause: %s\n", SDL_GetError());
 		return -1;
@@ -95,12 +108,12 @@ int View::CreateSurface()
 int View::CreateRenderer()
 {
 	//Using OpenGL
-	renderer = SDL_CreateRenderer(View, -1, SDL_RENDERER_ACCELERATED);
+	Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
 
-	if (renderer == NULL)
+	if (Renderer == NULL)
 		return -1;
 
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(Renderer, 100, 100, 255, 255);
 
 }
 
@@ -108,12 +121,12 @@ SDL_Texture* View::LoadTexture(char* path)
 {
 	SDL_Texture* texture = NULL;
 
-	SDL_Surface* tmpSurface = SDL_LoadBMP(path);
+	SDL_Surface* tmpSurface = IMG_Load(path);
 
 	if (tmpSurface == NULL)
 		printf("Unable to load image: %s. \nCause: %s\n", path, SDL_GetError());
 
-	texture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	texture = SDL_CreateTextureFromSurface(Renderer, tmpSurface);
 	if (texture == NULL)
 		printf("Unable to load texture. \nCause: %s\n", SDL_GetError());
 
@@ -121,4 +134,15 @@ SDL_Texture* View::LoadTexture(char* path)
 	SDL_FreeSurface(tmpSurface);
 
 	return texture;
+}
+
+int View::InitSDLImage()
+{
+	int imgFlags = IMG_INIT_PNG;
+
+	if ((IMG_Init(imgFlags) & imgFlags) == 0)
+	{
+		printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+		return -1;
+	}
 }
