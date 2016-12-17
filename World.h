@@ -1,6 +1,6 @@
 #pragma once
 #include "AnimatedObject.h"
-#include "Level.h"
+#include "Map.h"
 #include "Player.h"
 
 class World
@@ -16,7 +16,7 @@ class World
 
 		Player* GetPlayer();
 		AnimatedObject* GetAnimatedObjects();
-		Level* GetLevel(); 
+		Map* GetMap(); 
 
 		/*
 		{
