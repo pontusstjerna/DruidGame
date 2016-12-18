@@ -11,8 +11,8 @@ class Block
 		int GetHeight();
 		char* GetTexture();
 
-		const int MIN_WIDTH = 20;
-		const int MIN_HEIGHT = 20;
+		const int MIN_WIDTH = 10;
+		const int MIN_HEIGHT = 10;
 
 	private:
 		char* Texture;

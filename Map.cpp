@@ -6,11 +6,12 @@ Map::Map(char* json, char* name) : Name(name)
 
 		if (name == "map1")
 		{
-			NumberOfBlocks = 2;
+			NumberOfBlocks = 3;
 
 			Blocks = new Block*[NumberOfBlocks];
-			Blocks[0] = new Block(5, 5, 3, 2, "data/blocks/block1.png");
-			Blocks[1] = new Block(5, 20, 3, 2, "data/blocks/block1.png");
+			Blocks[0] = new Block(45, 45, 2, 1, "data/blocks/block1.png");
+			Blocks[1] = new Block(0, 50, 20, 10, "data/blocks/block1.png");
+			Blocks[2] = new Block(20, 42, 5, 1, "data/blocks/block1.png");
 
 			Background = "data/maps/map1_bg.png";
 
