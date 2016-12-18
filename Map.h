@@ -1,5 +1,6 @@
 #pragma once
 #include "Block.h"
+#include "Enemy.h"
 
 class Map
 {
@@ -11,10 +12,13 @@ class Map
 
 		int GetNumberofBlocks();
 		Block** GetBlocks();
+		AnimatedObject** GetObjects();
 
 	private:
 		char* Name;
 		char* Background;
 		int NumberOfBlocks;
-		Block* Blocks[];
+		Block** Blocks;
+		Enemy** Enemies;
+		
 };

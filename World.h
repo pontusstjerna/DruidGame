@@ -18,6 +18,10 @@ class World
 		AnimatedObject* GetAnimatedObjects();
 		Map* GetMap(); 
 
+	private:
+		Player* Player;
+		Map* ActiveMap;
+
 		/*
 		{
 		"LevelName" : "Level1",

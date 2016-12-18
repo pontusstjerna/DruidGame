@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include "Map.h"
 
 class View
 {
@@ -10,6 +11,7 @@ class View
 		~View();
 
 		int InitView();
+		int LoadMap(Map* map);
 		void Update(int);
 
 	private:
@@ -17,13 +19,15 @@ class View
 		int CreateSurface();
 		int CreateRenderer();
 		SDL_Texture* LoadTexture(char*);
-		int View::InitSDLImage();
+		int InitSDLImage();
+		void LoadTextures();
 
 		void DrawBackground(SDL_Renderer* renderer);
-		void DrawForeground(SDL_Renderer* renderer);
+		void DrawBlocks(SDL_Renderer* renderer);
+		void DrawBlock(Block* block, SDL_Renderer* renderer);
 
-		const unsigned int WINDOW_WIDTH;
-		const unsigned int WINDOW_HEIGHT;
+		const int WINDOW_WIDTH;
+		const int WINDOW_HEIGHT;
 		char* WINDOW_TITLE;
 
 };

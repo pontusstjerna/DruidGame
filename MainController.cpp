@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <stdio.h>
 #include "View.h"
+#include "World.h"
 
 
 using namespace std;
@@ -9,6 +10,7 @@ using namespace std;
 void GameLoop(void);
 
 View* view;
+World* world;
 
 MainController::MainController()
 {
@@ -18,6 +20,7 @@ MainController::MainController()
 MainController::~MainController()
 {
 	printf("Exiting game.\n");
+	delete world;
 	delete view;
 
 	printf("Done!");
@@ -29,11 +32,19 @@ void MainController::Start()
 {
 	printf("Starting game...\n");
 
+	world = new World();
 	view = new View(800, 600, "Druid Game");
 
 	if (view->InitView() == -1)
 	{
 		printf("Unable to initialize view. Aborting.\n");
+		SDL_Delay(10000);
+		return;
+	}
+
+	if (view->LoadMap(world->GetMap()) == -1)
+	{
+		printf("Unable to load map. Aborting.\n");
 		SDL_Delay(10000);
 		return;
 	}
