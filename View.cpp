@@ -1,7 +1,4 @@
 #include "View.h"
-#include "List.h"
-//TODO: Fix this
-#include "List.cpp"
 #include <stdio.h>
 
 SDL_Window* Window = NULL;
@@ -16,6 +13,7 @@ Map* ActiveMap;
 View::View(unsigned int width, unsigned int height, char* title) : WINDOW_WIDTH(width), WINDOW_HEIGHT(height), WINDOW_TITLE(title)
 {
 	//Bla bla constructor code
+	Scale = 3;
 }
 
 View::View() : View(800, 600, "Rabbit's Laughter")
@@ -85,6 +83,18 @@ void View::LoadTextures()
 			}
 		}
 	}
+
+	for (int i = 0; i < ActiveMap->GetNumberofObjects(); i++)
+	{
+		char* currTexture = ActiveMap->GetObjects()[i]->GetSpriteSheetPath();
+		for (int j = 0; j < ActiveMap->GetNumberofObjects(); j++)
+		{
+			if (ActiveMap->GetObjects()[j]->GetSpriteSheetPath() == currTexture)
+			{
+				ActiveMap->GetObjects()[j]->SetSpriteSheet(LoadTexture(currTexture));
+			}
+		}
+	}
 }
 
 void View::Update(int fps)
@@ -93,6 +103,7 @@ void View::Update(int fps)
 
 	DrawBackground(Renderer);
 	DrawBlocks(Renderer);
+	DrawAnimatedObjects(Renderer);
 
 	//Update screen
 	SDL_RenderPresent(Renderer);
@@ -129,45 +140,75 @@ void View::DrawBlock(Block* block, SDL_Renderer* renderer)
 	int mw = block->MIN_WIDTH;
 	int mh = block->MIN_HEIGHT;
 
-	float scale = 3;
+	//Top row
+	DrawBlockRow(block, renderer, top, y);
+	
+	if (h > mh)
+	{
+		//Middle vertical
+		for (int i = mh; i < h - mh; i += mh)
+		{
+			DrawBlockRow(block, renderer, middle, y + (int)(i*Scale));
+		}
 
-	if (w > 1*mw)
+		//Bottom
+		DrawBlockRow(block, renderer, bottom, y + (int)((h - mh)*Scale));
+	}
+}
+
+void View::DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos pos, int y)
+{
+	int x = block->GetX();
+	int w = block->GetWidth();
+	int h = block->GetHeight();
+	int mw = block->MIN_WIDTH;
+	int mh = block->MIN_HEIGHT;
+
+	float zoom = 3;
+
+	if (w > 1 * mw)
 	{
 		//Draw top left
-		SDL_Rect sRect = { 0, 0, mw, mh };
-		SDL_Rect dRect = { x, y, (int)(mw*scale), (int)mh*scale };
+		SDL_Rect sRect = { 0, pos*mh, mw, mh };
+		SDL_Rect dRect = { x, y, (int)(mw*zoom), (int)mh*zoom };
 		SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
 	}
 
 	//Middle blocks
-	if (w > 2*mw)
+	if (w > 2 * mw)
 	{
 		//Repeat middle texture for every width bigger than 2.
 		for (int i = mw; i < w - mw; i += mw)
 		{
-			SDL_Rect sRect = { mw, 0, mw, mh };
-			SDL_Rect dRect = { x + (int)(i*scale), y, (int)(mw*scale), (int)mh*scale };
+			SDL_Rect sRect = { mw, pos*mh, mw, mh };
+			SDL_Rect dRect = { x + (int)(i*zoom), y, (int)(mw*zoom), (int)mh*zoom };
 			SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
 		}
 	}
 
 	//Top right, always paint
-	SDL_Rect sRect = { mw*2, 0, mw, mh };
-	SDL_Rect dRect = { x + (int)((w - mw)*scale), y, (int)(mw*scale), (int)mh*scale };
+	SDL_Rect sRect = { mw * 2, pos*mh, mw, mh };
+	SDL_Rect dRect = { x + (int)((w - mw)*zoom), y, (int)(mw*zoom), (int)mh*zoom };
 	SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
+}
 
-	if (h > mh)
+void View::DrawAnimatedObjects(SDL_Renderer* renderer)
+{
+	float zoom = 2;
+
+	for (int i = 0; i < ActiveMap->GetNumberofObjects(); i++)
 	{
-		for (int i = mh; i < h; i += mh)
-		{
-			for (int j = 0; j < w; j += mw)
-			{
-				SDL_Rect sRect = {0, mh, mw, mh };
-				SDL_Rect dRect = { x + (int)(j*scale), y + (int)(i*scale), (int)(mw*scale), (int)mh*scale };
-				SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
-			}
-		}
+		AnimatedObject* obj = ActiveMap->GetObjects()[i];
+
+		int x = obj->GetX();
+		int y = obj->GetY();
+		int w = obj->GetWidth();
+		int h = obj->GetHeight();
+		SDL_Rect sRect = { 0, obj->GetState(), w, h };
+		SDL_Rect dRect = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, (int)(w*zoom), (int)(h*zoom) };
+		SDL_RenderCopy(renderer, obj->GetSpriteSheet(), &sRect, &dRect);
 	}
+
 }
 
 int View::CreateWindow()

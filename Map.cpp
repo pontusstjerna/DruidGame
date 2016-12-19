@@ -6,24 +6,30 @@ Map::Map(char* json, char* name) : Name(name)
 
 		if (name == "map1")
 		{
-			NumberOfBlocks = 3;
+			NumberOfBlocks = 5;
 
 			Blocks = new Block*[NumberOfBlocks];
-			Blocks[0] = new Block(45, 45, 2, 1, "data/blocks/block1.png");
+			Blocks[0] = new Block(45, 43, 3, 1, "data/blocks/block_grass1.png");
 			Blocks[1] = new Block(0, 50, 20, 10, "data/blocks/block_grass1.png");
-			Blocks[2] = new Block(20, 42, 5, 1, "data/blocks/block_grass1.png");
+			Blocks[2] = new Block(40, 30, 5, 3, "data/blocks/block_stonewall1.png");
+			Blocks[3] = new Block(10, 0, 4, 100, "data/blocks/block_stonewall1.png");
+			Blocks[4] = new Block(62, 35, 5, 2, "data/blocks/block_grass1.png");
 
 			Background = "data/maps/map1_bg2.png";
 
+
+			NumObjects = 1;
+			Objects = new AnimatedObject*[NumObjects];
+			Objects[0] = new Character(50, 50, "data/spritesheets/player_human.png");
+
 		}
+
+
 	}
 Map::~Map()
 {
-	for (int i = 0; i < NumberOfBlocks; i++)
-	{
-		delete Blocks[i];
-	}
-	delete Blocks;
+	delete[] Blocks;
+	delete[] Objects;
 }
 
 char* Map::GetBackground()
@@ -39,4 +45,14 @@ int Map::GetNumberofBlocks()
 Block** Map::GetBlocks()
 {
 	return Blocks;
+}
+
+int Map::GetNumberofObjects()
+{
+	return NumObjects;
+}
+
+AnimatedObject** Map::GetObjects()
+{
+	return Objects;
 }

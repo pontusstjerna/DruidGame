@@ -1,12 +1,7 @@
 #pragma once
-#include "AnimatedObject.h"
+#include "Character.h"
 
-class Player : AnimatedObject
+class Player : Character
 {
-	Player(int x, int y);
-	~Player();
 
-	void MoveRight();
-	void MoveLeft();
-	void Jump();
 };

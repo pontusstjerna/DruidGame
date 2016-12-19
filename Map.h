@@ -1,6 +1,6 @@
 #pragma once
 #include "Block.h"
-#include "Enemy.h"
+#include "Character.h"
 
 class Map
 {
@@ -12,6 +12,7 @@ class Map
 
 		int GetNumberofBlocks();
 		Block** GetBlocks();
+		int GetNumberofObjects();
 		AnimatedObject** GetObjects();
 
 	private:
@@ -19,6 +20,10 @@ class Map
 		char* Background;
 		int NumberOfBlocks;
 		Block** Blocks;
-		Enemy** Enemies;
+		int NumObjects;
+		AnimatedObject** Objects;
+		//Enemy** Enemies;
+		//Player
+		//Enemies
 		
 };
