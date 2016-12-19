@@ -1,7 +1,8 @@
 #pragma once
 #include "Character.h"
 
-class Player : Character
+class Player : public Character
 {
-
+	public:
+		Player(int x, int y);
 };

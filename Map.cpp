@@ -1,6 +1,6 @@
 #include "Map.h"
 
-Map::Map(char* json, char* name) : Name(name)
+Map::Map(char* json, char* name, AnimatedObject* player) : Name(name)
 {
 	//Blocks = JsonParser.Parse(json);
 
@@ -20,7 +20,7 @@ Map::Map(char* json, char* name) : Name(name)
 
 			NumObjects = 1;
 			Objects = new AnimatedObject*[NumObjects];
-			Objects[0] = new Character(50, 50, "data/spritesheets/player_human.png");
+			Objects[0] = player;
 
 		}
 
@@ -30,6 +30,14 @@ Map::~Map()
 {
 	delete[] Blocks;
 	delete[] Objects;
+}
+
+void Map::Update(float dTime)
+{
+	for (int i = 0; i < NumObjects; i++)
+	{
+		Objects[i]->Update(dTime);
+	}
 }
 
 char* Map::GetBackground()

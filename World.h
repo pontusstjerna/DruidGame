@@ -19,7 +19,7 @@ class World
 		Map* GetMap(); 
 
 	private:
-		Player* Player;
+		Player* ActivePlayer;
 		Map* ActiveMap;
 
 		/*

@@ -68,6 +68,7 @@ void GameLoop()
 			}
 		}
 
+		world->Update(0.5f);
 		view->Update(0);
 
 		SDL_Delay(10);

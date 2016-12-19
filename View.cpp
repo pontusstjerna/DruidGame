@@ -133,11 +133,8 @@ void View::DrawBlocks(SDL_Renderer* renderer)
 
 void View::DrawBlock(Block* block, SDL_Renderer* renderer)
 {
-	int x = block->GetX();
-	int y = block->GetY();
-	int w = block->GetWidth();
+	int y = block->GetY() - ActiveMap->GetObjects()[0]->GetY();
 	int h = block->GetHeight();
-	int mw = block->MIN_WIDTH;
 	int mh = block->MIN_HEIGHT;
 
 	//Top row
@@ -158,8 +155,9 @@ void View::DrawBlock(Block* block, SDL_Renderer* renderer)
 
 void View::DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos pos, int y)
 {
-	int x = block->GetX();
-	int w = block->GetWidth();
+
+	int x = block->GetX() - ActiveMap->GetObjects()[0]->GetX();
+	int w = block->GetWidth();// -player->GetY();
 	int h = block->GetHeight();
 	int mw = block->MIN_WIDTH;
 	int mh = block->MIN_HEIGHT;

@@ -1,12 +1,14 @@
 #pragma once
 #include "Block.h"
-#include "Character.h"
+#include "AnimatedObject.h"
 
 class Map
 {
 	public:
-		Map(char* json, char* name);
+		Map(char* json, char* name, AnimatedObject* player);
 		~Map();
+
+		void Update(float dTime);
 
 		char* GetBackground();
 
@@ -23,7 +25,6 @@ class Map
 		int NumObjects;
 		AnimatedObject** Objects;
 		//Enemy** Enemies;
-		//Player
 		//Enemies
 		
 };
