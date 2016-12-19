@@ -1,6 +1,6 @@
 #include "Block.h"
 
-Block::Block(int x, int y, int width, int height, char* texture) : Texture(texture)
+Block::Block(int x, int y, int width, int height, char* texture) : TexturePath(texture)
 {
 	//Check valid values
 	if (width < 2)
@@ -22,7 +22,7 @@ Block::Block(int x, int y, int width, int height, char* texture) : Texture(textu
 
 Block::~Block()
 {
-
+	SDL_DestroyTexture(Texture);
 }
 
 int Block::GetX()
@@ -44,7 +44,17 @@ int Block::GetHeight()
 	return H;
 }
 
-char* Block::GetTexture()
+char* Block::GetTexturePath()
+{
+	return TexturePath;
+}
+
+SDL_Texture* Block::GetTexture()
 {
 	return Texture;
+}
+
+void Block::SetTexture(SDL_Texture* texture)
+{
+	Texture = texture;
 }

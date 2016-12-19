@@ -1,4 +1,7 @@
 #include "View.h"
+#include "List.h"
+//TODO: Fix this
+#include "List.cpp"
 #include <stdio.h>
 
 SDL_Window* Window = NULL;
@@ -7,11 +10,7 @@ SDL_Surface* MainSurface = NULL;
 SDL_Texture* Background = NULL;
 SDL_Renderer* Renderer = NULL;
 
-SDL_Texture** BlockTextures;
-
 Map* ActiveMap;
-
-int NumTextures = 0;
 
 //This is called initializer list and is requred for const variables
 View::View(unsigned int width, unsigned int height, char* title) : WINDOW_WIDTH(width), WINDOW_HEIGHT(height), WINDOW_TITLE(title)
@@ -29,11 +28,6 @@ View::~View()
 	printf("Destroying window...\n");
 	SDL_DestroyWindow(Window);
 	SDL_DestroyTexture(Background);
-	for (int i = 0; i < NumTextures; i++)
-	{
-		SDL_DestroyTexture(BlockTextures[i]);
-	}
-
 	SDL_DestroyRenderer(Renderer);
 
 	
@@ -80,31 +74,16 @@ int View::LoadMap(Map* map)
 
 void View::LoadTextures()
 {
-	NumTextures = 0;
-	char** textures = new char*[0];
-
 	for (int i = 0; i < ActiveMap->GetNumberofBlocks(); i++)
 	{
-		bool add = true;
-		char* texture = ActiveMap->GetBlocks()[i]->GetTexture();
-		for (int j = 0; j < NumTextures; j++)
+		char* currTexture = ActiveMap->GetBlocks()[i]->GetTexturePath();
+		for (int j = 0; j < ActiveMap->GetNumberofBlocks(); j++)
 		{
-			if (texture == textures[j])
-				add = false;
+			if (ActiveMap->GetBlocks()[j]->GetTexturePath() == currTexture)
+			{
+				ActiveMap->GetBlocks()[j]->SetTexture(LoadTexture(currTexture));
+			}
 		}
-
-		if (add)
-		{
-			textures = new char*[sizeof(texture)];
-			textures[NumTextures] = texture;
-			NumTextures++;
-		}
-	}
-
-	BlockTextures = new SDL_Texture*[NumTextures];
-	for (int i = 0; i < NumTextures; i++)
-	{
-		BlockTextures[i] = LoadTexture(textures[i]);
 	}
 }
 
@@ -134,6 +113,8 @@ void View::DrawBlocks(SDL_Renderer* renderer)
 {
 	for (int i = 0; i < ActiveMap->GetNumberofBlocks(); i++)
 	{
+		SDL_Texture* texture;
+
 		//TODO: Check if inside view rect
 		DrawBlock(ActiveMap->GetBlocks()[i], renderer);
 	}
@@ -141,7 +122,6 @@ void View::DrawBlocks(SDL_Renderer* renderer)
 
 void View::DrawBlock(Block* block, SDL_Renderer* renderer)
 {
-	//TODO: Map texture depending on width and stuff
 	int x = block->GetX();
 	int y = block->GetY();
 	int w = block->GetWidth();
@@ -156,25 +136,25 @@ void View::DrawBlock(Block* block, SDL_Renderer* renderer)
 		//Draw top left
 		SDL_Rect sRect = { 0, 0, mw, mh };
 		SDL_Rect dRect = { x, y, (int)(mw*scale), (int)mh*scale };
-		SDL_RenderCopy(renderer, BlockTextures[0], &sRect, &dRect);
+		SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
 	}
 
 	//Middle blocks
 	if (w > 2*mw)
 	{
 		//Repeat middle texture for every width bigger than 2.
-		for (int i = mw; i < w - 1; i += mw)
+		for (int i = mw; i < w - mw; i += mw)
 		{
 			SDL_Rect sRect = { mw, 0, mw, mh };
 			SDL_Rect dRect = { x + (int)(i*scale), y, (int)(mw*scale), (int)mh*scale };
-			SDL_RenderCopy(renderer, BlockTextures[0], &sRect, &dRect);
+			SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
 		}
 	}
 
 	//Top right, always paint
 	SDL_Rect sRect = { mw*2, 0, mw, mh };
 	SDL_Rect dRect = { x + (int)((w - mw)*scale), y, (int)(mw*scale), (int)mh*scale };
-	SDL_RenderCopy(renderer, BlockTextures[0], &sRect, &dRect);
+	SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
 
 	if (h > mh)
 	{
@@ -184,7 +164,7 @@ void View::DrawBlock(Block* block, SDL_Renderer* renderer)
 			{
 				SDL_Rect sRect = {0, mh, mw, mh };
 				SDL_Rect dRect = { x + (int)(j*scale), y + (int)(i*scale), (int)(mw*scale), (int)mh*scale };
-				SDL_RenderCopy(renderer, BlockTextures[0], &sRect, &dRect);
+				SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
 			}
 		}
 	}
