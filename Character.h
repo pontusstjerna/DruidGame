@@ -31,6 +31,7 @@ class Character : public AnimatedObject
 		float DeltaTime = 0;
 		float X, Y;
 		States state = STANDING;
+		float Speed = 1;
 
 		int Width = 20;
 		int Height = 40;

@@ -47,17 +47,17 @@ void Character::SetSpriteSheet(SDL_Texture* texture)
 
 void Character::MoveLeft()
 {
-	X -= DeltaTime;
+	X -= DeltaTime*Speed;
 }
 
 void Character::MoveRight()
 {
-	X += DeltaTime;
+	X += DeltaTime*Speed;
 }
 
 void Character::Jump()
 {
-
+	Y -= DeltaTime*Speed;
 }
 
 void Character::Kill()

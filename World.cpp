@@ -18,7 +18,6 @@ World::~World()
 void World::Update(float dTime)
 {
 	ActiveMap->Update(dTime);
-	ActivePlayer->MoveRight();
 }
 
 //void SaveGame(char* saveName);

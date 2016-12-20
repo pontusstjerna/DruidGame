@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "View.h"
 #include "World.h"
+#include "PlayerController.h"
 
 
 using namespace std;
@@ -11,6 +12,7 @@ void GameLoop(void);
 
 View* view;
 World* world;
+PlayerController* Controller;
 
 MainController::MainController()
 {
@@ -20,6 +22,7 @@ MainController::MainController()
 MainController::~MainController()
 {
 	printf("Exiting game.\n");
+	delete Controller;
 	delete world;
 	delete view;
 
@@ -33,6 +36,7 @@ void MainController::Start()
 	printf("Starting game...\n");
 
 	world = new World();
+	Controller = new PlayerController(world->GetPlayer());
 	view = new View(800, 600, "Druid Game");
 
 	if (view->InitView() == -1)
@@ -66,11 +70,13 @@ void GameLoop()
 			{
 				running = false;
 			}
+			Controller->UpdateInputs(event);
 		}
 
-		world->Update(0.5f);
+		Controller->Update();
+		world->Update(1);
 		view->Update(0);
 
-		SDL_Delay(10);
+		SDL_Delay(5);
 	}
 }
