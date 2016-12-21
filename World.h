@@ -2,6 +2,7 @@
 #include "AnimatedObject.h"
 #include "Map.h"
 #include "Player.h"
+#include "Character.h"
 
 class World
 {
@@ -21,6 +22,8 @@ class World
 	private:
 		Player* ActivePlayer;
 		Map* ActiveMap;
+
+		void CollidePlayer(float dTime);
 
 		/*
 		{

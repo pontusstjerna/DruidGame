@@ -1,10 +1,11 @@
 #include "PlayerController.h"
+#include <stdio.h>
 
 
 
 PlayerController::PlayerController(Player* player) : ActivePlayer(player)
 {
-
+	
 }
 
 void PlayerController::UpdateInputs(SDL_Event e)
@@ -34,6 +35,16 @@ void PlayerController::Update()
 	{
 		ActivePlayer->Jump();
 	}
+
+	bool empty = true;
+	for (int i = 0; i < sizeof(Presses); i++)
+	{
+		if (Presses[i])
+			empty = false;
+	}
+
+	if (empty)
+		ActivePlayer->Stop();
 }
 
 void PlayerController::AddKeyPress(SDL_Keycode code)

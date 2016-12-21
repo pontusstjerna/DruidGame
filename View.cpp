@@ -16,7 +16,7 @@ View::View(unsigned int width, unsigned int height, char* title) : WINDOW_WIDTH(
 	Scale = 3;
 }
 
-View::View() : View(800, 600, "Rabbit's Laughter")
+View::View() : View(800, 600, "Druid Game")
 {
 	//No arguments, use default
 }
@@ -36,12 +36,6 @@ View::~View()
 
 int View::InitView()
 {
-	//SDL returns -1 if it failed.
-	if (SDL_Init(SDL_INIT_VIDEO) == -1)
-	{
-		printf("Ops! Could not initialize SDL.\n Cause: %s\n", SDL_GetError());
-		return -1;
-	}
 
 	if (CreateWindow() == -1)
 		return -1;
@@ -97,18 +91,31 @@ void View::LoadTextures()
 	}
 }
 
-void View::Update(int fps)
+void View::Update(float dTime)
 {
 	SDL_RenderClear(Renderer);
+	IncrementFrames(dTime);
 
 	DrawBackground(Renderer);
 	DrawBlocks(Renderer);
-	DrawAnimatedObjects(Renderer);
+	DrawPlayer(Renderer);
 
 	//Update screen
 	SDL_RenderPresent(Renderer);
 
 	//SDL_UpdateWindowSurface(Window);
+}
+
+float FrameCounter = 0;
+void View::IncrementFrames(float dTime)
+{
+	FrameCounter += dTime;
+	
+	if (FrameCounter > STD_UPDATE_INTERVAL)
+	{
+		Frame = (Frame + 1) % NUMBEROF_FRAMES;
+		FrameCounter = 0;
+	}
 }
 
 void View::DrawBackground(SDL_Renderer* renderer)
@@ -127,13 +134,14 @@ void View::DrawBlocks(SDL_Renderer* renderer)
 		SDL_Texture* texture;
 
 		//TODO: Check if inside view rect
-		DrawBlock(ActiveMap->GetBlocks()[i], renderer);
+		if(IsInsideView(ActiveMap->GetBlocks()[i]))
+			DrawBlock(ActiveMap->GetBlocks()[i], renderer);
 	}
 }
 
 void View::DrawBlock(Block* block, SDL_Renderer* renderer)
 {
-	int y = block->GetY() - ActiveMap->GetObjects()[0]->GetY();
+	int y = (int)((block->GetY() - ActiveMap->GetObjects()[0]->GetY())*Scale) + WINDOW_HEIGHT/2;
 	int h = block->GetHeight();
 	int mh = block->MIN_HEIGHT;
 
@@ -156,7 +164,7 @@ void View::DrawBlock(Block* block, SDL_Renderer* renderer)
 void View::DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos pos, int y)
 {
 
-	int x = block->GetX() - ActiveMap->GetObjects()[0]->GetX();
+	int x = (int)((block->GetX() - ActiveMap->GetObjects()[0]->GetX())*Scale) + WINDOW_WIDTH/2;
 	int w = block->GetWidth();// -player->GetY();
 	int h = block->GetHeight();
 	int mw = block->MIN_WIDTH;
@@ -190,22 +198,20 @@ void View::DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos pos, i
 	SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
 }
 
-void View::DrawAnimatedObjects(SDL_Renderer* renderer)
+void View::DrawPlayer(SDL_Renderer* renderer)
 {
-	float zoom = 2;
+	
+	AnimatedObject* obj = ActiveMap->GetObjects()[0];
 
-	for (int i = 0; i < ActiveMap->GetNumberofObjects(); i++)
-	{
-		AnimatedObject* obj = ActiveMap->GetObjects()[i];
+	int x = obj->GetX();
+	int y = obj->GetY();
+	int w = obj->GetWidth();
+	int h = obj->GetHeight();
 
-		int x = obj->GetX();
-		int y = obj->GetY();
-		int w = obj->GetWidth();
-		int h = obj->GetHeight();
-		SDL_Rect sRect = { 0, obj->GetState(), w, h };
-		SDL_Rect dRect = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, (int)(w*zoom), (int)(h*zoom) };
-		SDL_RenderCopy(renderer, obj->GetSpriteSheet(), &sRect, &dRect);
-	}
+	//The State*height*2 is for frame index, frame height and 2 for number of directions
+	SDL_Rect sRect = { Frame*w, obj->GetState()*h*2 + obj->GetDir()*h , w, h };
+	SDL_Rect dRect = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, (int)(w*Scale), (int)(h*Scale) };
+	SDL_RenderCopy(renderer, obj->GetSpriteSheet(), &sRect, &dRect);
 
 }
 
@@ -284,4 +290,14 @@ int View::InitSDLImage()
 	}
 
 	return 0;
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+}                               
+
+bool View::IsInsideView(Block* block)
+{
+	AnimatedObject* player = ActiveMap->GetObjects()[0];
+	int x = (int)((block->GetX() - ActiveMap->GetObjects()[0]->GetX())*Scale) + WINDOW_WIDTH / 2;
+	int y = (int)((block->GetY() - ActiveMap->GetObjects()[0]->GetY())*Scale) + WINDOW_HEIGHT / 2;
+	int w = (int)(block->GetWidth()*Scale);
+	int h = (int)(block->GetHeight()*Scale);
+	return x + w > 0 && x < WINDOW_WIDTH && y + h > 0 && y < WINDOW_HEIGHT;
+}

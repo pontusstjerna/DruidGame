@@ -8,6 +8,7 @@ class AnimatedObject
 		virtual int GetX() = 0;
 		virtual int GetY() = 0;
 		virtual int GetState() = 0;
+		virtual int GetDir() = 0;
 		virtual char* GetSpriteSheetPath() = 0;
 		virtual SDL_Texture* GetSpriteSheet() = 0;
 		virtual void SetSpriteSheet(SDL_Texture* texture) = 0;

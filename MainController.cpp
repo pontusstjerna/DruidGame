@@ -35,9 +35,16 @@ void MainController::Start()
 {
 	printf("Starting game...\n");
 
+	//SDL returns -1 if it failed.
+	if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
+	{
+		printf("Ops! Could not initialize SDL.\n Cause: %s\n", SDL_GetError());
+		return;
+	}
+
 	world = new World();
 	Controller = new PlayerController(world->GetPlayer());
-	view = new View(800, 600, "Druid Game");
+	view = new View(1200, 700, "Druid Game");
 
 	if (view->InitView() == -1)
 	{
@@ -61,9 +68,15 @@ void GameLoop()
 {
 	SDL_Event event;
 	bool running = true;
+	float dTime = 0;
+	float cTime = 0;
+	float tTime = 0;
+
+	float printCounter = 0;
 
 	while (running)
 	{
+		
 		while (SDL_PollEvent(&event) != 0)
 		{
 			if (event.type == SDL_QUIT)
@@ -74,9 +87,20 @@ void GameLoop()
 		}
 
 		Controller->Update();
-		world->Update(1);
-		view->Update(0);
+		world->Update(dTime);
+		view->Update(dTime);
 
-		SDL_Delay(5);
+		SDL_Delay(10);
+
+		cTime = (float)SDL_GetTicks()/1000;
+		dTime = cTime - tTime;
+		tTime = cTime;
+		printCounter += dTime;
+
+		if (printCounter > 1)
+		{
+			printf("FPS: %f\n", 1/dTime);
+			printCounter = 0;
+		}
 	}
 }

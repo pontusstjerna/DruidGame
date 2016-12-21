@@ -10,9 +10,10 @@ Map::Map(char* json, char* name, AnimatedObject* player) : Name(name)
 
 			Blocks = new Block*[NumberOfBlocks];
 			Blocks[0] = new Block(45, 43, 3, 1, "data/blocks/block_grass1.png");
-			Blocks[1] = new Block(0, 50, 20, 10, "data/blocks/block_grass1.png");
+			Blocks[1] = new Block(4, 50, 200, 10, "data/blocks/block_grass1.png");
+			//Blocks[1] = new Block(4, 50, 20000, 10, "data/blocks/block_grass1.png");
 			Blocks[2] = new Block(40, 30, 5, 3, "data/blocks/block_stonewall1.png");
-			Blocks[3] = new Block(10, 0, 4, 100, "data/blocks/block_stonewall1.png");
+			Blocks[3] = new Block(0, 0, 4, 100, "data/blocks/block_stonewall1.png");
 			Blocks[4] = new Block(62, 35, 5, 2, "data/blocks/block_grass1.png");
 
 			Background = "data/maps/map1_bg2.png";

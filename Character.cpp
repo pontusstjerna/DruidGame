@@ -13,6 +13,18 @@ Character::~Character()
 void Character::Update(float dTime)
 {
 	DeltaTime = dTime;
+
+	if (Collisions[BOTTOM])
+		Gravity = 0;
+
+	if (GravityEnabled)
+		ApplyGravity();
+
+}
+
+void Character::Collide(Direction dir, bool collide)
+{
+	Collisions[dir] = collide;
 }
 
 int Character::GetX()
@@ -27,7 +39,12 @@ int Character::GetY()
 
 int Character::GetState()
 {
-	return state;
+	return CurrState;
+}
+
+int Character::GetDir()
+{
+	return Dir;
 }
 
 char* Character::GetSpriteSheetPath()
@@ -47,22 +64,43 @@ void Character::SetSpriteSheet(SDL_Texture* texture)
 
 void Character::MoveLeft()
 {
-	X -= DeltaTime*Speed;
+	if(!Collisions[LEFT])
+		X -= DeltaTime*Speed;
+
+	CurrState = RUNNING;
+	Dir = LEFT;
 }
 
 void Character::MoveRight()
 {
-	X += DeltaTime*Speed;
+	if(!Collisions[RIGHT])
+		X += DeltaTime*Speed;
+
+	CurrState = RUNNING;
+	Dir = RIGHT;
 }
 
 void Character::Jump()
 {
-	Y -= DeltaTime*Speed;
+	if(!Collisions[TOP])
+		Y -= DeltaTime*Speed;
+
+	CurrState = JUMPING;
+}
+
+void Character::Stop()
+{
+	CurrState = STANDING;
 }
 
 void Character::Kill()
 {
+	CurrState = DYING;
+}
 
+void Character::SetGravity(bool gravity)
+{
+	GravityEnabled = gravity;
 }
 
 int Character::GetMaxHealth()
@@ -83,4 +121,19 @@ int Character::GetWidth()
 int Character::GetHeight()
 {
 	return Height;
+}
+
+void Character::ApplyGravity()
+{
+	const int gravIncrease = 1500;
+	if (!Collisions[BOTTOM] && CurrState != JUMPING)
+	{
+		Y += DeltaTime*Gravity;
+		Gravity += gravIncrease * DeltaTime;
+	}
+}
+
+int Character::GetFallingVel()
+{
+	return Gravity;
 }
