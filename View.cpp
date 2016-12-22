@@ -8,6 +8,7 @@ SDL_Texture* Background = NULL;
 SDL_Renderer* Renderer = NULL;
 
 Map* ActiveMap;
+AnimatedPlayer* Player;
 
 //This is called initializer list and is requred for const variables
 View::View(unsigned int width, unsigned int height, char* title) : WINDOW_WIDTH(width), WINDOW_HEIGHT(height), WINDOW_TITLE(title)
@@ -64,6 +65,16 @@ int View::LoadMap(Map* map)
 	return 0;
 }
 
+int LoadPlayer(AnimatedPlayer* player)
+{
+	Player = player;
+
+	for (int i = 0; i < player->GetNumSpriteSheets(); i++)
+	{
+		Player->SetTexture(LoadTexture())
+	}
+}
+
 void View::LoadTextures()
 {
 	for (int i = 0; i < ActiveMap->GetNumberofBlocks(); i++)
@@ -83,6 +94,7 @@ void View::LoadTextures()
 		char* currTexture = ActiveMap->GetObjects()[i]->GetSpriteSheetPath();
 		for (int j = 0; j < ActiveMap->GetNumberofObjects(); j++)
 		{
+					
 			if (ActiveMap->GetObjects()[j]->GetSpriteSheetPath() == currTexture)
 			{
 				ActiveMap->GetObjects()[j]->SetSpriteSheet(LoadTexture(currTexture));
@@ -200,18 +212,15 @@ void View::DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos pos, i
 
 void View::DrawPlayer(SDL_Renderer* renderer)
 {
-	
-	AnimatedObject* obj = ActiveMap->GetObjects()[0];
-
-	int x = obj->GetX();
-	int y = obj->GetY();
-	int w = obj->GetWidth();
-	int h = obj->GetHeight();
+	int x = Player->GetX();
+	int y = Player->GetY();
+	int w = Player->GetWidth();
+	int h = Player->GetHeight();
 
 	//The State*height*2 is for frame index, frame height and 2 for number of directions
-	SDL_Rect sRect = { Frame*w, obj->GetState()*h*2 + obj->GetDir()*h , w, h };
+	SDL_Rect sRect = { Frame*w, Player->GetState()*h*2 + obj->GetDir()*h , w, h };
 	SDL_Rect dRect = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, (int)(w*Scale), (int)(h*Scale) };
-	SDL_RenderCopy(renderer, obj->GetSpriteSheet(), &sRect, &dRect);
+	SDL_RenderCopy(renderer, Player->GetSpriteSheets()[Player->GetActiveSpriteSheet()], &sRect, &dRect);
 
 }
 

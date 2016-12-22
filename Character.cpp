@@ -1,9 +1,14 @@
 #include "Character.h"
 
+float JumpPower = 0;
+
 Character::Character(int x, int y, char* spriteSheet) : X(x), Y(y), SpriteSheetPath(spriteSheet)
 {
-
+	
 }
+
+//Constructor for more than one spritesheets
+Character::Character(int x, int y) : X(x), Y(y) {}
 
 Character::~Character()
 {
@@ -15,7 +20,11 @@ void Character::Update(float dTime)
 	DeltaTime = dTime;
 
 	if (Collisions[BOTTOM])
+	{
 		Gravity = 0;
+		JumpPower = 0;
+	}
+		
 
 	if (GravityEnabled)
 		ApplyGravity();
@@ -64,33 +73,61 @@ void Character::SetSpriteSheet(SDL_Texture* texture)
 
 void Character::MoveLeft()
 {
-	if(!Collisions[LEFT])
+	if (!Collisions[LEFT])
+	{
 		X -= DeltaTime*Speed;
-
-	CurrState = RUNNING;
-	Dir = LEFT;
+		CurrState = RUNNING;
+		Dir = LEFT;
+	}
 }
 
 void Character::MoveRight()
 {
-	if(!Collisions[RIGHT])
+	if (!Collisions[RIGHT])
+	{
 		X += DeltaTime*Speed;
-
-	CurrState = RUNNING;
-	Dir = RIGHT;
+		CurrState = RUNNING;
+		Dir = RIGHT;
+	}
 }
 
 void Character::Jump()
 {
-	if(!Collisions[TOP])
-		Y -= DeltaTime*Speed;
+	if (JumpPower == 0 && CurrState != FALLING)
+		TempState = CurrState;
 
-	CurrState = JUMPING;
+	if (CurrState != FALLING && !JumpLock)
+	{
+		if(!Collisions[TOP])
+			Y -= DeltaTime*(JumpVel - JumpPower);
+
+		JumpPower += GRAVITY_INCREASE * DeltaTime;
+
+		if (JumpPower > JumpVel || Collisions[TOP])
+		{
+			CurrState = FALLING;
+			JumpLock = true;
+		}
+		else
+			CurrState = JUMPING;
+	}
+	else if(Collisions[BOTTOM])
+	{
+		CurrState = TempState;
+	}
 }
 
 void Character::Stop()
 {
-	CurrState = STANDING;
+	if (Collisions[BOTTOM])
+		CurrState = STANDING;
+	else
+		CurrState = FALLING;
+}
+
+void Character::StopJump()
+{
+	JumpLock = false;
 }
 
 void Character::Kill()
@@ -125,11 +162,10 @@ int Character::GetHeight()
 
 void Character::ApplyGravity()
 {
-	const int gravIncrease = 1500;
 	if (!Collisions[BOTTOM] && CurrState != JUMPING)
 	{
 		Y += DeltaTime*Gravity;
-		Gravity += gravIncrease * DeltaTime;
+		Gravity += GRAVITY_INCREASE * DeltaTime;
 	}
 }
 

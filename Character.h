@@ -4,10 +4,11 @@
 class Character : public AnimatedObject
 {
 	public:
-		enum States {STANDING, RUNNING, JUMPING, ATTACKING, DYING};
+		enum States {STANDING, RUNNING, JUMPING, FALLING, ATTACKING, DYING};
 		enum Direction {RIGHT, LEFT, TOP, BOTTOM};
 
 		Character(int x, int y, char* spriteSheet);
+		Character(int x, int y);
 		~Character();
 		void AnimatedObject::Update(float dTime);
 		int AnimatedObject::GetX();
@@ -25,6 +26,7 @@ class Character : public AnimatedObject
 		void MoveRight();
 		void Jump();
 		void Stop();
+		void StopJump();
 		void Kill();
 		void SetGravity(bool gravity);
 		int GetFallingVel();
@@ -32,20 +34,34 @@ class Character : public AnimatedObject
 		int GetMaxHealth();
 		int GetHealth();
 
-	private:
-		float DeltaTime = 0;
-		float X, Y;
-		States CurrState = STANDING;
-		Direction Dir = RIGHT;
+	protected:
+		int MaxHealth = 100;
+		int Health = MaxHealth;
 		int Speed = 100;
-		int Gravity = 0;
+		int JumpVel = 300;
+
 		bool GravityEnabled = true;
-		bool Collisions[4];
 
 		int Width = 20;
 		int Height = 40;
+
+		States CurrState = STANDING;
+		States TempState = STANDING;
+		Direction Dir = RIGHT;
+
 		char* SpriteSheetPath;
-		SDL_Texture* SpriteSheet = NULL;
+		SDL_Texture* SpriteSheet;
+
+	private:
+		const int GRAVITY_INCREASE = 1500;
+
+		float DeltaTime = 0;
+		float X, Y;
+		
+		bool JumpLock = false;
+		int Gravity = 0;
+		
+		bool Collisions[4];
 
 		void ApplyGravity();
 };

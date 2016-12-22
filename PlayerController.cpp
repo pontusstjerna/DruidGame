@@ -78,6 +78,22 @@ void PlayerController::RemoveKeyPress(SDL_Keycode code)
 			break;
 		case SDLK_UP:
 				Presses[UP] = false;
+				ActivePlayer->StopJump();
+			break;
+		case SDLK_1:
+			ActivePlayer->Shapeshift(Player::HUMAN);
+			break;
+		case SDLK_2:
+			ActivePlayer->Shapeshift(Player::CAT);
+			break;
+		case SDLK_3:
+			ActivePlayer->Shapeshift(Player::BEAR);
+			break;
+		case SDLK_4:
+			ActivePlayer->Shapeshift(Player::FISH);
+			break;
+		case SDLK_5:
+			ActivePlayer->Shapeshift(Player::BIRD);
 			break;
 	}
 }

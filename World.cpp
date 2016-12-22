@@ -3,7 +3,9 @@
 
 World::World()
 {
-	ActivePlayer = new Player(100, 0);
+	char* sheets[2] = { "data/spritesheets/player_human.png", "data/spritesheets/player_cat.png" };
+
+	ActivePlayer = new Player(100, 0, sheets);
 	ActiveMap = new Map("none", "map1", ActivePlayer);
 }
 World::World(char* savedGame)
@@ -58,14 +60,17 @@ void World::CollidePlayer(float dTime)
 		int bTop = ActiveMap->GetBlocks()[i]->GetY();
 		int bBottom = ActiveMap->GetBlocks()[i]->GetY() + ActiveMap->GetBlocks()[i]->GetHeight();
 
-		bool betweenVertical = bTop <= pBottom && bBottom >= pTop;
-		bool betweenHorizontal = bLeft <= pRight && bRight >= pLeft;
+		bool betweenVertical = bTop < pBottom && bBottom > pTop;
+		bool betweenHorizontal = bLeft < pRight && bRight > pLeft;
 
 		if(!left)
 			left = (pLeft <= bRight && pRight >= bRight && betweenVertical);
 
 		if(!right)
 			right = (pRight >= bLeft && pLeft <= bLeft && betweenVertical);
+
+		if (right)
+			int x = 5;
 
 		if(!top)
 			top = (pTop <= bBottom && pBottom >= bBottom && betweenHorizontal);

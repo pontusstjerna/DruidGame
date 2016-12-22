@@ -9,7 +9,7 @@ class PlayerController
 		void Update();
 
 	private:
-		enum KeyPos { RIGHT, LEFT, UP };
+		enum KeyPos { RIGHT, LEFT, UP};
 		Player* ActivePlayer;
 		bool Presses[3] = {false, false, false};
 

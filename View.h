@@ -2,12 +2,13 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Map.h"
+#include "AnimatedPlayer.h"
 
 class View
 {
 	public:
 		const int NUMBEROF_FRAMES = 8;
-		const float STD_UPDATE_INTERVAL = 0.0375f;
+		const float STD_UPDATE_INTERVAL = 0.05f;
 
 		View();
 		View(unsigned int, unsigned int, char*);
@@ -15,6 +16,7 @@ class View
 
 		int InitView();
 		int LoadMap(Map* map);
+		int LoadPlayer(AnimatedPlayer* player);
 		void Update(float);
 
 	private:
