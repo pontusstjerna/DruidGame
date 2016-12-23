@@ -2,7 +2,7 @@
 #include "Character.h"
 #include "AnimatedPlayer.h"
 
-class Player : public AnimatedPlayer, public Character
+class Player : public Character
 {
 	public:
 		enum Forms {HUMAN, CAT, BEAR, FISH, BIRD};
@@ -18,7 +18,8 @@ class Player : public AnimatedPlayer, public Character
 
 		SDL_Texture** AnimatedPlayer::GetSpriteSheets();
 		int AnimatedPlayer::GetNumSpriteSheets();
-		int GetActiveSpriteSheet();
+		void SetSpriteSheet(SDL_Texture*, int);
+		char** GetSpriteSheetPaths();
 		
 	private:
 		const int RequiredLevels[5] = { 1, 3, 5, 7, 15 };

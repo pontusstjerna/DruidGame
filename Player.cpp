@@ -2,7 +2,7 @@
 
 Player::Player(int x, int y, char** spriteSheets) : Character(x, y)
 {
-	NumSpriteSheets = sizeof(spriteSheets);
+	NumSpriteSheets = 2;
 
 	SpriteSheetPaths = new char*[NumSpriteSheets];
 	for (int i = 0; i < NumSpriteSheets; i++)
@@ -88,4 +88,14 @@ int Player::GetNumSpriteSheets()
 SDL_Texture** Player::GetSpriteSheets()
 {
 	return SpriteSheets;
+}
+
+void Player::SetSpriteSheet(SDL_Texture* spriteSheet, int index)
+{
+	SpriteSheets[index] = spriteSheet;
+}
+
+char** Player::GetSpriteSheetPaths()
+{
+	return SpriteSheetPaths;
 }

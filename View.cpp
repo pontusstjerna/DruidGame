@@ -65,14 +65,16 @@ int View::LoadMap(Map* map)
 	return 0;
 }
 
-int LoadPlayer(AnimatedPlayer* player)
+int View::LoadPlayer(AnimatedPlayer* player)
 {
 	Player = player;
 
 	for (int i = 0; i < player->GetNumSpriteSheets(); i++)
 	{
-		Player->SetTexture(LoadTexture())
+		Player->SetSpriteSheet(LoadTexture(Player->GetSpriteSheetPaths()[i]), i);
 	}
+
+	return 0;
 }
 
 void View::LoadTextures()
@@ -89,10 +91,10 @@ void View::LoadTextures()
 		}
 	}
 
-	for (int i = 0; i < ActiveMap->GetNumberofObjects(); i++)
+	for (int i = 1; i < ActiveMap->GetNumberofObjects(); i++)
 	{
 		char* currTexture = ActiveMap->GetObjects()[i]->GetSpriteSheetPath();
-		for (int j = 0; j < ActiveMap->GetNumberofObjects(); j++)
+		for (int j = 1; j < ActiveMap->GetNumberofObjects(); j++)
 		{
 					
 			if (ActiveMap->GetObjects()[j]->GetSpriteSheetPath() == currTexture)
@@ -218,7 +220,7 @@ void View::DrawPlayer(SDL_Renderer* renderer)
 	int h = Player->GetHeight();
 
 	//The State*height*2 is for frame index, frame height and 2 for number of directions
-	SDL_Rect sRect = { Frame*w, Player->GetState()*h*2 + obj->GetDir()*h , w, h };
+	SDL_Rect sRect = { Frame*w, Player->GetState()*h*2 + Player->GetDir()*h , w, h };
 	SDL_Rect dRect = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, (int)(w*Scale), (int)(h*Scale) };
 	SDL_RenderCopy(renderer, Player->GetSpriteSheets()[Player->GetActiveSpriteSheet()], &sRect, &dRect);
 

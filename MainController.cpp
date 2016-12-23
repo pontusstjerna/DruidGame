@@ -60,6 +60,13 @@ void MainController::Start()
 		return;
 	}
 
+	if (view->LoadPlayer(world->GetPlayer()) == -1)
+	{
+		printf("Unable to load player. Aborting.\n");
+		SDL_Delay(10000);
+		return;
+	}
+
 	printf("Game started!\n----------------------------------\n\n");
 	GameLoop();
 }

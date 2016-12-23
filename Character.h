@@ -1,7 +1,8 @@
 #pragma once
 #include "AnimatedObject.h"
+#include "AnimatedPlayer.h"
 
-class Character : public AnimatedObject
+class Character : public AnimatedPlayer
 {
 	public:
 		enum States {STANDING, RUNNING, JUMPING, FALLING, ATTACKING, DYING};
