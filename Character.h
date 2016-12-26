@@ -36,6 +36,8 @@ class Character : public AnimatedPlayer
 		int GetHealth();
 
 	protected:
+		float X, Y;
+
 		int MaxHealth = 100;
 		int Health = MaxHealth;
 		int Speed = 100;
@@ -50,6 +52,8 @@ class Character : public AnimatedPlayer
 		States TempState = STANDING;
 		Direction Dir = RIGHT;
 
+		bool Collisions[4];
+
 		char* SpriteSheetPath;
 		SDL_Texture* SpriteSheet;
 
@@ -57,12 +61,9 @@ class Character : public AnimatedPlayer
 		const int GRAVITY_INCREASE = 1500;
 
 		float DeltaTime = 0;
-		float X, Y;
 		
 		bool JumpLock = false;
 		int Gravity = 0;
-		
-		bool Collisions[4];
 
 		void ApplyGravity();
 };

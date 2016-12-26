@@ -3,12 +3,16 @@
 #include <SDL_image.h>
 #include "Map.h"
 #include "AnimatedPlayer.h"
+#include "GameView.h"
 
 class View
 {
 	public:
 		const int NUMBEROF_FRAMES = 8;
 		const float STD_UPDATE_INTERVAL = 0.05f;
+
+		const int WINDOW_WIDTH;
+		const int WINDOW_HEIGHT;
 
 		View();
 		View(unsigned int, unsigned int, char*);
@@ -40,8 +44,6 @@ class View
 
 		bool IsInsideView(Block* block);
 
-		const int WINDOW_WIDTH;
-		const int WINDOW_HEIGHT;
 		char* WINDOW_TITLE;
 
 		float Scale;

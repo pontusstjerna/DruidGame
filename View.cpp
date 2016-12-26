@@ -134,11 +134,20 @@ void View::IncrementFrames(float dTime)
 
 void View::DrawBackground(SDL_Renderer* renderer)
 {
-	float zoom = 0.5f;
-	int h = (int)(WINDOW_HEIGHT*zoom);
-	SDL_Rect sRect = {2, 300/2 - h/2, (int)(WINDOW_WIDTH*zoom), h};
-	SDL_Rect dRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
-	SDL_RenderCopy(renderer, Background, &sRect, &dRect);
+	int totWidth = 0;
+
+	int bgWidth = 200 * Scale;
+	int bgHeight = 150 * Scale;
+	while (totWidth < WINDOW_WIDTH + 200)
+	{
+		int x = (int)((-Player->GetX()/4)*Scale) % bgWidth;// +WINDOW_WIDTH / 2;
+
+		SDL_Rect sRect = { 0, 0, bgWidth, bgHeight };
+		SDL_Rect dRect = { x + totWidth, 0, bgWidth, WINDOW_HEIGHT };
+		SDL_RenderCopy(renderer, Background, &sRect, &dRect);
+
+		totWidth += bgWidth;
+	}
 }
 
 void View::DrawBlocks(SDL_Renderer* renderer)

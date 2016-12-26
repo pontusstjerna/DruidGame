@@ -30,7 +30,7 @@ class Player : public Character
 		Forms Form = HUMAN;
 
 		int Experience = 0;
-		int Level = 20;
+		int Level = 3;
 
 		void SetStats(Forms form);
 

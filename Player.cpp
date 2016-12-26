@@ -41,6 +41,8 @@ int Player::GetLevel()
 
 void Player::SetStats(Forms form)
 {
+	float oldHeight = Height;
+
 	//HELP ALFRED
 	switch (form)
 	{
@@ -49,12 +51,16 @@ void Player::SetStats(Forms form)
 			MaxStamina = 50;
 			JumpVel = 250;
 			Speed = 70;
+			Width = 20;
+			Height = 40;
 			break;
 		case Player::CAT:
 			MaxHealth = 30;
 			MaxStamina = 50;
 			JumpVel = 500;
-			Speed = 120;
+			Speed = 150;
+			Width = 50;
+			Height = 25;
 			break;
 		case Player::BEAR:
 			MaxHealth = 300;
@@ -73,6 +79,9 @@ void Player::SetStats(Forms form)
 		default:
 			break;
 	}
+
+	if(oldHeight < Height)
+		Y -= oldHeight;
 }
 
 int Player::GetActiveSpriteSheet()

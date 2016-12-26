@@ -1,4 +1,5 @@
 #include "Character.h"
+#include <stdio.h>
 
 float JumpPower = 0;
 
@@ -23,11 +24,12 @@ void Character::Update(float dTime)
 	{
 		Gravity = 0;
 		JumpPower = 0;
-	}
-		
+	}	
 
 	if (GravityEnabled)
 		ApplyGravity();
+
+	//printf("State: %i\n", CurrState);
 
 }
 
@@ -76,7 +78,10 @@ void Character::MoveLeft()
 	if (!Collisions[LEFT])
 	{
 		X -= DeltaTime*Speed;
-		CurrState = RUNNING;
+
+		if(Collisions[BOTTOM])
+			CurrState = RUNNING;
+
 		Dir = LEFT;
 	}
 }
@@ -86,7 +91,9 @@ void Character::MoveRight()
 	if (!Collisions[RIGHT])
 	{
 		X += DeltaTime*Speed;
-		CurrState = RUNNING;
+		if(Collisions[BOTTOM])
+			CurrState = RUNNING;
+
 		Dir = RIGHT;
 	}
 }
@@ -109,7 +116,9 @@ void Character::Jump()
 			JumpLock = true;
 		}
 		else
+		{
 			CurrState = JUMPING;
+		}
 	}
 	else if(Collisions[BOTTOM])
 	{
@@ -128,6 +137,7 @@ void Character::Stop()
 void Character::StopJump()
 {
 	JumpLock = false;
+	CurrState = FALLING;
 }
 
 void Character::Kill()
