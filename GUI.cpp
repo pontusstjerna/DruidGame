@@ -5,9 +5,9 @@ GUI::GUI(AnimatedPlayer* player, int nObjects, AnimatedObject** objects) : Playe
 
 }
 
-int GUI::LoadGUI(char* background)
-{
-	if(View::LoadTexture)
-
-	return 0;
-}
+//int GUI::LoadGUI(char* background)
+//{
+//	if(View::LoadTexture)
+//
+//	return 0;
+//}

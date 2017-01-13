@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <stdio.h>
 
 Player::Player(int x, int y, char** spriteSheets) : Character(x, y)
 {
@@ -13,11 +14,13 @@ Player::Player(int x, int y, char** spriteSheets) : Character(x, y)
 	SpriteSheets = new SDL_Texture*[NumSpriteSheets];
 
 	SetStats(HUMAN);
+
+	printf("Player created at pos (%i,%i) with stats: \n\tHP: %i\n\tStamina: %i\n", x, y, MaxHealth, MaxStamina);
 }
 
 Player::~Player()
 {
-
+	printf("Player destroyed.\n");
 }
 
 void Player::Shapeshift(Forms form)

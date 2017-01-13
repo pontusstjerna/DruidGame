@@ -1,4 +1,5 @@
 #include "Map.h"
+#include <stdio.h>
 
 Map::Map(char* json, char* name, AnimatedObject* player) : Name(name)
 {
@@ -29,11 +30,15 @@ Map::Map(char* json, char* name, AnimatedObject* player) : Name(name)
 			Objects[0] = player;
 
 		}
+
+		printf("Map %s initialized with %i blocks.\n", Name, NumberOfBlocks);
 	}
 Map::~Map()
 {
 	delete[] Blocks;
 	delete[] Objects;
+
+	printf("Map %s destroyed.\n", Name);
 }
 
 void Map::Update(float dTime)

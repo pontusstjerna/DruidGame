@@ -8,9 +8,6 @@
 class View
 {
 	public:
-		const int NUMBEROF_FRAMES = 8;
-		const float STD_UPDATE_INTERVAL = 0.05f;
-
 		const int WINDOW_WIDTH;
 		const int WINDOW_HEIGHT;
 
@@ -22,11 +19,10 @@ class View
 		int LoadMap(Map* map);
 		int LoadPlayer(AnimatedPlayer* player);
 		void Update(float);
+		void Start();
 
 	private:
-		enum VerticalPos {top, middle, bottom};
-		
-		int Frame = 0;
+		GameView* GView;
 
 		int CreateWindow();
 		int CreateSurface();
@@ -34,15 +30,6 @@ class View
 		SDL_Texture* LoadTexture(char*);
 		int InitSDLImage();
 		void LoadTextures();
-		void IncrementFrames(float dTime);
-
-		void DrawBackground(SDL_Renderer* renderer);
-		void DrawBlocks(SDL_Renderer* renderer);
-		void DrawBlock(Block* block, SDL_Renderer* renderer);
-		void DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos pos, int y);
-		void DrawPlayer(SDL_Renderer* renderer);
-
-		bool IsInsideView(Block* block);
 
 		char* WINDOW_TITLE;
 

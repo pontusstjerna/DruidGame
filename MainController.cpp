@@ -67,6 +67,8 @@ void MainController::Start()
 		return;
 	}
 
+	view->Start();
+
 	printf("Game started!\n----------------------------------\n\n");
 	GameLoop();
 }

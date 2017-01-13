@@ -1,20 +1,23 @@
 #include "GameView.h"
 
-GameView::GameView()
+GameView::GameView(int winWidth, int winHeight, Map* map, AnimatedPlayer* player) : WinWidth(winWidth), WinHeight(winHeight), ActiveMap(map), Player(player)
+{
+	
+}
 
-void GameView::DrawBackground(SDL_Renderer* renderer, float scale)
+void GameView::DrawBackground(SDL_Renderer* renderer, SDL_Texture* background, float scale)
 {
 	int totWidth = 0;
 
 	int bgWidth = 200 * scale;
 	int bgHeight = 150 * scale;
-	while (totWidth < WINDOW_WIDTH + 200)
+	while (totWidth < WinWidth + 200)
 	{
-		int x = (int)((-Player->GetX() / 4)*scale) % bgWidth;// +WINDOW_WIDTH / 2;
+		int x = (int)((-Player->GetX() / 4)*scale) % bgWidth;// +WinWidth / 2;
 
 		SDL_Rect sRect = { 0, 0, bgWidth, bgHeight };
-		SDL_Rect dRect = { x + totWidth, 0, bgWidth, WINDOW_HEIGHT };
-		SDL_RenderCopy(renderer, Background, &sRect, &dRect);
+		SDL_Rect dRect = { x + totWidth, 0, bgWidth, WinHeight };
+		SDL_RenderCopy(renderer, background, &sRect, &dRect);
 
 		totWidth += bgWidth;
 	}
@@ -24,40 +27,39 @@ void GameView::DrawBlocks(SDL_Renderer* renderer, float scale)
 {
 	for (int i = 0; i < ActiveMap->GetNumberofBlocks(); i++)
 	{
-		SDL_Texture* texture;
-
 		//TODO: Check if inside view rect
-		if (IsInsideView(ActiveMap->GetBlocks()[i]))
-			DrawBlock(ActiveMap->GetBlocks()[i], renderer);
+		if (IsInsideView(ActiveMap->GetBlocks()[i], scale))
+			DrawBlock(ActiveMap->GetBlocks()[i], renderer, scale);
 	}
 }
 
-void View::DrawBlock(Block* block, SDL_Renderer* renderer)
+void GameView::DrawBlock(Block* block, SDL_Renderer* renderer, float scale)
 {
-	int y = (int)((block->GetY() - ActiveMap->GetObjects()[0]->GetY())*Scale) + WINDOW_HEIGHT / 2;
+	int x = (int)((block->GetX() - ActiveMap->GetObjects()[0]->GetX())*scale) + WinWidth / 2;
+	int y = (int)((block->GetY() - ActiveMap->GetObjects()[0]->GetY())*scale) + WinHeight / 2;
 	int h = block->GetHeight();
 	int mh = block->MIN_HEIGHT;
 
 	//Top row
-	DrawBlockRow(block, renderer, top, y);
+	DrawBlockRow(block, renderer, top, x, y, scale);
 
 	if (h > mh)
 	{
 		//Middle vertical
 		for (int i = mh; i < h - mh; i += mh)
 		{
-			DrawBlockRow(block, renderer, middle, y + (int)(i*Scale));
+			DrawBlockRow(block, renderer, middle, x, y + (int)(i*scale), scale);
 		}
 
 		//Bottom
-		DrawBlockRow(block, renderer, bottom, y + (int)((h - mh)*Scale));
+		DrawBlockRow(block, renderer, bottom, x, y + (int)((h - mh)*scale), scale);
 	}
 }
 
-void View::DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos pos, int y)
+void GameView::DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos pos, int x, int y, float scale)
 {
 
-	int x = (int)((block->GetX() - ActiveMap->GetObjects()[0]->GetX())*Scale) + WINDOW_WIDTH / 2;
+	
 	int w = block->GetWidth();// -player->GetY();
 	int h = block->GetHeight();
 	int mw = block->MIN_WIDTH;
@@ -91,7 +93,7 @@ void View::DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos pos, i
 	SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
 }
 
-void View::DrawPlayer(SDL_Renderer* renderer)
+void GameView::DrawPlayer(SDL_Renderer* renderer, float scale)
 {
 	int x = Player->GetX();
 	int y = Player->GetY();
@@ -100,7 +102,28 @@ void View::DrawPlayer(SDL_Renderer* renderer)
 
 	//The State*height*2 is for frame index, frame height and 2 for number of directions
 	SDL_Rect sRect = { Frame*w, Player->GetState()*h * 2 + Player->GetDir()*h , w, h };
-	SDL_Rect dRect = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, (int)(w*Scale), (int)(h*Scale) };
+	SDL_Rect dRect = { WinWidth / 2, WinHeight / 2, (int)(w*scale), (int)(h*scale) };
 	SDL_RenderCopy(renderer, Player->GetSpriteSheets()[Player->GetActiveSpriteSheet()], &sRect, &dRect);
 
+}
+
+bool GameView::IsInsideView(Block* block, float scale)
+{
+	int x = (int)((block->GetX() - Player->GetX())*scale) + WinWidth / 2;
+	int y = (int)((block->GetY() - ActiveMap->GetObjects()[0]->GetY())*scale) + WinHeight / 2;
+	int w = (int)(block->GetWidth()*scale);
+	int h = (int)(block->GetHeight()*scale);
+	return x + w > 0 && x < WinWidth && y + h > 0 && y < WinHeight;
+}
+
+float FrameCounter = 0;
+void GameView::IncrementFrames(float dTime)
+{
+	FrameCounter += dTime;
+
+	if (FrameCounter > STD_UPDATE_INTERVAL)
+	{
+		Frame = (Frame + 1) % NUMBEROF_FRAMES;
+		FrameCounter = 0;
+	}
 }

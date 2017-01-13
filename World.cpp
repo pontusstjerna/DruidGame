@@ -8,6 +8,7 @@ World::World()
 	ActivePlayer = new Player(100, 0, sheets);
 	ActiveMap = new Map("none", "map1", ActivePlayer);
 }
+
 World::World(char* savedGame)
 {
 	
