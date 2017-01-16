@@ -67,6 +67,13 @@ void MainController::Start()
 		return;
 	}
 
+	if (view->InitGUI() == -1)
+	{
+		printf("Unable to load GUI. Aborting.\n");
+		SDL_Delay(10000);
+		return;
+	}
+
 	view->Start();
 
 	printf("Game started!\n----------------------------------\n\n");

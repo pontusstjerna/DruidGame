@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "AnimatedPlayer.h"
 #include "GameView.h"
+#include "GUI.h"
 
 class View
 {
@@ -18,11 +19,13 @@ class View
 		int InitView();
 		int LoadMap(Map* map);
 		int LoadPlayer(AnimatedPlayer* player);
+		int InitGUI();
 		void Update(float);
 		void Start();
 
 	private:
 		GameView* GView;
+		GUI* Gui;
 
 		int CreateWindow();
 		int CreateSurface();

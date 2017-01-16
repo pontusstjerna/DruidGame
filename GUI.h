@@ -3,15 +3,16 @@
 #include <SDL_image.h>
 #include "AnimatedPlayer.h"
 #include "AnimatedObject.h"
-#include "View.h"
 
 class GUI
 {
 	public:
+		char* GUI_BACKGROUND = "data/gui/GUI_background.png";
+
 		GUI(AnimatedPlayer* player, int nObjects, AnimatedObject**);
 		~GUI();
 
-		int LoadGUI(char* background);
+		int LoadGUI(SDL_Texture* background);
 
 		void Update(float dTime);
 
@@ -22,4 +23,5 @@ class GUI
 		SDL_Texture* Background = NULL;
 
 		int NumObjects = 0;
+		
 };

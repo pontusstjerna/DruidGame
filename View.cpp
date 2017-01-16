@@ -49,6 +49,12 @@ int View::InitView()
 	return 0;
 }
 
+int View::InitGUI()
+{
+	Gui = new GUI(Player, ActiveMap->GetNumberofObjects(), ActiveMap->GetObjects());
+	return Gui->LoadGUI(LoadTexture(Gui->GUI_BACKGROUND));
+}
+
 int View::LoadMap(Map* map)
 {
 	ActiveMap = map;
