@@ -52,7 +52,7 @@ int View::InitView()
 int View::InitGUI()
 {
 	Gui = new GUI(Player, ActiveMap->GetNumberofObjects(), ActiveMap->GetObjects());
-	return Gui->LoadGUI(LoadTexture(Gui->GUI_BACKGROUND));
+	return Gui->LoadGUI(LoadTexture(Gui->GUI_BACKGROUND), WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 int View::LoadMap(Map* map)
@@ -124,6 +124,7 @@ void View::Update(float dTime)
 	GView->DrawBackground(Renderer, Background, Scale);
 	GView->DrawBlocks(Renderer, Scale);
 	GView->DrawPlayer(Renderer, Scale);
+	Gui->Draw(Renderer);
 
 	//Update screen
 	SDL_RenderPresent(Renderer);

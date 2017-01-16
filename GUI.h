@@ -12,16 +12,30 @@ class GUI
 		GUI(AnimatedPlayer* player, int nObjects, AnimatedObject**);
 		~GUI();
 
-		int LoadGUI(SDL_Texture* background);
+		int LoadGUI(SDL_Texture* background, int win_width, int win_height);
 
-		void Update(float dTime);
+		void Draw(SDL_Renderer* renderer);
 
 	private:
+		const int BG_WIDTH = 240;
+		const int BG_HEIGHT = 180;
+
+		int WinWidth, WinHeight;
+
 		AnimatedPlayer* Player;
 		AnimatedObject** Objects;
 
 		SDL_Texture* Background = NULL;
 
 		int NumObjects = 0;
+		bool ShowFps = false;
+
+		void DrawBackground(SDL_Renderer* renderer);
+		void DrawHealth(SDL_Renderer* renderer);
+		void DrawStamina(SDL_Renderer* renderer);
+		void DrawXP(SDL_Renderer* renderer);
+		void DrawLevel(SDL_Renderer* renderer);
+		void DrawHealthBars(SDL_Renderer* renderer);
+		void DrawHealthBar(SDL_Renderer* renderer, AnimatedObject* obj);
 		
 };
