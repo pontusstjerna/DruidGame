@@ -152,12 +152,12 @@ void Character::SetGravity(bool gravity)
 
 int Character::GetMaxHealth()
 {
-	return 0;
+	return MaxHealth;
 }
 
 int Character::GetHealth()
 {
-	return 0;
+	return Health;
 }
 
 int Character::GetWidth()

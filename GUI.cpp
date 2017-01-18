@@ -34,7 +34,8 @@ int GUI::LoadGUI(SDL_Texture** textures, int win_width, int win_height)
 void GUI::Draw(SDL_Renderer* renderer)
 {
 	DrawBackground(renderer);
-
+	DrawHealth(renderer);
+	DrawStamina(renderer);
 }
 
 void GUI::DrawBackground(SDL_Renderer* renderer)
@@ -46,9 +47,18 @@ void GUI::DrawBackground(SDL_Renderer* renderer)
 
 void GUI::DrawHealth(SDL_Renderer* renderer)
 {
-	SDL_Rect sRect = { 0, 0, 49, BG_HEIGHT };
-	SDL_Rect dRect = { 0, 0, WinWidth, WinHeight };
-	SDL_RenderCopy(renderer, Textures[BACKGROUND], &sRect, &dRect);
+	float healthPercent = (float)Player->GetHealth() / Player->GetMaxHealth();
+	SDL_Rect sRect = { 0, 0, BAR_WIDTH*healthPercent, BAR_HEIGHT };
+	SDL_Rect dRect = { 25*GetScaleX(), 5*GetScaleY(), BAR_WIDTH*healthPercent*GetScaleX(), BAR_HEIGHT*GetScaleY() };
+	SDL_RenderCopy(renderer, Textures[HEALTH_BAR], &sRect, &dRect);
+}
+
+void GUI::DrawStamina(SDL_Renderer* renderer)
+{
+	float staPercent = (float)Player->GetStamina() / Player->GetMaxStamina();
+	SDL_Rect sRect = { 0, 0, BAR_WIDTH*staPercent, BAR_HEIGHT };
+	SDL_Rect dRect = { 25 * GetScaleX(), 25 * GetScaleY(), BAR_WIDTH*staPercent*GetScaleX(), BAR_HEIGHT*GetScaleY() };
+	SDL_RenderCopy(renderer, Textures[STA_BAR], &sRect, &dRect);
 }
 
 float GUI::GetScaleX()

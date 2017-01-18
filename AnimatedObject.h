@@ -14,6 +14,8 @@ class AnimatedObject
 		virtual void SetSpriteSheet(SDL_Texture* texture) = 0;
 		virtual int GetWidth() = 0;
 		virtual int GetHeight() = 0;
+		virtual int GetHealth() = 0;
+		virtual int GetMaxHealth() = 0;
 
 		const int NUM_FRAMES = 8;
 };

@@ -14,6 +14,8 @@ Player::Player(int x, int y, char** spriteSheets) : Character(x, y)
 	SpriteSheets = new SDL_Texture*[NumSpriteSheets];
 
 	SetStats(HUMAN);
+	Health = MaxHealth;
+	Stamina = MaxStamina;
 
 	printf("Player created at pos (%i,%i) with stats: \n\tHP: %i\n\tStamina: %i\n", x, y, MaxHealth, MaxStamina);
 }
@@ -30,6 +32,21 @@ void Player::Shapeshift(Forms form)
 		Form = form;
 		SetStats(form);
 	}
+}
+
+void Player::Update(float dTime)
+{
+
+}
+
+int Player::GetStamina()
+{
+	return Stamina;
+}
+
+int Player::GetMaxStamina()
+{
+	return MaxStamina;
 }
 
 int Player::GetXP()
@@ -85,6 +102,12 @@ void Player::SetStats(Forms form)
 
 	if(oldHeight < Height)
 		Y -= oldHeight;
+
+	if (Health > MaxHealth)
+		Health = MaxHealth;
+
+	if (Stamina > MaxStamina)
+		Stamina = MaxStamina;
 }
 
 int Player::GetActiveSpriteSheet()

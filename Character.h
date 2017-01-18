@@ -21,6 +21,8 @@ class Character : public AnimatedPlayer
 		void AnimatedObject::SetSpriteSheet(SDL_Texture* texture);
 		int AnimatedObject::GetWidth();
 		int AnimatedObject::GetHeight();
+		int AnimatedObject::GetHealth();
+		int AnimatedObject::GetMaxHealth();
 
 		void Collide(Direction dir, bool collide);
 		void MoveLeft();
@@ -31,9 +33,6 @@ class Character : public AnimatedPlayer
 		void Kill();
 		void SetGravity(bool gravity);
 		int GetFallingVel();
-
-		int GetMaxHealth();
-		int GetHealth();
 
 	protected:
 		float X, Y;

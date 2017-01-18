@@ -10,9 +10,13 @@ class Player : public Character
 		Player(int x, int y, char**);
 		~Player();
 
+		void Update(float dTime);
+
 		void Shapeshift(Forms form);
-		int GetXP();
-		int GetLevel();
+		int AnimatedPlayer::GetStamina();
+		int AnimatedPlayer::GetMaxStamina();
+		int AnimatedPlayer::GetXP();
+		int AnimatedPlayer::GetLevel();
 
 		int GetActiveSpriteSheet();
 
@@ -30,7 +34,7 @@ class Player : public Character
 		Forms Form = HUMAN;
 
 		int Experience = 0;
-		int Level = 3;
+		int Level = 20;
 
 		void SetStats(Forms form);
 
