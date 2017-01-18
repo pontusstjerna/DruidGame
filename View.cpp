@@ -52,7 +52,13 @@ int View::InitView()
 int View::InitGUI()
 {
 	Gui = new GUI(Player, ActiveMap->GetNumberofObjects(), ActiveMap->GetObjects());
-	return Gui->LoadGUI(LoadTexture(Gui->GUI_BACKGROUND), WINDOW_WIDTH, WINDOW_HEIGHT);
+
+	SDL_Texture* textures[GUI::nTextures];
+	for (int i = 0; i < GUI::nTextures; i++)
+	{
+		textures[i] = LoadTexture((char*)Gui->GUI_TEXTURES[i]);
+	}
+	return Gui->LoadGUI(textures, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 int View::LoadMap(Map* map)
