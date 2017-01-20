@@ -38,7 +38,7 @@ class Character : public AnimatedPlayer
 		float X, Y;
 
 		int MaxHealth = 100;
-		int Health = MaxHealth;
+		float Health = MaxHealth;
 		int Speed = 100;
 		int JumpVel = 300;
 

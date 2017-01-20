@@ -37,6 +37,8 @@ class Player : public Character
 		int Level = 20;
 
 		void SetStats(Forms form);
+		void HealthRegen(float dTime);
+		void StaminaRegen(float dTime);
 
 		char** SpriteSheetPaths;
 		SDL_Texture** SpriteSheets;
