@@ -11,6 +11,7 @@ class Player : public Character
 		~Player();
 
 		void Update(float dTime);
+		void Jump();
 
 		void Shapeshift(Forms form);
 		int AnimatedPlayer::GetStamina();
@@ -37,8 +38,8 @@ class Player : public Character
 		int Level = 20;
 
 		void SetStats(Forms form);
-		void HealthRegen(float dTime);
-		void StaminaRegen(float dTime);
+		void HealthRegen();
+		void StaminaRegen();
 
 		char** SpriteSheetPaths;
 		SDL_Texture** SpriteSheets;

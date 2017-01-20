@@ -30,17 +30,22 @@ class Character : public AnimatedPlayer
 		void Jump();
 		void Stop();
 		void StopJump();
-		void Kill();
+		void Attack();
+		void Damage(float dmg);
 		void SetGravity(bool gravity);
 		int GetFallingVel();
 
 	protected:
 		float X, Y;
+		float DeltaTime = 0;
 
 		int MaxHealth = 100;
 		float Health = MaxHealth;
 		int Speed = 100;
 		int JumpVel = 300;
+		float ConsumedJumpPwr = 0;
+		float AttackDmg = 3;
+		float AttackRange = 10;
 
 		bool GravityEnabled = true;
 
@@ -56,10 +61,10 @@ class Character : public AnimatedPlayer
 		char* SpriteSheetPath;
 		SDL_Texture* SpriteSheet;
 
+		void Die();
+
 	private:
 		const int GRAVITY_INCREASE = 1500;
-
-		float DeltaTime = 0;
 		
 		bool JumpLock = false;
 		int Gravity = 0;

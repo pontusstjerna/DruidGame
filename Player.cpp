@@ -40,10 +40,11 @@ void Player::Update(float dTime)
 
 	if (CurrState == HUMAN)
 	{
-		HealthRegen(dTime);
+		HealthRegen();
 	}
 
-	StaminaRegen(dTime);
+	if (Collisions[BOTTOM])
+		StaminaRegen();
 }
 
 int Player::GetStamina()
@@ -89,6 +90,26 @@ void Player::SetSpriteSheet(SDL_Texture* spriteSheet, int index)
 char** Player::GetSpriteSheetPaths()
 {
 	return SpriteSheetPaths;
+}
+
+void Player::Jump()
+{
+	if (Stamina > 0)
+	{
+		if (CurrState == JUMPING)
+		{
+			const int multiplier = 20;
+			Stamina -= DeltaTime*multiplier;
+			if (Stamina < 0)
+				Stamina = 0;
+		}
+	}
+	else 
+	{
+		ConsumedJumpPwr = JumpVel;
+	}
+
+	Character::Jump();
 }
 
 void Player::SetStats(Forms form)
@@ -142,11 +163,11 @@ void Player::SetStats(Forms form)
 		Stamina = MaxStamina;
 }
 
-void Player::HealthRegen(float dTime)
+void Player::HealthRegen()
 {
 	if (Health < MaxHealth)
 	{
-		Health += dTime;
+		Health += DeltaTime;
 	}
 	else
 	{
@@ -154,11 +175,12 @@ void Player::HealthRegen(float dTime)
 	}
 }
 
-void Player::StaminaRegen(float dTime)
+void Player::StaminaRegen()
 {
+	const int multiplier = 3;
 	if (Stamina < MaxStamina)
 	{
-		Stamina += dTime;
+		Stamina += DeltaTime*multiplier;
 	}
 	else
 	{

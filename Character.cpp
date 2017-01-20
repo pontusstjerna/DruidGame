@@ -1,8 +1,6 @@
 #include "Character.h"
 #include <stdio.h>
 
-float JumpPower = 0;
-
 Character::Character(int x, int y, char* spriteSheet) : X(x), Y(y), SpriteSheetPath(spriteSheet)
 {
 	
@@ -23,7 +21,7 @@ void Character::Update(float dTime)
 	if (Collisions[BOTTOM])
 	{
 		Gravity = 0;
-		JumpPower = 0;
+		ConsumedJumpPwr = 0;
 	}	
 
 	if (GravityEnabled)
@@ -100,17 +98,17 @@ void Character::MoveRight()
 
 void Character::Jump()
 {
-	if (JumpPower == 0 && CurrState != FALLING)
+	if (ConsumedJumpPwr == 0 && CurrState != FALLING)
 		TempState = CurrState;
 
 	if (CurrState != FALLING && !JumpLock)
 	{
 		if(!Collisions[TOP])
-			Y -= DeltaTime*(JumpVel - JumpPower);
+			Y -= DeltaTime*(JumpVel - ConsumedJumpPwr);
 
-		JumpPower += GRAVITY_INCREASE * DeltaTime;
+		ConsumedJumpPwr += GRAVITY_INCREASE * DeltaTime;
 
-		if (JumpPower > JumpVel || Collisions[TOP])
+		if (ConsumedJumpPwr > JumpVel || Collisions[TOP])
 		{
 			CurrState = FALLING;
 			JumpLock = true;
@@ -140,9 +138,19 @@ void Character::StopJump()
 	CurrState = FALLING;
 }
 
-void Character::Kill()
+void Character::Attack()
 {
-	CurrState = DYING;
+	//ClosestCharacter()->Damage(AttackDmg);
+}
+
+void Character::Damage(float dmg)
+{
+	Health -= dmg;
+	if (Health <= 0)
+	{
+		Die();
+	}
+	//CurrState = DYING;
 }
 
 void Character::SetGravity(bool gravity)
@@ -182,4 +190,9 @@ void Character::ApplyGravity()
 int Character::GetFallingVel()
 {
 	return Gravity;
+}
+
+void Character::Die()
+{
+	//Oops
 }
