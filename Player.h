@@ -2,7 +2,7 @@
 #include "Character.h"
 #include "AnimatedPlayer.h"
 
-class Player : public Character
+class Player : public AnimatedPlayer
 {
 	public:
 		enum Forms {HUMAN, CAT, BEAR, FISH, BIRD};

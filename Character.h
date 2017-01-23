@@ -2,7 +2,7 @@
 #include "AnimatedObject.h"
 #include "AnimatedPlayer.h"
 
-class Character : public AnimatedPlayer
+class Character : public AnimatedObject
 {
 	public:
 		enum States {STANDING, RUNNING, JUMPING, FALLING, ATTACKING, DYING};

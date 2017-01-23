@@ -1,8 +1,8 @@
 #pragma once
 
-#include "AnimatedObject.h"
+#include "Character.h"
 
-class AnimatedPlayer : public AnimatedObject
+class AnimatedPlayer : public Character
 {
 	public:
 		virtual void SetSpriteSheet(SDL_Texture*, int) = 0;

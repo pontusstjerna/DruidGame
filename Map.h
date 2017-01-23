@@ -1,11 +1,12 @@
 #pragma once
 #include "Block.h"
 #include "AnimatedObject.h"
+#include "Character.h"
 
 class Map
 {
 	public:
-		Map(char* json, char* name, AnimatedObject* player);
+		Map(char* json, char* name);
 		~Map();
 
 		void Update(float dTime);
