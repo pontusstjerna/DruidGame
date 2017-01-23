@@ -16,6 +16,7 @@ class GameView
 		void DrawBackground(SDL_Renderer* renderer, SDL_Texture* background, float scale);
 		void DrawBlocks(SDL_Renderer* renderer, float scale);
 		void DrawPlayer(SDL_Renderer* renderer, float scale);
+		void DrawAnimatedObjects(SDL_Renderer* renderer, float scale);
 
 	private:
 		enum VerticalPos { top, middle, bottom };
@@ -29,5 +30,6 @@ class GameView
 
 		void DrawBlock(Block* block, SDL_Renderer* renderer, float scale);
 		void DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos pos, int x, int y, float scale);
+		void DrawAnimatedObject(AnimatedObject* object, SDL_Renderer* renderer, float scale);
 		bool IsInsideView(Block* block, float );
 };

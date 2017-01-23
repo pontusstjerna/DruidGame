@@ -130,6 +130,7 @@ void View::Update(float dTime)
 	GView->DrawBackground(Renderer, Background, Scale);
 	GView->DrawBlocks(Renderer, Scale);
 	GView->DrawPlayer(Renderer, Scale);
+	GView->DrawAnimatedObjects(Renderer, Scale);
 	Gui->Draw(Renderer);
 
 	//Update screen

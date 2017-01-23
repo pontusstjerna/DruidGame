@@ -107,6 +107,29 @@ void GameView::DrawPlayer(SDL_Renderer* renderer, float scale)
 
 }
 
+void GameView::DrawAnimatedObjects(SDL_Renderer* renderer, float scale)
+{
+	for (int i = 1; i < ActiveMap->GetNumberofObjects(); i++)
+	{
+		//TODO: Check if inside view rect
+		//if (IsInsideView(ActiveMap->GetBlocks()[i], scale))
+			DrawAnimatedObject(ActiveMap->GetObjects()[i], renderer, scale);
+	}
+}
+
+void GameView::DrawAnimatedObject(AnimatedObject* object, SDL_Renderer* renderer, float scale)
+{
+	int x = (int)((object->GetX() - ActiveMap->GetObjects()[0]->GetX())*scale) + WinWidth / 2;
+	int y = (int)((object->GetY() - ActiveMap->GetObjects()[0]->GetY())*scale) + WinHeight / 2;
+	int w = object->GetWidth();
+	int h = object->GetHeight();
+
+	//The State*height*2 is for frame index, frame height and 2 for number of directions
+	SDL_Rect sRect = { Frame*w, object->GetState()*h * 2 + object->GetDir()*h , w, h };
+	SDL_Rect dRect = { x, y, (int)(w*scale), (int)(h*scale) };
+	SDL_RenderCopy(renderer, object->GetSpriteSheet(), &sRect, &dRect);
+}
+
 bool GameView::IsInsideView(Block* block, float scale)
 {
 	int x = (int)((block->GetX() - Player->GetX())*scale) + WinWidth / 2;

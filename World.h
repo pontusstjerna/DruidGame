@@ -23,7 +23,8 @@ class World
 		Player* ActivePlayer;
 		Map* ActiveMap;
 
-		void CollidePlayer(float dTime);
+		void CollideCharacters(float dTime);
+		void CollideCharacter(Character* object, float dTime);
 
 		/*
 		{

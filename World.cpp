@@ -21,7 +21,7 @@ World::~World()
 
 void World::Update(float dTime)
 {
-	CollidePlayer(dTime);
+	CollideCharacters(dTime);
 	ActiveMap->Update(dTime);
 
 }
@@ -38,12 +38,17 @@ Map* World::GetMap()
 	return ActiveMap;
 }
 
-void World::CollidePlayer(float dTime)
+void World::CollideCharacters(float dTime)
 {
-	int pLeft = ActivePlayer->GetX();
-	int pRight = ActivePlayer->GetX() + ActivePlayer->GetWidth();
-	int pTop = ActivePlayer->GetY();
-	int pBottom = ActivePlayer->GetY() + ActivePlayer->GetHeight() + ActivePlayer->GetFallingVel()*dTime;
+
+}
+
+void World::CollideCharacter(Character* object, float dTime)
+{
+	int pLeft = object->GetX();
+	int pRight = object->GetX() + object->GetWidth();
+	int pTop = object->GetY();
+	int pBottom = object->GetY() + object->GetHeight() + object->GetFallingVel()*dTime;
 
 	bool left = false;
 	bool right = false;
@@ -81,9 +86,9 @@ void World::CollidePlayer(float dTime)
 
 	}
 
-	ActivePlayer->Collide(Character::LEFT, left);
-	ActivePlayer->Collide(Character::RIGHT, right);
-	ActivePlayer->Collide(Character::TOP, top);
-	ActivePlayer->Collide(Character::BOTTOM, bottom);
+	object->Collide(Character::LEFT, left);
+	object->Collide(Character::RIGHT, right);
+	object->Collide(Character::TOP, top);
+	object->Collide(Character::BOTTOM, bottom);
 
 }

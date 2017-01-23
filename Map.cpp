@@ -28,7 +28,7 @@ Map::Map(char* json, char* name, AnimatedPlayer* player) : Name(name)
 			NumObjects = 2;
 			Objects = new AnimatedObject*[NumObjects];
 			Objects[0] = player;
-			Objects[1] = new Character(50, 25, "data/spritesheets/enemy_human1.png");
+			Objects[1] = new Character(125, 25, "data/spritesheets/enemy_human1.png");
 
 		}
 
