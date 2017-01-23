@@ -1,6 +1,5 @@
 #pragma once
 #include "AnimatedObject.h"
-#include "AnimatedPlayer.h"
 
 class Character : public AnimatedObject
 {

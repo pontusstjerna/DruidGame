@@ -1,7 +1,7 @@
 #include "Map.h"
 #include <stdio.h>
 
-Map::Map(char* json, char* name) : Name(name)
+Map::Map(char* json, char* name, AnimatedPlayer* player) : Name(name)
 {
 	//Blocks = JsonParser.Parse(json);
 
@@ -25,9 +25,10 @@ Map::Map(char* json, char* name) : Name(name)
 			Background = "data/maps/map1_bg2.png";
 
 
-			NumObjects = 1;
+			NumObjects = 2;
 			Objects = new AnimatedObject*[NumObjects];
-			Objects[0] = new Character(50, 25, "data/spritesheets/enemy_human1.png");
+			Objects[0] = player;
+			Objects[1] = new Character(50, 25, "data/spritesheets/enemy_human1.png");
 
 		}
 

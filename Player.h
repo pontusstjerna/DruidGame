@@ -2,7 +2,7 @@
 #include "Character.h"
 #include "AnimatedPlayer.h"
 
-class Player : public AnimatedPlayer
+class Player : public AnimatedPlayer, public Character
 {
 	public:
 		enum Forms {HUMAN, CAT, BEAR, FISH, BIRD};
@@ -10,7 +10,6 @@ class Player : public AnimatedPlayer
 		Player(int x, int y, char**);
 		~Player();
 
-		void Update(float dTime);
 		void Jump();
 
 		void Shapeshift(Forms form);
@@ -19,11 +18,25 @@ class Player : public AnimatedPlayer
 		int AnimatedPlayer::GetXP();
 		int AnimatedPlayer::GetLevel();
 
+		//Refer these functions to character base class
+		void AnimatedPlayer::Update(float dTime);
+		int AnimatedPlayer::GetX() { return Character::GetX(); };
+		int AnimatedPlayer::GetY() { return Character::GetY(); };
+		int AnimatedPlayer::GetState() { return Character::GetState(); };
+		int AnimatedPlayer::GetDir() { return Character::GetDir(); };
+		char* AnimatedPlayer::GetSpriteSheetPath() { return Character::GetSpriteSheetPath(); };
+		SDL_Texture* AnimatedPlayer::GetSpriteSheet() { return Character::GetSpriteSheet(); };
+		void AnimatedPlayer::SetSpriteSheet(SDL_Texture* texture, int);
+		int AnimatedPlayer::GetWidth() { return Character::GetWidth(); };
+		int AnimatedPlayer::GetHeight() { return Character::GetHeight(); };
+		int AnimatedPlayer::GetHealth() { return Character::GetHealth(); };
+		int AnimatedPlayer::GetMaxHealth() { return Character::GetMaxHealth(); };
+		void AnimatedObject::SetSpriteSheet(SDL_Texture* texture) { Character::SetSpriteSheet(texture); };
+
 		int GetActiveSpriteSheet();
 
 		SDL_Texture** AnimatedPlayer::GetSpriteSheets();
 		int AnimatedPlayer::GetNumSpriteSheets();
-		void SetSpriteSheet(SDL_Texture*, int);
 		char** GetSpriteSheetPaths();
 		
 	private:

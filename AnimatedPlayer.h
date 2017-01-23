@@ -2,7 +2,7 @@
 
 #include "Character.h"
 
-class AnimatedPlayer : public Character
+class AnimatedPlayer : public AnimatedObject
 {
 	public:
 		virtual void SetSpriteSheet(SDL_Texture*, int) = 0;
