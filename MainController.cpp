@@ -27,7 +27,7 @@ MainController::~MainController()
 	delete view;
 
 	printf("Done!");
-	SDL_Delay(1000);
+	SDL_Delay(3000);
 	SDL_Quit();
 }
 

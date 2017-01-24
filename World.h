@@ -16,12 +16,11 @@ class World
 		//void SaveGame(char* saveName);
 
 		Player* GetPlayer();
-		AnimatedObject* GetAnimatedObjects();
-		Map* GetMap(); 
+		Model* GetMap(); 
 
 	private:
-		Player* ActivePlayer;
-		Map* ActiveMap;
+		Player* activePlayer;
+		Map* activeMap;
 
 		void CollideCharacters(float dTime);
 		void CollideCharacter(Character* object, float dTime);

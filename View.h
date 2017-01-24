@@ -1,10 +1,12 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-#include "Map.h"
+#include <vector>
+#include "Model.h"
 #include "AnimatedPlayer.h"
 #include "GameView.h"
 #include "GUI.h"
+#include "Texture.h"
 
 class View
 {
@@ -17,15 +19,19 @@ class View
 		~View();
 
 		int InitView();
-		int LoadMap(Map* map);
+		int LoadMap(Model* map);
 		int LoadPlayer(AnimatedPlayer* player);
 		int InitGUI();
 		void Update(float);
 		void Start();
 
 	private:
-		GameView* GView;
-		GUI* Gui;
+		GameView* gView;
+		GUI* gui;
+
+		Model* activeMap;
+
+		std::vector<Texture*> textures;
 
 		int CreateWindow();
 		int CreateSurface();

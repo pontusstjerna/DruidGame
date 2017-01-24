@@ -5,7 +5,6 @@ SDL_Window* Window = NULL;
 SDL_Texture* Background = NULL;
 SDL_Renderer* Renderer = NULL;
 
-Map* ActiveMap;
 AnimatedPlayer* Player;
 
 //This is called initializer list and is requred for const variables
@@ -27,7 +26,14 @@ View::~View()
 	SDL_DestroyTexture(Background);
 	SDL_DestroyRenderer(Renderer);
 
-	delete GView;
+	delete gView;
+	delete gui;
+
+	for (int i = 0; i < textures.size(); i++)
+	{
+		delete textures.at(i);
+	}
+
 
 	IMG_Quit();
 	SDL_Quit();
@@ -51,19 +57,19 @@ int View::InitView()
 
 int View::InitGUI()
 {
-	Gui = new GUI(Player, ActiveMap->GetNumberofObjects(), ActiveMap->GetObjects());
+	gui = new GUI(Player, activeMap->GetNumberofObjects(), activeMap->GetObjects());
 
 	SDL_Texture* textures[GUI::nTextures];
 	for (int i = 0; i < GUI::nTextures; i++)
 	{
-		textures[i] = LoadTexture((char*)Gui->GUI_TEXTURES[i]);
+		textures[i] = LoadTexture((char*)gui->GUI_TEXTURES[i]);
 	}
-	return Gui->LoadGUI(textures, WINDOW_WIDTH, WINDOW_HEIGHT);
+	return gui->LoadGUI(textures, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
-int View::LoadMap(Map* map)
+int View::LoadMap(Model* map)
 {
-	ActiveMap = map;
+	activeMap = map;
 	Background = LoadTexture(map->GetBackground());
 	if (Background == NULL)
 	{
@@ -89,27 +95,27 @@ int View::LoadPlayer(AnimatedPlayer* player)
 
 void View::LoadTextures()
 {
-	for (int i = 0; i < ActiveMap->GetNumberofBlocks(); i++)
+	for (int i = 0; i < activeMap->GetNumberofBlocks(); i++)
 	{
-		char* currTexture = ActiveMap->GetBlocks()[i]->GetTexturePath();
-		for (int j = 0; j < ActiveMap->GetNumberofBlocks(); j++)
+		char* currTexture = activeMap->GetBlocks()[i]->GetTexturePath();
+		for (int j = 0; j < activeMap->GetNumberofBlocks(); j++)
 		{
-			if (ActiveMap->GetBlocks()[j]->GetTexturePath() == currTexture)
+			if (activeMap->GetBlocks()[j]->GetTexturePath() == currTexture)
 			{
-				ActiveMap->GetBlocks()[j]->SetTexture(LoadTexture(currTexture));
+				activeMap->GetBlocks()[j]->SetTexture(LoadTexture(currTexture));
 			}
 		}
 	}
 
-	for (int i = 1; i < ActiveMap->GetNumberofObjects(); i++)
+	for (int i = 1; i < activeMap->GetNumberofObjects(); i++)
 	{
-		char* currTexture = ActiveMap->GetObjects()[i]->GetSpriteSheetPath();
-		for (int j = 1; j < ActiveMap->GetNumberofObjects(); j++)
+		char* currTexture = activeMap->GetObjects()[i]->GetSpriteSheetPath();
+		for (int j = 1; j < activeMap->GetNumberofObjects(); j++)
 		{
 					
-			if (ActiveMap->GetObjects()[j]->GetSpriteSheetPath() == currTexture)
+			if (activeMap->GetObjects()[j]->GetSpriteSheetPath() == currTexture)
 			{
-				ActiveMap->GetObjects()[j]->SetSpriteSheet(LoadTexture(currTexture));
+				activeMap->GetObjects()[j]->SetSpriteSheet(LoadTexture(currTexture));
 			}
 		}
 	}
@@ -117,7 +123,7 @@ void View::LoadTextures()
 
 void View::Start()
 {
-	GView = new GameView(WINDOW_WIDTH, WINDOW_HEIGHT, ActiveMap, Player);
+	gView = new GameView(WINDOW_WIDTH, WINDOW_HEIGHT, activeMap, Player);
 
 	printf("View started.\n");
 }
@@ -125,13 +131,13 @@ void View::Start()
 void View::Update(float dTime)
 {
 	SDL_RenderClear(Renderer);
-	GView->IncrementFrames(dTime);
+	gView->IncrementFrames(dTime);
 
-	GView->DrawBackground(Renderer, Background, Scale);
-	GView->DrawBlocks(Renderer, Scale);
-	GView->DrawPlayer(Renderer, Scale);
-	GView->DrawAnimatedObjects(Renderer, Scale);
-	Gui->Draw(Renderer);
+	gView->DrawBackground(Renderer, Background, Scale);
+	gView->DrawBlocks(Renderer, Scale);
+	gView->DrawPlayer(Renderer, Scale);
+	gView->DrawAnimatedObjects(Renderer, Scale);
+	gui->Draw(Renderer);
 
 	//Update screen
 	SDL_RenderPresent(Renderer);
@@ -185,6 +191,15 @@ int View::CreateRenderer()
 
 SDL_Texture* View::LoadTexture(char* path)
 {
+	
+	for (int i = 0; i < textures.size(); i++)
+	{
+		if (strcmp(textures.at(i)->getPath(), path) == 0)
+		{
+			return textures.at(i)->getTexture();
+		}
+	}
+
 	SDL_Texture* texture = NULL;
 
 	SDL_Surface* tmpSurface = IMG_Load(path);
@@ -198,6 +213,9 @@ SDL_Texture* View::LoadTexture(char* path)
 
 	//Reallocate
 	SDL_FreeSurface(tmpSurface);
+
+	//Add texture to texture list
+	textures.push_back(new Texture(texture, path));
 
 	return texture;
 }

@@ -3,29 +3,32 @@
 #include "AnimatedObject.h"
 #include "AnimatedPlayer.h"
 #include "Character.h"
+#include "Player.h"
+#include "Model.h"
 
-class Map
+class Map : public Model
 {
 	public:
-		Map(char* json, char* name, AnimatedPlayer* player);
+		Map(char* json, char* name, Player* player);
 		~Map();
 
 		void Update(float dTime);
 
-		char* GetBackground();
+		char* Model::GetBackground();
 
-		int GetNumberofBlocks();
-		Block** GetBlocks();
-		int GetNumberofObjects();
-		AnimatedObject** GetObjects();
+		int Model::GetNumberofBlocks();
+		Block** Model::GetBlocks();
+		int Model::GetNumberofObjects();
+		AnimatedObject** Model::GetObjects();
+		Character** GetCharacters();
 
 	private:
-		char* Name;
-		char* Background;
+		char* name;
+		char* background;
 		int NumberOfBlocks;
-		Block** Blocks;
-		int NumObjects;
-		AnimatedObject** Objects;
+		Block** blocks;
+		int nObjects;
+		Character** characters;
 		//Enemy** Enemies;
 		//Enemies
 		

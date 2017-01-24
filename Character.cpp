@@ -11,7 +11,7 @@ Character::Character(int x, int y) : X(x), Y(y) {}
 
 Character::~Character()
 {
-	SDL_DestroyTexture(SpriteSheet);
+	printf("Character destroyed at pos (%i, %i).\n", X, Y);
 }
 
 void Character::Update(float dTime)

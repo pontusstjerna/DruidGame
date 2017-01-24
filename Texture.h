@@ -5,19 +5,14 @@
 class Texture
 {
 public:
-	Texture(char* path);
+	Texture(SDL_Texture* texture, char* path);
 	~Texture();
 
-	void Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip = NULL);
+	SDL_Texture* getTexture();
+	char* getPath();
 
-	int GetWidth();
-	int GetHeight();
 private:
-	SDL_Texture* LoadTexture(char* path);
-	void Free();
 
-	SDL_Texture* MainTexture;
-
-	int mWidth;
-	int mHeight;
+	SDL_Texture* texture;
+	char* path;
 };

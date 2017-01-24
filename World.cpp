@@ -5,8 +5,8 @@ World::World()
 {
 	char* sheets[2] = { "data/spritesheets/player_human.png", "data/spritesheets/player_cat.png" };
 
-	ActivePlayer = new Player(100, 0, sheets);
-	ActiveMap = new Map("none", "map1", ActivePlayer);
+	activePlayer = new Player(100, 0, sheets);
+	activeMap = new Map("none", "map1", activePlayer);
 }
 
 World::World(char* savedGame)
@@ -16,13 +16,13 @@ World::World(char* savedGame)
 
 World::~World()
 {
-	delete ActiveMap;
+	delete activeMap;
 }
 
 void World::Update(float dTime)
 {
 	CollideCharacters(dTime);
-	ActiveMap->Update(dTime);
+	activeMap->Update(dTime);
 
 }
 
@@ -30,17 +30,20 @@ void World::Update(float dTime)
 
 Player* World::GetPlayer()
 {
-	return ActivePlayer;
+	return activePlayer;
 }
 
-Map* World::GetMap()
+Model* World::GetMap()
 {
-	return ActiveMap;
+	return activeMap;
 }
 
 void World::CollideCharacters(float dTime)
 {
-
+	for (int i = 0; i < activeMap->GetNumberofObjects(); i++)
+	{
+		CollideCharacter(activeMap->GetCharacters()[i], dTime);
+	}
 }
 
 void World::CollideCharacter(Character* object, float dTime)
@@ -58,13 +61,13 @@ void World::CollideCharacter(Character* object, float dTime)
 	//printf("LS: %i\n", pLeft);
 
 	//Loop through all blocks
-	for (int i = 0; i < ActiveMap->GetNumberofBlocks(); i++)
+	for (int i = 0; i < activeMap->GetNumberofBlocks(); i++)
 	{
 		//Nexts
-		int bLeft = ActiveMap->GetBlocks()[i]->GetX();
-		int bRight = ActiveMap->GetBlocks()[i]->GetX() + ActiveMap->GetBlocks()[i]->GetWidth();
-		int bTop = ActiveMap->GetBlocks()[i]->GetY();
-		int bBottom = ActiveMap->GetBlocks()[i]->GetY() + ActiveMap->GetBlocks()[i]->GetHeight();
+		int bLeft = activeMap->GetBlocks()[i]->GetX();
+		int bRight = activeMap->GetBlocks()[i]->GetX() + activeMap->GetBlocks()[i]->GetWidth();
+		int bTop = activeMap->GetBlocks()[i]->GetY();
+		int bBottom = activeMap->GetBlocks()[i]->GetY() + activeMap->GetBlocks()[i]->GetHeight();
 
 		bool betweenVertical = bTop < pBottom && bBottom > pTop;
 		bool betweenHorizontal = bLeft < pRight && bRight > pLeft;

@@ -1,7 +1,7 @@
 #include "Map.h"
 #include <stdio.h>
 
-Map::Map(char* json, char* name, AnimatedPlayer* player) : Name(name)
+Map::Map(char* json, char* name, Player* player) : name(name)
 {
 	//Blocks = JsonParser.Parse(json);
 
@@ -9,50 +9,69 @@ Map::Map(char* json, char* name, AnimatedPlayer* player) : Name(name)
 		{
 			NumberOfBlocks = 10;
 
-			Blocks = new Block*[NumberOfBlocks];
-			Blocks[0] = new Block(45, 43, 3, 1, "data/blocks/block_grass1.png");
-			Blocks[1] = new Block(4, 50, 200, 10, "data/blocks/block_grass1.png");
+			blocks = new Block*[NumberOfBlocks];
+			blocks[0] = new Block(45, 43, 3, 1, "data/blocks/block_grass1.png");
+			blocks[1] = new Block(4, 50, 200, 10, "data/blocks/block_grass1.png");
 			//Blocks[1] = new Block(4, 50, 20000, 10, "data/blocks/block_grass1.png");
-			Blocks[2] = new Block(40, 30, 5, 3, "data/blocks/block_stonewall1.png");
-			Blocks[3] = new Block(0, 0, 4, 100, "data/blocks/block_stonewall1.png");
-			Blocks[4] = new Block(50, 37, 5, 2, "data/blocks/block_grass1.png");
-			Blocks[5] = new Block(100, 48, 5, 1, "data/blocks/block_grass1.png");
-			Blocks[6] = new Block(106, 47, 5, 1, "data/blocks/block_grass1.png");
-			Blocks[7] = new Block(111, 46, 5, 1, "data/blocks/block_grass1.png");
-			Blocks[8] = new Block(118, 47, 5, 1, "data/blocks/block_stonewall1.png");
-			Blocks[9] = new Block(50, 25, 50, 2, "data/blocks/block_grass1.png");
+			blocks[2] = new Block(40, 30, 5, 3, "data/blocks/block_stonewall1.png");
+			blocks[3] = new Block(0, 0, 4, 100, "data/blocks/block_stonewall1.png");
+			blocks[4] = new Block(50, 37, 5, 2, "data/blocks/block_grass1.png");
+			blocks[5] = new Block(100, 48, 5, 1, "data/blocks/block_grass1.png");
+			blocks[6] = new Block(106, 47, 5, 1, "data/blocks/block_grass1.png");
+			blocks[7] = new Block(111, 46, 5, 1, "data/blocks/block_grass1.png");
+			blocks[8] = new Block(118, 47, 5, 1, "data/blocks/block_stonewall1.png");
+			blocks[9] = new Block(50, 25, 50, 2, "data/blocks/block_grass1.png");
 
-			Background = "data/maps/map1_bg2.png";
+			background = "data/maps/map1_bg2.png";
 
 
-			NumObjects = 2;
-			Objects = new AnimatedObject*[NumObjects];
-			Objects[0] = player;
-			Objects[1] = new Character(125, 25, "data/spritesheets/enemy_human1.png");
+			nObjects = 2000;
+			characters = new Character*[nObjects];
+			characters[0] = player;
+			characters[1] = new Character(125, 25, "data/spritesheets/enemy_human1.png");
+
+			for (int i = 2; i < nObjects; i++)
+			{
+				characters[i] = new Character(300 + i, 25, "data/spritesheets/enemy_human1.png");
+			}
+
+
 
 		}
 
-		printf("Map %s initialized with %i blocks.\n", Name, NumberOfBlocks);
+		printf("Map %s initialized with %i blocks.\n", name, NumberOfBlocks);
 	}
 Map::~Map()
 {
-	delete[] Blocks;
-	delete[] Objects;
+	for (int i = 1; i < nObjects; i++)
+	{
+		delete characters[i];
+	}
 
-	printf("Map %s destroyed.\n", Name);
+	for (int i = 1; i < NumberOfBlocks; i++)
+	{
+		delete blocks[i];
+	}
+
+	delete[] blocks;
+	delete[] characters;
+
+	
+
+	printf("Map %s destroyed.\n", name);
 }
 
 void Map::Update(float dTime)
 {
-	for (int i = 0; i < NumObjects; i++)
+	for (int i = 0; i < nObjects; i++)
 	{
-		Objects[i]->Update(dTime);
+		characters[i]->Update(dTime);
 	}
 }
 
 char* Map::GetBackground()
 {
-	return Background;
+	return background;
 }
 
 int Map::GetNumberofBlocks()
@@ -62,15 +81,20 @@ int Map::GetNumberofBlocks()
 
 Block** Map::GetBlocks()
 {
-	return Blocks;
+	return blocks;
 }
 
 int Map::GetNumberofObjects()
 {
-	return NumObjects;
+	return nObjects;
 }
 
 AnimatedObject** Map::GetObjects()
 {
-	return Objects;
+	return (AnimatedObject**)characters;
+}
+
+Character** Map::GetCharacters()
+{
+	return characters;
 }
