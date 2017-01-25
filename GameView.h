@@ -17,6 +17,7 @@ class GameView
 		void DrawBlocks(SDL_Renderer* renderer, float scale);
 		void DrawPlayer(SDL_Renderer* renderer, float scale);
 		void DrawAnimatedObjects(SDL_Renderer* renderer, float scale);
+		void UpdateActiveObjects(float scale);
 
 	private:
 		enum VerticalPos { top, middle, bottom };

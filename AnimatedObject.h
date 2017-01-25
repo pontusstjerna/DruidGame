@@ -18,4 +18,5 @@ class AnimatedObject
 		virtual int GetMaxHealth() = 0;
 
 		const int NUM_FRAMES = 8;
+		bool active = true;
 };

@@ -112,8 +112,7 @@ void GameView::DrawAnimatedObjects(SDL_Renderer* renderer, float scale)
 	for (int i = 1; i < activeMap->GetNumberofObjects(); i++)
 	{
 		AnimatedObject* obj = activeMap->GetObjects()[i];
-		SDL_Rect objRect = { obj->GetX(), obj->GetY(), obj->GetWidth(), obj->GetHeight() };
-		if (IsInsideView(objRect, scale))
+		if (obj->active)
 			DrawAnimatedObject(activeMap->GetObjects()[i], renderer, scale);
 	}
 }
@@ -129,6 +128,11 @@ void GameView::DrawAnimatedObject(AnimatedObject* object, SDL_Renderer* renderer
 	SDL_Rect sRect = { frame*w, object->GetState()*h * 2 + object->GetDir()*h , w, h };
 	SDL_Rect dRect = { x, y, (int)(w*scale), (int)(h*scale) };
 	SDL_RenderCopy(renderer, object->GetSpriteSheet(), &sRect, &dRect);
+
+	//Draw health bar bg
+	const int barHeight = (int)(scale * 2);
+	SDL_Rect hpBar = { x, y - barHeight, (int)(w*scale) , barHeight};
+	SDL_RenderFillRect(renderer, &hpBar);
 }
 
 bool GameView::IsInsideView(Block* block, float scale)
@@ -138,6 +142,19 @@ bool GameView::IsInsideView(Block* block, float scale)
 	int w = (int)(block->GetWidth()*scale);
 	int h = (int)(block->GetHeight()*scale);
 	return x + w > 0 && x < winWidth && y + h > 0 && y < winHeight;
+}
+
+void GameView::UpdateActiveObjects(float scale)
+{
+	for (int i = 1; i < activeMap->GetNumberofObjects(); i++)
+	{
+		AnimatedObject* obj = activeMap->GetObjects()[i];
+		SDL_Rect objRect = { obj->GetX(), obj->GetY(), obj->GetWidth(), obj->GetHeight() };
+		if (IsInsideView(objRect, scale))
+			obj->active = true;
+		else
+			obj->active = false;
+	}
 }
 
 bool GameView::IsInsideView(SDL_Rect rect, float scale)

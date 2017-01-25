@@ -133,6 +133,7 @@ void View::Update(float dTime)
 	SDL_RenderClear(Renderer);
 	gView->IncrementFrames(dTime);
 
+	gView->UpdateActiveObjects(Scale);
 	gView->DrawBackground(Renderer, Background, Scale);
 	gView->DrawBlocks(Renderer, Scale);
 	gView->DrawPlayer(Renderer, Scale);
