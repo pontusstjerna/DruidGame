@@ -4,6 +4,7 @@
 #include "AnimatedPlayer.h"
 #include "Character.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Model.h"
 
 class Map : public Model

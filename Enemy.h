@@ -1,9 +1,20 @@
 #pragma once
-#include "AnimatedObject.h"
+#include "Character.h"
 
-class Enemy : AnimatedObject
+class Enemy : public Character
 {
 	public:	
-		Enemy(char* json);
+		const int MAX_DIST_X = 200;
+
+		Enemy(int x, int y, char* texture);
 		~Enemy();
+
+		void Update(float dTime);
+
+	private:
+		int startX, startY;
+		int direction = LEFT;
+
+		void DecideDir();
+		void Walk(int dir);
 };

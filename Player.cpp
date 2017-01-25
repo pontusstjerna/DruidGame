@@ -22,6 +22,10 @@ Player::Player(int x, int y, char** spriteSheets) : Character(x, y)
 
 Player::~Player()
 {
+	for (int i = 0; i < NumSpriteSheets; i++)
+	{
+		SDL_DestroyTexture(SpriteSheets[i]);
+	}
 	printf("Player destroyed.\n");
 }
 

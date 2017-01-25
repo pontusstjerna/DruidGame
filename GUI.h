@@ -25,8 +25,8 @@ class GUI
 	private:
 		const int BG_WIDTH = 240;
 		const int BG_HEIGHT = 180;
-		const int BAR_WIDTH = 49;
-		const int BAR_HEIGHT = 6;
+		const int PLAYER_BAR_WIDTH = 49;
+		const int PLAYER_BAR_HEIGHT = 6;
 
 		int WinWidth, WinHeight;
 
