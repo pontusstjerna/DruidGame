@@ -4,7 +4,6 @@
 class Character : public AnimatedObject
 {
 	public:
-		enum States {STANDING, RUNNING, JUMPING, FALLING, ATTACKING, DYING};
 		enum Direction {RIGHT, LEFT, TOP, BOTTOM};
 
 		Character(int x, int y, char* spriteSheet);
@@ -20,7 +19,7 @@ class Character : public AnimatedObject
 		void AnimatedObject::SetSpriteSheet(SDL_Texture* texture);
 		int AnimatedObject::GetWidth();
 		int AnimatedObject::GetHeight();
-		int AnimatedObject::GetHealth();
+		float AnimatedObject::GetHealth();
 		int AnimatedObject::GetMaxHealth();
 
 		void Collide(Direction dir, bool collide);

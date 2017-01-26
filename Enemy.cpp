@@ -1,8 +1,13 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int x, int y, char* texture) : Character(x,y,texture), startX(x), startY(y)
+Enemy::Enemy(int x, int y, char* texture, int seedSeparator) : Character(x,y,texture), startX(x), startY(y)
 {
-	direction = RIGHT;
+
+	srand(time(NULL) + seedSeparator);
+	direction = rand() % 2;
+	turnTime = (rand() + minDirTime) % maxDirTime;
+
+	Speed = 50;
 }
 
 Enemy::~Enemy()
@@ -14,19 +19,37 @@ void Enemy::Update(float dTime)
 {
 	Character::Update(dTime);
 
-	DecideDir();
-	Walk(direction);
+	
+	if (CurrState != DEAD)
+	{
+		timer += dTime * 1000;
+
+		DecideDir();
+		Walk(direction);
+
+		Health -= 8 * dTime;
+	}
 }
 
 void Enemy::DecideDir()
 {
-	if (X - startX > MAX_DIST_X || Collisions[RIGHT])
+	if (X - startX > maxDistX || Collisions[RIGHT])
 	{
 		direction = LEFT;
 	}
-	else if (startX - X > MAX_DIST_X || Collisions[LEFT])
+	else if (startX - X > maxDistX || Collisions[LEFT])
 	{
 		direction = RIGHT;
+	}
+	else if (timer > turnTime)
+	{
+		turnTime = (rand() + minDirTime) % maxDirTime;
+		timer = 0;
+
+		if (direction == LEFT)
+			direction = RIGHT;
+		else
+			direction = LEFT;
 	}
 }
 

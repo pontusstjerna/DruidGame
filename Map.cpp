@@ -7,7 +7,7 @@ Map::Map(char* json, char* name, Player* player) : name(name)
 
 		if (name == "map1")
 		{
-			NumberOfBlocks = 10;
+			NumberOfBlocks = 11;
 
 			blocks = new Block*[NumberOfBlocks];
 			blocks[0] = new Block(45, 43, 3, 1, "data/blocks/block_grass1.png");
@@ -21,6 +21,7 @@ Map::Map(char* json, char* name, Player* player) : name(name)
 			blocks[7] = new Block(111, 46, 5, 1, "data/blocks/block_grass1.png");
 			blocks[8] = new Block(118, 47, 5, 1, "data/blocks/block_stonewall1.png");
 			blocks[9] = new Block(50, 25, 50, 2, "data/blocks/block_grass1.png");
+			blocks[10] = new Block(204, 0, 2, 100, "data/blocks/block_stonewall1.png");
 
 			background = "data/maps/map1_bg2.png";
 
@@ -28,11 +29,11 @@ Map::Map(char* json, char* name, Player* player) : name(name)
 			nObjects = 20;
 			characters = new Character*[nObjects];
 			characters[0] = player;
-			characters[1] = new Enemy(125, 25, "data/spritesheets/enemy_human1.png");
+			characters[1] = new Enemy(125, 25, "data/spritesheets/enemy_human1.png", 1);
 
 			for (int i = 2; i < nObjects; i++)
 			{
-				characters[i] = new Enemy(200 + i*30, 25, "data/spritesheets/enemy_human1.png");
+				characters[i] = new Enemy(150, 25, "data/spritesheets/enemy_human1.png", i);
 			}
 
 		}
@@ -63,7 +64,8 @@ void Map::Update(float dTime)
 {
 	for (int i = 0; i < nObjects; i++)
 	{
-		characters[i]->Update(dTime);
+		if(characters[i]->GetState() != AnimatedObject::DEAD)
+			characters[i]->Update(dTime);
 	}
 }
 

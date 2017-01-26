@@ -3,6 +3,7 @@
 #include <SDL_image.h>
 #include "Model.h"
 #include "AnimatedPlayer.h"
+#include "AnimatedObjectView.h"
 
 class GameView
 {
@@ -24,6 +25,7 @@ class GameView
 
 		Model* activeMap;
 		AnimatedPlayer* player;
+		AnimatedObjectView** objects;
 
 		int winWidth = 0;
 		int winHeight = 0;

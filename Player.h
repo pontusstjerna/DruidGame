@@ -29,7 +29,7 @@ class Player : public AnimatedPlayer, public Character
 		void AnimatedPlayer::SetSpriteSheet(SDL_Texture* texture, int);
 		int AnimatedPlayer::GetWidth() { return Character::GetWidth(); };
 		int AnimatedPlayer::GetHeight() { return Character::GetHeight(); };
-		int AnimatedPlayer::GetHealth() { return Character::GetHealth(); };
+		float AnimatedPlayer::GetHealth() { return Character::GetHealth(); };
 		int AnimatedPlayer::GetMaxHealth() { return Character::GetMaxHealth(); };
 		void AnimatedObject::SetSpriteSheet(SDL_Texture* texture) { Character::SetSpriteSheet(texture); };
 

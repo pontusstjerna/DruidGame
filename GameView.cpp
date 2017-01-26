@@ -129,10 +129,20 @@ void GameView::DrawAnimatedObject(AnimatedObject* object, SDL_Renderer* renderer
 	SDL_Rect dRect = { x, y, (int)(w*scale), (int)(h*scale) };
 	SDL_RenderCopy(renderer, object->GetSpriteSheet(), &sRect, &dRect);
 
-	//Draw health bar bg
-	const int barHeight = (int)(scale * 2);
-	SDL_Rect hpBar = { x, y - barHeight, (int)(w*scale) , barHeight};
-	SDL_RenderFillRect(renderer, &hpBar);
+	//If it has health, otherwise it's either dead or for example grass
+	if (object->GetHealth() > 0)
+	{
+		//Draw health bar bg
+		SDL_SetRenderDrawColor(renderer, 200, 0, 0, 255);
+		const int barHeight = (int)(scale * 2);
+		SDL_Rect hpBar = { x, y - barHeight, (int)(w*scale) , barHeight };
+		SDL_RenderFillRect(renderer, &hpBar);
+
+		//Draw health bar fg
+		SDL_SetRenderDrawColor(renderer, 0, 200, 0, 255);
+		hpBar = { x, y - barHeight, (int)(w*scale*(object->GetHealth() / object->GetMaxHealth())) , barHeight };
+		SDL_RenderFillRect(renderer, &hpBar);
+	}
 }
 
 bool GameView::IsInsideView(Block* block, float scale)

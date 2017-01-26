@@ -29,6 +29,11 @@ void Character::Update(float dTime)
 
 	//printf("State: %i\n", CurrState);
 
+	if (Health <= 0)
+	{
+		CurrState = DEAD;
+	}
+
 }
 
 void Character::Collide(Direction dir, bool collide)
@@ -163,7 +168,7 @@ int Character::GetMaxHealth()
 	return MaxHealth;
 }
 
-int Character::GetHealth()
+float Character::GetHealth()
 {
 	return Health;
 }
