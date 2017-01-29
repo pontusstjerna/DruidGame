@@ -38,6 +38,27 @@ Model* World::GetMap()
 	return activeMap;
 }
 
+Character* World::GetClosestCharacter(Character* character)
+{
+	Character* closest = activeMap->GetCharacters()[0];
+
+	//If character is player
+	if(character == closest)
+		closest = activeMap->GetCharacters()[1];
+		
+	for (int i = 0; i < activeMap->GetNumberofObjects(); i++)
+	{
+		int dist = 0;
+		Character* current = activeMap->GetCharacters()[i];
+		if (current != character && current->Distance(character->GetX(), character->GetY()) < closest->Distance(character->GetX(), character->GetY()))
+		{
+			closest = current;
+		}
+	}
+
+	return closest;
+}
+
 void World::CollideCharacters(float dTime)
 {
 	for (int i = 0; i < activeMap->GetNumberofObjects(); i++)

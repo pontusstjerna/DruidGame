@@ -22,9 +22,10 @@ MainController::MainController()
 MainController::~MainController()
 {
 	printf("Exiting game.\n");
+	delete view;
 	delete Controller;
 	delete world;
-	delete view;
+	
 
 	printf("Done!");
 	SDL_Delay(3000);
@@ -43,7 +44,7 @@ void MainController::Start()
 	}
 
 	world = new World();
-	Controller = new PlayerController(world->GetPlayer());
+	Controller = new PlayerController(world);
 	view = new View(1200, 700, "Druid Game");
 
 	if (view->InitView() == -1)

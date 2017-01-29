@@ -26,8 +26,6 @@ void Enemy::Update(float dTime)
 
 		DecideDir();
 		Walk(direction);
-
-		Health -= 8 * dTime;
 	}
 }
 

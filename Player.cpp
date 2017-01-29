@@ -130,6 +130,7 @@ void Player::SetStats(Forms form)
 		Speed = 70;
 		Width = 20;
 		Height = 40;
+		AttackDmg = 3;
 		break;
 	case Player::CAT:
 		MaxHealth = 30;
@@ -138,18 +139,21 @@ void Player::SetStats(Forms form)
 		Speed = 150;
 		Width = 50;
 		Height = 25;
+		AttackDmg = 20;
 		break;
 	case Player::BEAR:
 		MaxHealth = 300;
 		MaxStamina = 100;
 		JumpVel = 400;
 		Speed = 90;
+		AttackDmg = 10;
 		break;
 	case Player::BIRD:
 		MaxHealth = 10;
 		MaxStamina = 30;
 		JumpVel = 0;
 		Speed = 400;
+		AttackDmg = 1;
 		break;
 	case Player::FISH:
 		break;

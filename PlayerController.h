@@ -1,17 +1,19 @@
 #pragma once
 #include "Player.h"
+#include "World.h"
 #include <SDL.h>
 class PlayerController
 {
 	public:
-		PlayerController(Player* player);
+		PlayerController(World* world);
 		void UpdateInputs(SDL_Event e);
 		void Update();
 
 	private:
-		enum KeyPos { RIGHT, LEFT, UP};
-		Player* ActivePlayer;
-		bool Presses[3] = {false, false, false};
+		enum KeyPos { RIGHT, LEFT, UP, SPACE};
+		Player* player;
+		World* world;
+		bool Presses[4] = {false, false, false, false};
 
 		void AddKeyPress(SDL_Keycode code);
 		void RemoveKeyPress(SDL_Keycode code);

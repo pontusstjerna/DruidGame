@@ -2,7 +2,21 @@
 
 GameView::GameView(int winWidth, int winHeight, Model* map, AnimatedPlayer* player) : winWidth(winWidth), winHeight(winHeight), activeMap(map), player(player)
 {
-	
+	objects = new AnimatedObjectView*[map->GetNumberofObjects()];
+	for (int i = 0; i < activeMap->GetNumberofObjects(); i++)
+	{
+		objects[i] = new AnimatedObjectView(activeMap->GetObjects()[i], NUMBEROF_FRAMES);
+	}
+}
+
+GameView::~GameView()
+{
+	for (int i = 0; i < activeMap->GetNumberofObjects(); i++)
+	{
+		delete objects[i];
+	}
+
+	delete objects;
 }
 
 void GameView::DrawBackground(SDL_Renderer* renderer, SDL_Texture* background, float scale)
@@ -35,8 +49,8 @@ void GameView::DrawBlocks(SDL_Renderer* renderer, float scale)
 
 void GameView::DrawBlock(Block* block, SDL_Renderer* renderer, float scale)
 {
-	int x = (int)((block->GetX() - activeMap->GetObjects()[0]->GetX())*scale) + winWidth / 2;
-	int y = (int)((block->GetY() - activeMap->GetObjects()[0]->GetY())*scale) + winHeight / 2;
+	int x = (int)((block->GetX() - objects[0]->GetObject()->GetX())*scale) + winWidth / 2;
+	int y = (int)((block->GetY() - objects[0]->GetObject()->GetY())*scale) + winHeight / 2;
 	int h = block->GetHeight();
 	int mh = block->MIN_HEIGHT;
 
@@ -101,7 +115,7 @@ void GameView::DrawPlayer(SDL_Renderer* renderer, float scale)
 	int h = player->GetHeight();
 
 	//The State*height*2 is for frame index, frame height and 2 for number of directions
-	SDL_Rect sRect = { frame*w, player->GetState()*h * 2 + player->GetDir()*h , w, h };
+	SDL_Rect sRect = { objects[0]->GetFrame()*w, player->GetState()*h * 2 + player->GetDir()*h , w, h };
 	SDL_Rect dRect = { winWidth / 2, winHeight / 2, (int)(w*scale), (int)(h*scale) };
 	SDL_RenderCopy(renderer, player->GetSpriteSheets()[player->GetActiveSpriteSheet()], &sRect, &dRect);
 
@@ -111,26 +125,26 @@ void GameView::DrawAnimatedObjects(SDL_Renderer* renderer, float scale)
 {
 	for (int i = 1; i < activeMap->GetNumberofObjects(); i++)
 	{
-		AnimatedObject* obj = activeMap->GetObjects()[i];
-		if (obj->active)
-			DrawAnimatedObject(activeMap->GetObjects()[i], renderer, scale);
+		AnimatedObjectView* obj = objects[i];
+		if (obj->insideView)
+			DrawAnimatedObject(objects[i], renderer, scale);
 	}
 }
 
-void GameView::DrawAnimatedObject(AnimatedObject* object, SDL_Renderer* renderer, float scale)
+void GameView::DrawAnimatedObject(AnimatedObjectView* object, SDL_Renderer* renderer, float scale)
 {
-	int x = (int)((object->GetX() - activeMap->GetObjects()[0]->GetX())*scale) + winWidth / 2;
-	int y = (int)((object->GetY() - activeMap->GetObjects()[0]->GetY())*scale) + winHeight / 2;
-	int w = object->GetWidth();
-	int h = object->GetHeight();
+	int x = (int)((object->GetObject()->GetX() - activeMap->GetObjects()[0]->GetX())*scale) + winWidth / 2;
+	int y = (int)((object->GetObject()->GetY() - activeMap->GetObjects()[0]->GetY())*scale) + winHeight / 2;
+	int w = object->GetObject()->GetWidth();
+	int h = object->GetObject()->GetHeight();
 
 	//The State*height*2 is for frame index, frame height and 2 for number of directions
-	SDL_Rect sRect = { frame*w, object->GetState()*h * 2 + object->GetDir()*h , w, h };
+	SDL_Rect sRect = { object->GetFrame()*w, object->GetObject()->GetState()*h * 2 + object->GetObject()->GetDir()*h , w, h };
 	SDL_Rect dRect = { x, y, (int)(w*scale), (int)(h*scale) };
-	SDL_RenderCopy(renderer, object->GetSpriteSheet(), &sRect, &dRect);
+	SDL_RenderCopy(renderer, object->GetObject()->GetSpriteSheet(), &sRect, &dRect);
 
 	//If it has health, otherwise it's either dead or for example grass
-	if (object->GetHealth() > 0)
+	if (object->GetObject()->GetHealth() > 0)
 	{
 		//Draw health bar bg
 		SDL_SetRenderDrawColor(renderer, 200, 0, 0, 255);
@@ -140,7 +154,7 @@ void GameView::DrawAnimatedObject(AnimatedObject* object, SDL_Renderer* renderer
 
 		//Draw health bar fg
 		SDL_SetRenderDrawColor(renderer, 0, 200, 0, 255);
-		hpBar = { x, y - barHeight, (int)(w*scale*(object->GetHealth() / object->GetMaxHealth())) , barHeight };
+		hpBar = { x, y - barHeight, (int)(w*scale*(object->GetObject()->GetHealth() / object->GetObject()->GetMaxHealth())) , barHeight };
 		SDL_RenderFillRect(renderer, &hpBar);
 	}
 }
@@ -158,12 +172,11 @@ void GameView::UpdateActiveObjects(float scale)
 {
 	for (int i = 1; i < activeMap->GetNumberofObjects(); i++)
 	{
-		AnimatedObject* obj = activeMap->GetObjects()[i];
-		SDL_Rect objRect = { obj->GetX(), obj->GetY(), obj->GetWidth(), obj->GetHeight() };
+		SDL_Rect objRect = { objects[i]->GetObject()->GetX(), objects[i]->GetObject()->GetY(), objects[i]->GetObject()->GetWidth(), objects[i]->GetObject()->GetHeight() };
 		if (IsInsideView(objRect, scale))
-			obj->active = true;
+			objects[i]->insideView = true;
 		else
-			obj->active = false;
+			objects[i]->insideView = false;
 	}
 }
 
@@ -176,14 +189,17 @@ bool GameView::IsInsideView(SDL_Rect rect, float scale)
 	return x + w > 0 && x < winWidth && y + h > 0 && y < winHeight;
 }
 
-float FrameCounter = 0;
+float frameCounter = 0;
 void GameView::IncrementFrames(float dTime)
 {
-	FrameCounter += dTime;
+	frameCounter += dTime;
 
-	if (FrameCounter > STD_UPDATE_INTERVAL)
+	if (frameCounter > STD_UPDATE_INTERVAL)
 	{
-		frame = (frame + 1) % NUMBEROF_FRAMES;
-		FrameCounter = 0;
+		for (int i = 0; i < activeMap->GetNumberofObjects(); i++)
+		{
+			objects[i]->IncrementFrames();
+		}
+		frameCounter = 0;
 	}
 }

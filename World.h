@@ -12,6 +12,7 @@ class World
 		~World();
 
 		void Update(float dTime);
+		Character* GetClosestCharacter(Character* character);
 
 		//void SaveGame(char* saveName);
 

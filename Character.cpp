@@ -143,19 +143,15 @@ void Character::StopJump()
 	CurrState = FALLING;
 }
 
-void Character::Attack()
+void Character::Attack(Character* target)
 {
-	//ClosestCharacter()->Damage(AttackDmg);
+	if(target->Distance(X,Y) < AttackRange)
+		target->Damage(AttackDmg);
 }
 
 void Character::Damage(float dmg)
 {
 	Health -= dmg;
-	if (Health <= 0)
-	{
-		Die();
-	}
-	//CurrState = DYING;
 }
 
 void Character::SetGravity(bool gravity)
@@ -197,7 +193,7 @@ int Character::GetFallingVel()
 	return Gravity;
 }
 
-void Character::Die()
+float Character::Distance(float x, float y)
 {
-	//Oops
+	return sqrt(pow(x - X, 2) + pow(y - Y, 2));
 }

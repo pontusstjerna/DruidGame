@@ -21,6 +21,7 @@ class Character : public AnimatedObject
 		int AnimatedObject::GetHeight();
 		float AnimatedObject::GetHealth();
 		int AnimatedObject::GetMaxHealth();
+		float Distance(float x, float y);
 
 		void Collide(Direction dir, bool collide);
 		void MoveLeft();
@@ -28,7 +29,7 @@ class Character : public AnimatedObject
 		void Jump();
 		void Stop();
 		void StopJump();
-		void Attack();
+		void Attack(Character* target);
 		void Damage(float dmg);
 		void SetGravity(bool gravity);
 		int GetFallingVel();
@@ -43,7 +44,7 @@ class Character : public AnimatedObject
 		int JumpVel = 300;
 		float ConsumedJumpPwr = 0;
 		float AttackDmg = 3;
-		float AttackRange = 10;
+		float AttackRange = 50;
 
 		bool GravityEnabled = true;
 
