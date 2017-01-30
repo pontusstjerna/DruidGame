@@ -45,12 +45,17 @@ Character* World::GetClosestCharacter(Character* character)
 	//If character is player
 	if(character == closest)
 		closest = activeMap->GetCharacters()[1];
+
+	//Adjust x to be approx at mouth
+	float x = character->GetX();
+	if (character->GetDir() == Character::RIGHT)
+		x += character->GetWidth();
 		
 	for (int i = 0; i < activeMap->GetNumberofObjects(); i++)
 	{
 		int dist = 0;
 		Character* current = activeMap->GetCharacters()[i];
-		if (current != character && current->Distance(character->GetX(), character->GetY()) < closest->Distance(character->GetX(), character->GetY()))
+		if (current != character && current->Distance(x, character->GetY()) < closest->Distance(x, character->GetY()))
 		{
 			closest = current;
 		}

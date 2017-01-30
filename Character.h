@@ -44,7 +44,9 @@ class Character : public AnimatedObject
 		int JumpVel = 300;
 		float ConsumedJumpPwr = 0;
 		float AttackDmg = 3;
-		float AttackRange = 50;
+		float AttackRange = 30;
+		float attackCooldown = 0.5;
+		float attackTimer = 0;
 
 		bool GravityEnabled = true;
 
@@ -69,4 +71,5 @@ class Character : public AnimatedObject
 		int Gravity = 0;
 
 		void ApplyGravity();
+		void SetState(States state);
 };

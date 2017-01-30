@@ -26,14 +26,14 @@ Map::Map(char* json, char* name, Player* player) : name(name)
 			background = "data/maps/map1_bg2.png";
 
 
-			nObjects = 200;
+			nObjects = 20;
 			characters = new Character*[nObjects];
 			characters[0] = player;
 			characters[1] = new Enemy(125, 25, "data/spritesheets/enemy_human1.png", 1);
 
 			for (int i = 2; i < nObjects; i++)
 			{
-				characters[i] = new Enemy(150, 25, "data/spritesheets/enemy_human1.png", i);
+				characters[i] = new Enemy(150 + i * 20, 25, "data/spritesheets/enemy_human1.png", i);
 			}
 
 		}

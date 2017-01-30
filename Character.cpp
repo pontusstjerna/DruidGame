@@ -28,7 +28,14 @@ void Character::Update(float dTime)
 		ApplyGravity();
 
 	//printf("State: %i\n", CurrState);
-
+	if (attackTimer > 0)
+		attackTimer -= dTime;
+	else if (attackTimer < 0)
+	{
+		attackTimer = 0;
+		CurrState = STANDING;
+	}
+		
 	if (Health <= 0)
 	{
 		CurrState = DEAD;
@@ -82,8 +89,8 @@ void Character::MoveLeft()
 	{
 		X -= DeltaTime*Speed;
 
-		if(Collisions[BOTTOM])
-			CurrState = RUNNING;
+		if (Collisions[BOTTOM])
+			SetState(RUNNING);
 
 		Dir = LEFT;
 	}
@@ -94,8 +101,8 @@ void Character::MoveRight()
 	if (!Collisions[RIGHT])
 	{
 		X += DeltaTime*Speed;
-		if(Collisions[BOTTOM])
-			CurrState = RUNNING;
+		if (Collisions[BOTTOM])
+			SetState(RUNNING);
 
 		Dir = RIGHT;
 	}
@@ -126,15 +133,16 @@ void Character::Jump()
 	else if(Collisions[BOTTOM])
 	{
 		CurrState = TempState;
+		TempState = STANDING;
 	}
 }
 
 void Character::Stop()
 {
 	if (Collisions[BOTTOM])
-		CurrState = STANDING;
+		SetState(STANDING);
 	else
-		CurrState = FALLING;
+		SetState(FALLING);
 }
 
 void Character::StopJump()
@@ -145,6 +153,13 @@ void Character::StopJump()
 
 void Character::Attack(Character* target)
 {
+	if (attackTimer == 0)
+	{
+		CurrState = ATTACKING;
+		attackTimer = attackCooldown;
+	}
+		
+
 	if(target->Distance(X,Y) < AttackRange)
 		target->Damage(AttackDmg);
 }
@@ -196,4 +211,20 @@ int Character::GetFallingVel()
 float Character::Distance(float x, float y)
 {
 	return sqrt(pow(x - X, 2) + pow(y - Y, 2));
+}
+
+void Character::SetState(States state)
+{
+	if (CurrState != ATTACKING && TempState != STANDING)
+	{
+		CurrState = TempState;
+		TempState = STANDING;
+	}
+		
+	
+
+	if (CurrState != ATTACKING)
+		CurrState = state;
+	else if(state != TempState)
+		TempState = state;
 }
