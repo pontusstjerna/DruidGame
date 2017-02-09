@@ -44,6 +44,7 @@ class Player : public AnimatedPlayer, public Character
 
 		int MaxStamina = 100;
 		float Stamina = MaxStamina;
+		bool tryShift = false;
 
 		Forms Form = HUMAN;
 

@@ -36,16 +36,10 @@ void PlayerController::Update()
 		player->Jump();
 	}
 
-	if (Presses[SPACE])
-	{
-		player->Attack(world->GetClosestCharacter(player));
-		Presses[SPACE] = false;
-	}
-
 	bool empty = true;
 	for (int i = 0; i < sizeof(Presses); i++)
 	{
-		if (Presses[i])
+		if (i != UP && Presses[i])
 			empty = false;
 	}
 
@@ -69,9 +63,6 @@ void PlayerController::AddKeyPress(SDL_Keycode code)
 			if (!Presses[UP])
 				Presses[UP] = true;
 			break;
-		case SDLK_SPACE:
-			if (!Presses[SPACE])
-				Presses[SPACE] = true;
 	}
 }
 
@@ -88,6 +79,9 @@ void PlayerController::RemoveKeyPress(SDL_Keycode code)
 		case SDLK_UP:
 				Presses[UP] = false;
 				player->StopJump();
+			break;
+		case SDLK_SPACE:
+			player->Attack(world->GetClosestCharacter(player));
 			break;
 		case SDLK_1:
 			player->Shapeshift(Player::HUMAN);

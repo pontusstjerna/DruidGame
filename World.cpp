@@ -104,9 +104,6 @@ void World::CollideCharacter(Character* object, float dTime)
 		if(!right)
 			right = (pRight >= bLeft && pLeft <= bLeft && betweenVertical);
 
-		if (right)
-			int x = 5;
-
 		if(!top)
 			top = (pTop <= bBottom && pBottom >= bBottom && betweenHorizontal);
 

@@ -31,10 +31,24 @@ Player::~Player()
 
 void Player::Shapeshift(Forms form)
 {
-	if (Level >= RequiredLevels[form])
+	if (tryShift && !(Collisions[LEFT] || Collisions[RIGHT]))
 	{
 		Form = form;
 		SetStats(form);
+		tryShift = false;
+	}
+	else if (Level >= RequiredLevels[form])
+	{
+		if (!tryShift)
+		{
+			SetStats(form);
+			tryShift = true;
+		}
+		else
+		{
+			//Reverse the stats, you can't shapeshift too close to a wall!
+			SetStats(Form);
+		}
 	}
 }
 

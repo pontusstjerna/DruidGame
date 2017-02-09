@@ -26,7 +26,7 @@ Map::Map(char* json, char* name, Player* player) : name(name)
 			background = "data/maps/map1_bg2.png";
 
 
-			nObjects = 20;
+			nObjects = 5;
 			characters = new Character*[nObjects];
 			characters[0] = player;
 			characters[1] = new Enemy(125, 25, "data/spritesheets/enemy_human1.png", 1);

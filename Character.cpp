@@ -33,7 +33,7 @@ void Character::Update(float dTime)
 	else if (attackTimer < 0)
 	{
 		attackTimer = 0;
-		CurrState = STANDING;
+		CurrState = TempState;
 	}
 		
 	if (Health <= 0)
@@ -139,7 +139,7 @@ void Character::Jump()
 
 void Character::Stop()
 {
-	if (Collisions[BOTTOM])
+	if (Collisions[BOTTOM] || Collisions[LEFT] || Collisions[RIGHT])
 		SetState(STANDING);
 	else
 		SetState(FALLING);
@@ -148,7 +148,9 @@ void Character::Stop()
 void Character::StopJump()
 {
 	JumpLock = false;
-	CurrState = FALLING;
+
+	if(!Collisions[BOTTOM])
+		CurrState = FALLING;
 }
 
 void Character::Attack(Character* target)
@@ -158,9 +160,12 @@ void Character::Attack(Character* target)
 		CurrState = ATTACKING;
 		attackTimer = attackCooldown;
 	}
-		
+	
+	int x = X;
+	if (Dir == RIGHT)
+		x += Width;
 
-	if(target->Distance(X,Y) < AttackRange)
+	if(target->Distance(x,Y) < AttackRange)
 		target->Damage(AttackDmg);
 }
 
@@ -215,16 +220,17 @@ float Character::Distance(float x, float y)
 
 void Character::SetState(States state)
 {
+	if (state == STANDING && CurrState == ATTACKING)
+		return;
+
 	if (CurrState != ATTACKING && TempState != STANDING)
 	{
 		CurrState = TempState;
 		TempState = STANDING;
 	}
 		
-	
-
-	if (CurrState != ATTACKING)
-		CurrState = state;
-	else if(state != TempState)
+	 if(state != TempState)
 		TempState = state;
+	 else
+		 CurrState = state;
 }
