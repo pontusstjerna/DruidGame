@@ -1,7 +1,7 @@
 #pragma once
-#include "Player.h"
-#include "World.h"
-#include <SDL.h>
+#include "../model/Player.h"
+#include "../model/World.h"
+#include <SDL2/SDL.h>
 class PlayerController
 {
 	public:

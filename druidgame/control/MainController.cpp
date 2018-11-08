@@ -1,8 +1,8 @@
 #include "MainController.h"
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <stdio.h>
-#include "View.h"
-#include "World.h"
+#include "../view/View.h"
+#include "../model/World.h"
 #include "PlayerController.h"
 
 

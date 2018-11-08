@@ -85,7 +85,7 @@ void GameView::DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos po
 	{
 		//Draw top left
 		SDL_Rect sRect = { 0, pos*mh, mw, mh };
-		SDL_Rect dRect = { x, y, (int)(mw*zoom), (int)mh*zoom };
+		SDL_Rect dRect = { x, y, (int)(mw*zoom), (int)(mh*zoom) };
 		SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
 	}
 
@@ -96,14 +96,14 @@ void GameView::DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos po
 		for (int i = mw; i < w - mw; i += mw)
 		{
 			SDL_Rect sRect = { mw, pos*mh, mw, mh };
-			SDL_Rect dRect = { x + (int)(i*zoom), y, (int)(mw*zoom), (int)mh*zoom };
+			SDL_Rect dRect = { x + (int)(i*zoom), y, (int)(mw*zoom), (int)(mh*zoom) };
 			SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
 		}
 	}
 
 	//Top right, always paint
 	SDL_Rect sRect = { mw * 2, pos*mh, mw, mh };
-	SDL_Rect dRect = { x + (int)((w - mw)*zoom), y, (int)(mw*zoom), (int)mh*zoom };
+	SDL_Rect dRect = { x + (int)((w - mw)*zoom), y, (int)(mw*zoom), (int)(mh*zoom) };
 	SDL_RenderCopy(renderer, block->GetTexture(), &sRect, &dRect);
 }
 

@@ -1,7 +1,7 @@
 #pragma once
-#include <SDL.h>
-#include <SDL_image.h>
-#include "Model.h"
+#include <SDL2/SDL.h>
+#include <SDL2_image/SDL_image.h>
+#include "../model/Model.h"
 #include "AnimatedPlayer.h"
 #include "AnimatedObjectView.h"
 

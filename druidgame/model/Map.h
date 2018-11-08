@@ -15,12 +15,12 @@ class Map : public Model
 
 		void Update(float dTime);
 
-		char* Model::GetBackground();
+		char* GetBackground();
 
-		int Model::GetNumberofBlocks();
-		Block** Model::GetBlocks();
-		int Model::GetNumberofObjects();
-		AnimatedObject** Model::GetObjects();
+		int GetNumberofBlocks();
+		Block** GetBlocks();
+		int GetNumberofObjects();
+		AnimatedObject** GetObjects();
 		Character** GetCharacters();
 
 	private:
