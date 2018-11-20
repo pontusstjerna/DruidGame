@@ -64,7 +64,7 @@ void Map::Update(float dTime)
 {
 	for (int i = 0; i < nObjects; i++)
 	{
-		if(characters[i]->GetState() != AnimatedObject::DEAD)
+		if(characters[i]->getState() != GameObject::DEAD)
 			characters[i]->Update(dTime);
 	}
 }
@@ -89,9 +89,9 @@ int Map::GetNumberofObjects()
 	return nObjects;
 }
 
-AnimatedObject** Map::GetObjects()
+GameObject** Map::GetObjects()
 {
-	return (AnimatedObject**)characters;
+	return (GameObject**)characters;
 }
 
 Character** Map::GetCharacters()

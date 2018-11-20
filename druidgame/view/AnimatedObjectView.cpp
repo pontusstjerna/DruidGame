@@ -1,10 +1,10 @@
 #include "AnimatedObjectView.h"
 
-AnimatedObjectView::AnimatedObjectView(AnimatedObject* obj, int nFrames) : animatedObject(obj), nFrames(nFrames) {}
+AnimatedObjectView::AnimatedObjectView(GameObject* obj, int nFrames) : animatedObject(obj), nFrames(nFrames) {}
 
 void AnimatedObjectView::IncrementFrames()
 {
-	if (animatedObject->GetState() != AnimatedObject::DEAD || frame < nFrames-1)
+	if (animatedObject->getState() != GameObject::DEAD || frame < nFrames-1)
 	{
 		frame = (frame + 1) % nFrames;
 	}
@@ -15,7 +15,7 @@ void AnimatedObjectView::IncrementFrames()
 		return;
 	}
 	
-	if (lastState != animatedObject->GetState() || lastDir != animatedObject->GetDir())
+	if (lastState != animatedObject->getState() || lastDir != animatedObject->getDir())
 	{
 		stateChanged = true;
 		frame = 0;
@@ -23,8 +23,8 @@ void AnimatedObjectView::IncrementFrames()
 	else
 		stateChanged = false;
 
-	lastDir = animatedObject->GetDir();
-	lastState = animatedObject->GetState();
+	lastDir = animatedObject->getDir();
+	lastState = animatedObject->getState();
 }
 
 int AnimatedObjectView::GetFrame()
@@ -32,7 +32,7 @@ int AnimatedObjectView::GetFrame()
 	return frame;
 }
 
-AnimatedObject* AnimatedObjectView::GetObject()
+GameObject* AnimatedObjectView::GetObject()
 {
 	return animatedObject;
 }

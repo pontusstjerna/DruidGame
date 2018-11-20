@@ -1,6 +1,6 @@
 #pragma once
 #include "Block.h"
-#include "AnimatedObject.h"
+#include "GameObject.h"
 #include "AnimatedPlayer.h"
 #include "Character.h"
 #include "Player.h"
@@ -20,7 +20,7 @@ class Map : public Model
 		int GetNumberofBlocks();
 		Block** GetBlocks();
 		int GetNumberofObjects();
-		AnimatedObject** GetObjects();
+		GameObject** GetObjects();
 		Character** GetCharacters();
 
 	private:

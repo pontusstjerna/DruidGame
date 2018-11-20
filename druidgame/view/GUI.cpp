@@ -1,8 +1,8 @@
 #include "GUI.h"
 
-GUI::GUI(AnimatedPlayer* player, int nObjects, AnimatedObject** objects) : Player(player), NumObjects(nObjects)
+GUI::GUI(AnimatedPlayer* player, int nObjects, GameObject** objects) : Player(player), NumObjects(nObjects)
 {
-	Objects = new AnimatedObject*[nObjects];
+	Objects = new GameObject*[nObjects];
 	for (int i = 0; i < nObjects; i++)
 	{
 		Objects[i] = objects[i];
@@ -47,7 +47,7 @@ void GUI::DrawBackground(SDL_Renderer* renderer)
 
 void GUI::DrawHealth(SDL_Renderer* renderer)
 {
-	float healthPercent = (float)Player->GetHealth() / Player->GetMaxHealth();
+	float healthPercent = (float)Player->getHealth() / Player->getMaxHealth();
 	SDL_Rect sRect = { 0, 0, (int)(PLAYER_BAR_WIDTH*healthPercent), PLAYER_BAR_HEIGHT };
 	SDL_Rect dRect = { (int)(25*GetScaleX()), (int)(5*GetScaleY()), (int)(PLAYER_BAR_WIDTH*healthPercent*GetScaleX()), (int)(PLAYER_BAR_HEIGHT*GetScaleY()) };
 	SDL_RenderCopy(renderer, Textures[HEALTH_BAR], &sRect, &dRect);

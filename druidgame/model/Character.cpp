@@ -36,7 +36,7 @@ void Character::Update(float dTime)
 		CurrState = TempState;
 	}
 		
-	if (Health <= 0)
+	if (health <= 0)
 	{
 		CurrState = DEAD;
 	}
@@ -48,22 +48,22 @@ void Character::Collide(Direction dir, bool collide)
 	Collisions[dir] = collide;
 }
 
-int Character::GetX()
+int Character::getX()
 {
 	return (int)X;
 }
 
-int Character::GetY()
+int Character::getY()
 {
 	return (int)Y;
 }
 
-int Character::GetState()
+int Character::getState()
 {
 	return CurrState;
 }
 
-int Character::GetDir()
+int Character::getDir()
 {
 	return Dir;
 }
@@ -171,7 +171,7 @@ void Character::Attack(Character* target)
 
 void Character::Damage(float dmg)
 {
-	Health -= dmg;
+	health -= dmg;
 }
 
 void Character::SetGravity(bool gravity)
@@ -179,22 +179,22 @@ void Character::SetGravity(bool gravity)
 	GravityEnabled = gravity;
 }
 
-int Character::GetMaxHealth()
+int Character::getMaxHealth()
 {
 	return MaxHealth;
 }
 
-float Character::GetHealth()
+float Character::getHealth()
 {
-	return Health;
+	return health;
 }
 
-int Character::GetWidth()
+int Character::getWidth()
 {
 	return Width;
 }
 
-int Character::GetHeight()
+int Character::getHeight()
 {
 	return Height;
 }

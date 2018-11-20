@@ -1,17 +1,17 @@
 #pragma once
-#include "AnimatedObject.h"
+#include "GameObject.h"
 
 class AnimatedObjectView
 {
 	public:
 		bool insideView = true;
 
-		AnimatedObjectView(AnimatedObject* obj, int nFrames);
+		AnimatedObjectView(GameObject* obj, int nFrames);
 		void IncrementFrames();
 		int GetFrame();
 		int GetNumFrames();
 		bool GetStateChanged();
-		AnimatedObject* GetObject();
+		GameObject* GetObject();
 
 	private:
 		int frame = 0;
@@ -19,5 +19,5 @@ class AnimatedObjectView
 		bool stateChanged = false;
 		int lastState = -1;
 		int lastDir = -1;
-		AnimatedObject* animatedObject;
+		GameObject* animatedObject;
 };

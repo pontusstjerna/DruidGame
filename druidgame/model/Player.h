@@ -20,17 +20,17 @@ class Player : public AnimatedPlayer, public Character
 
 		//Refer these functions to character base class
 		void Update(float dTime);
-		int GetX() { return Character::GetX(); };
-		int GetY() { return Character::GetY(); };
-		int GetState() { return Character::GetState(); };
-		int GetDir() { return Character::GetDir(); };
+		int getX() { return Character::getX(); };
+		int getY() { return Character::getY(); };
+		int getState() { return Character::getState(); };
+		int getDir() { return Character::getDir(); };
 		char* GetSpriteSheetPath() { return Character::GetSpriteSheetPath(); };
 		SDL_Texture* GetSpriteSheet() { return Character::GetSpriteSheet(); };
 		void SetSpriteSheet(SDL_Texture* texture, int);
-		int GetWidth() { return Character::GetWidth(); };
-		int GetHeight() { return Character::GetHeight(); };
-		float GetHealth() { return Character::GetHealth(); };
-		int GetMaxHealth() { return Character::GetMaxHealth(); };
+		int getWidth() { return Character::getWidth(); };
+		int getHeight() { return Character::getHeight(); };
+		float getHealth() { return Character::getHealth(); };
+		int getMaxHealth() { return Character::getMaxHealth(); };
 		void SetSpriteSheet(SDL_Texture* texture) { Character::SetSpriteSheet(texture); };
 
 		int GetActiveSpriteSheet();

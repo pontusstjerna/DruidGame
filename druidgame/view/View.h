@@ -42,6 +42,6 @@ class View
 
 		char* WINDOW_TITLE;
 
-		float Scale;
+		float scale;
 
 };

@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 #include "AnimatedPlayer.h"
-#include "AnimatedObject.h"
+#include "GameObject.h"
 
 class GUI
 {
@@ -15,7 +15,7 @@ class GUI
 		};
 		static const enum Textures {BACKGROUND, HEALTH_BAR, STA_BAR};
 
-		GUI(AnimatedPlayer* player, int nObjects, AnimatedObject**);
+		GUI(AnimatedPlayer* player, int nObjects, GameObject**);
 		~GUI();
 
 		int LoadGUI(SDL_Texture** textures, int win_width, int win_height);
@@ -31,7 +31,7 @@ class GUI
 		int WinWidth, WinHeight;
 
 		AnimatedPlayer* Player;
-		AnimatedObject** Objects;
+		GameObject** Objects;
 
 		SDL_Texture** Textures = NULL;
 
@@ -44,7 +44,7 @@ class GUI
 		void DrawXP(SDL_Renderer* renderer);
 		void DrawLevel(SDL_Renderer* renderer);
 		void DrawHealthBars(SDL_Renderer* renderer);
-		void DrawHealthBar(SDL_Renderer* renderer, AnimatedObject* obj);
+		void DrawHealthBar(SDL_Renderer* renderer, GameObject* obj);
 		float GetScaleX();
 		float GetScaleY();
 		

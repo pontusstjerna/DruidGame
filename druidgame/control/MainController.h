@@ -4,8 +4,8 @@ class MainController {
 	public:
 		MainController();
 		~MainController();
-		void Start();
+		void start();
 
 	private:
-
+    
 };

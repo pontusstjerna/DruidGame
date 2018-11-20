@@ -2,9 +2,9 @@
 
 int main()
 {
-	MainController* mc = new MainController();
-	mc->Start();
+	MainController* mainController = new MainController();
+	mainController->start();
 
-	delete mc;
+	delete mainController;
 	return 0;
 }

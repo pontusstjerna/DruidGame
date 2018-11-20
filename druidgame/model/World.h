@@ -1,5 +1,5 @@
 #pragma once
-#include "AnimatedObject.h"
+#include "GameObject.h"
 #include "Map.h"
 #include "Player.h"
 #include "Character.h"

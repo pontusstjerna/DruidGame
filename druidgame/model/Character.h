@@ -1,7 +1,7 @@
 #pragma once
-#include "AnimatedObject.h"
+#include "GameObject.h"
 
-class Character : public AnimatedObject
+class Character : public GameObject
 {
 	public:
 		enum Direction {RIGHT, LEFT, TOP, BOTTOM};
@@ -10,17 +10,17 @@ class Character : public AnimatedObject
 		Character(int x, int y);
 		~Character();
 		void Update (float dTime);
-		int GetX();
-		int GetY();
-		int GetState();
-		int GetDir();
+		int getX();
+		int getY();
+		int getState();
+		int getDir();
 		char* GetSpriteSheetPath();
 		SDL_Texture* GetSpriteSheet();
 		void SetSpriteSheet(SDL_Texture* texture);
-		int GetWidth();
-		int GetHeight();
-		float GetHealth();
-		int GetMaxHealth();
+		int getWidth();
+		int getHeight();
+		float getHealth();
+		int getMaxHealth();
 		float Distance(float x, float y);
 
 		void Collide(Direction dir, bool collide);
@@ -39,7 +39,7 @@ class Character : public AnimatedObject
 		float DeltaTime = 0;
 
 		int MaxHealth = 100;
-		float Health = MaxHealth;
+		float health = MaxHealth;
 		int Speed = 100;
 		int JumpVel = 300;
 		float ConsumedJumpPwr = 0;

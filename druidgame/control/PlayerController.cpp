@@ -8,11 +8,11 @@ PlayerController::PlayerController(World* world) : world(world)
 	player = world->GetPlayer();
 }
 
-void PlayerController::UpdateInputs(SDL_Event e)
+void PlayerController::checkInputs(SDL_Event e)
 {
 	if (e.type == SDL_KEYDOWN)
 	{
-		AddKeyPress(e.key.keysym.sym);
+		addKeyPress(e.key.keysym.sym);
 	}
 	else if (e.type == SDL_KEYUP)
 	{
@@ -20,7 +20,7 @@ void PlayerController::UpdateInputs(SDL_Event e)
 	}
 }
 
-void PlayerController::Update()
+void PlayerController::update()
 {
 	if (Presses[RIGHT])
 	{
@@ -47,10 +47,8 @@ void PlayerController::Update()
 		player->Stop();
 }
 
-void PlayerController::AddKeyPress(SDL_Keycode code)
-{
-	switch (code)
-	{
+void PlayerController::addKeyPress(SDL_Keycode code) {
+	switch (code) {
 		case SDLK_RIGHT:
 			if (!Presses[RIGHT])
 				Presses[RIGHT] = true;

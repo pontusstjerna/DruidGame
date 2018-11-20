@@ -6,8 +6,8 @@ class PlayerController
 {
 	public:
 		PlayerController(World* world);
-		void UpdateInputs(SDL_Event e);
-		void Update();
+		void checkInputs(SDL_Event e);
+		void update();
 
 	private:
 		enum KeyPos { RIGHT, LEFT, UP, SPACE};
@@ -15,6 +15,6 @@ class PlayerController
 		World* world;
 		bool Presses[4] = {false, false, false, false};
 
-		void AddKeyPress(SDL_Keycode code);
+		void addKeyPress(SDL_Keycode code);
 		void RemoveKeyPress(SDL_Keycode code);
 };

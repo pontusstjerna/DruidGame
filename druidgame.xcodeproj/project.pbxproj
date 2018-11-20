@@ -49,7 +49,7 @@
 		164545F0219347850005B0DD /* SolidObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SolidObject.h; sourceTree = "<group>"; };
 		164545F1219347850005B0DD /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		164545F2219347850005B0DD /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
-		164545F3219347850005B0DD /* AnimatedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedObject.h; sourceTree = "<group>"; };
+		164545F3219347850005B0DD /* GameObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObject.h; sourceTree = "<group>"; };
 		164545F4219347850005B0DD /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		164545F5219347850005B0DD /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enemy.h; sourceTree = "<group>"; };
 		164545F6219347850005B0DD /* AnimatedObjectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedObjectView.h; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 				16454603219347870005B0DD /* GameView.h */,
 				16454608219347870005B0DD /* GUI.cpp */,
 				16454600219347860005B0DD /* GUI.h */,
-				164545F3219347850005B0DD /* AnimatedObject.h */,
+				164545F3219347850005B0DD /* GameObject.h */,
 				164545F9219347860005B0DD /* AnimatedObjectView.cpp */,
 				164545F6219347850005B0DD /* AnimatedObjectView.h */,
 				164545FC219347860005B0DD /* AnimatedPlayer.h */,

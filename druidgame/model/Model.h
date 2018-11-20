@@ -1,6 +1,6 @@
 #pragma once
 #include "Block.h"
-#include "AnimatedObject.h"
+#include "GameObject.h"
 
 class Model 
 {
@@ -11,6 +11,6 @@ class Model
 		virtual int GetNumberofBlocks() = 0;
 		virtual Block** GetBlocks() = 0;
 		virtual int GetNumberofObjects() = 0;
-		virtual AnimatedObject** GetObjects() = 0;
+		virtual GameObject** GetObjects() = 0;
 };
 

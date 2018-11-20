@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void GameLoop(void);
+void runGame(void);
 
 View* view;
 World* world;
@@ -32,7 +32,7 @@ MainController::~MainController()
 	SDL_Quit();
 }
 
-void MainController::Start()
+void MainController::start()
 {
 	printf("Starting game...\n");
 
@@ -78,10 +78,10 @@ void MainController::Start()
 	view->Start();
 
 	printf("Game started!\n----------------------------------\n\n");
-	GameLoop();
+	runGame();
 }
 
-void GameLoop()
+void runGame()
 {
 	SDL_Event event;
 	bool running = true;
@@ -100,10 +100,10 @@ void GameLoop()
 			{
 				running = false;
 			}
-			Controller->UpdateInputs(event);
+			Controller->checkInputs(event);
 		}
 
-		Controller->Update();
+		Controller->update();
 		world->Update(dTime);
 		view->Update(dTime);
 

@@ -7,11 +7,12 @@ SDL_Renderer* Renderer = NULL;
 
 AnimatedPlayer* Player;
 
+
+View::View(unsigned int width, unsigned int height, char* title) :
 //This is called initializer list and is requred for const variables
-View::View(unsigned int width, unsigned int height, char* title) : WINDOW_WIDTH(width), WINDOW_HEIGHT(height), WINDOW_TITLE(title)
-{
+WINDOW_WIDTH(width), WINDOW_HEIGHT(height), WINDOW_TITLE(title) {
 	//Bla bla constructor code
-	Scale = 3;
+	scale = 3;
 }
 
 View::View() : View(800, 600, "Druid Game")
@@ -133,11 +134,11 @@ void View::Update(float dTime)
 	SDL_RenderClear(Renderer);
 	gView->IncrementFrames(dTime);
 
-	gView->UpdateActiveObjects(Scale);
-	gView->DrawBackground(Renderer, Background, Scale);
-	gView->DrawBlocks(Renderer, Scale);
-	gView->DrawPlayer(Renderer, Scale);
-	gView->DrawAnimatedObjects(Renderer, Scale);
+	gView->UpdateActiveObjects(scale);
+	gView->DrawBackground(Renderer, Background, scale);
+	gView->DrawBlocks(Renderer, scale);
+	gView->DrawPlayer(Renderer, scale);
+	gView->DrawAnimatedObjects(Renderer, scale);
 	gui->Draw(Renderer);
 
 	//Update screen

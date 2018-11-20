@@ -47,15 +47,15 @@ Character* World::GetClosestCharacter(Character* character)
 		closest = activeMap->GetCharacters()[1];
 
 	//Adjust x to be approx at mouth
-	float x = character->GetX();
-	if (character->GetDir() == Character::RIGHT)
-		x += character->GetWidth();
+	float x = character->getX();
+	if (character->getDir() == Character::RIGHT)
+		x += character->getWidth();
 		
 	for (int i = 0; i < activeMap->GetNumberofObjects(); i++)
 	{
 		int dist = 0;
 		Character* current = activeMap->GetCharacters()[i];
-		if (current != character && current->Distance(x, character->GetY()) < closest->Distance(x, character->GetY()))
+		if (current != character && current->Distance(x, character->getY()) < closest->Distance(x, character->getY()))
 		{
 			closest = current;
 		}
@@ -74,10 +74,10 @@ void World::CollideCharacters(float dTime)
 
 void World::CollideCharacter(Character* object, float dTime)
 {
-	int pLeft = object->GetX();
-	int pRight = object->GetX() + object->GetWidth();
-	int pTop = object->GetY();
-	int pBottom = object->GetY() + object->GetHeight() + object->GetFallingVel()*dTime;
+	int pLeft = object->getX();
+	int pRight = object->getX() + object->getWidth();
+	int pTop = object->getY();
+	int pBottom = object->getY() + object->getHeight() + object->GetFallingVel()*dTime;
 
 	bool left = false;
 	bool right = false;
