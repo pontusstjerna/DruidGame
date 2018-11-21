@@ -9,10 +9,10 @@ public:
 	~Texture();
 
 	SDL_Texture* getTexture();
-	char* getPath();
+	char* getName();
 
 private:
 
 	SDL_Texture* texture;
-	char* path;
+	char* name;
 };

@@ -1,9 +1,12 @@
-#include "View.h"
 #include <stdio.h>
 
-SDL_Window* Window = NULL;
-SDL_Texture* Background = NULL;
-SDL_Renderer* Renderer = NULL;
+#include "View.h"
+#include "../util/SDLUtils.h"
+#include "TextureHandler.h"
+
+SDL_Window* window = NULL;
+SDL_Texture* background = NULL;
+SDL_Renderer* renderer = NULL;
 
 AnimatedPlayer* Player;
 
@@ -23,18 +26,14 @@ View::View() : View(800, 600, "Druid Game")
 View::~View()
 {
 	printf("Destroying window...\n");
-	SDL_DestroyWindow(Window);
-	SDL_DestroyTexture(Background);
-	SDL_DestroyRenderer(Renderer);
+	SDL_DestroyWindow(window);
+	SDL_DestroyTexture(background);
+	SDL_DestroyRenderer(renderer);
 
 	delete gView;
 	delete gui;
-
-	for (int i = 0; i < textures.size(); i++) {
-		delete textures.at(i);
-	}
-
-
+    delete textureHandler;
+    
 	IMG_Quit();
 	SDL_Quit();
 }
@@ -48,7 +47,7 @@ int View::init(Model* model)
 	if (CreateRenderer() == -1)
 		return -1;
 
-	if (InitSDLImage() == -1)
+    if (SDLUtils::initSDLImage() == -1)
 		return -1;
     
     if (LoadMap(model) == -1)
@@ -71,7 +70,7 @@ int View::InitGUI()
 	SDL_Texture* textures[GUI::nTextures];
 	for (int i = 0; i < GUI::nTextures; i++)
 	{
-		textures[i] = LoadTexture((char*)gui->GUI_TEXTURES[i]);
+		textures[i] = textureHandler->getTexture((char*)gui->GUI_TEXTURES[i])->getTexture();
 	}
 	return gui->LoadGUI(textures, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
@@ -79,8 +78,8 @@ int View::InitGUI()
 int View::LoadMap(Model* map)
 {
 	activeMap = map;
-	Background = LoadTexture(map->GetBackground());
-	if (Background == NULL)
+	background = textureHandler->getTexture(map->GetBackground())->getTexture();
+	if (background == NULL)
 	{
 		return -1;
 	}
@@ -93,10 +92,11 @@ int View::LoadMap(Model* map)
 int View::LoadPlayer(AnimatedPlayer* player)
 {
 	Player = player;
-
+    
+    // TODO: Simply always use textureHandler for this
 	for (int i = 0; i < player->GetNumSpriteSheets(); i++)
 	{
-		Player->SetSpriteSheet(LoadTexture(Player->GetSpriteSheetPaths()[i]), i);
+		Player->SetSpriteSheet(textureHandler->getTexture(Player->GetSpriteSheetPaths()[i])->getTexture(), i);
 	}
 
 	return 0;
@@ -111,7 +111,7 @@ void View::LoadTextures()
 		{
 			if (activeMap->GetBlocks()[j]->GetTexturePath() == currTexture)
 			{
-				activeMap->GetBlocks()[j]->SetTexture(LoadTexture(currTexture));
+				activeMap->GetBlocks()[j]->SetTexture(textureHandler->getTexture(currTexture)->getTexture());
 			}
 		}
 	}
@@ -124,7 +124,7 @@ void View::LoadTextures()
 					
 			if (activeMap->GetObjects()[j]->GetSpriteSheetPath() == currTexture)
 			{
-				activeMap->GetObjects()[j]->SetSpriteSheet(LoadTexture(currTexture));
+				activeMap->GetObjects()[j]->SetSpriteSheet(textureHandler->getTexture(currTexture)->getTexture());
 			}
 		}
 	}
@@ -139,25 +139,25 @@ void View::Start()
 
 void View::Update(float dTime)
 {
-	SDL_RenderClear(Renderer);
+	SDL_RenderClear(renderer);
 	gView->IncrementFrames(dTime);
 
 	gView->UpdateActiveObjects(scale);
-	gView->DrawBackground(Renderer, Background, scale);
-	gView->DrawBlocks(Renderer, scale);
-	gView->DrawPlayer(Renderer, scale);
-	gView->DrawAnimatedObjects(Renderer, scale);
-	gui->Draw(Renderer);
+	gView->DrawBackground(renderer, background, scale);
+	gView->DrawBlocks(renderer, scale);
+	gView->DrawPlayer(renderer, scale);
+	gView->DrawAnimatedObjects(renderer, scale);
+	gui->Draw(renderer);
 
 	//Update screen
-	SDL_RenderPresent(Renderer);
+	SDL_RenderPresent(renderer);
 
 	//SDL_UpdateWindowSurface(Window);
 }
 
 int View::CreateWindow()
 {
-	Window = SDL_CreateWindow(
+	window = SDL_CreateWindow(
 		WINDOW_TITLE,
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
@@ -165,7 +165,7 @@ int View::CreateWindow()
 		WINDOW_HEIGHT,
 		SDL_WINDOW_SHOWN);
 
-	if (Window == NULL)
+	if (window == NULL)
 	{
 		printf("Could not create window. \nCause: %s\n", SDL_GetError());
 		return -1;
@@ -177,7 +177,7 @@ int View::CreateWindow()
 int View::CreateSurface()
 {
 
-	if (Window == NULL)
+	if (window == NULL)
 	{
 		printf("Could not create surface. \nCause: %s\n", SDL_GetError());
 		return -1;
@@ -189,56 +189,14 @@ int View::CreateSurface()
 int View::CreateRenderer()
 {
 	//Using OpenGL
-	Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-	if (Renderer == NULL)
+	if (renderer == NULL)
 		return -1;
 
-	SDL_SetRenderDrawColor(Renderer, 100, 100, 255, 255);
+	SDL_SetRenderDrawColor(renderer, 100, 100, 255, 255);
+    
+    textureHandler = new TextureHandler(renderer);
 
 	return 0;
 }
-
-SDL_Texture* View::LoadTexture(char* path)
-{
-	
-	for (int i = 0; i < textures.size(); i++)
-	{
-		if (strcmp(textures.at(i)->getPath(), path) == 0)
-		{
-			return textures.at(i)->getTexture();
-		}
-	}
-
-	SDL_Texture* texture = NULL;
-
-	SDL_Surface* tmpSurface = IMG_Load(path);
-
-	if (tmpSurface == NULL)
-		printf("Unable to load image: %s. \nCause: %s\n", path, SDL_GetError());
-
-	texture = SDL_CreateTextureFromSurface(Renderer, tmpSurface);
-	if (texture == NULL)
-		printf("Unable to load texture. \nCause: %s\n", SDL_GetError());
-
-	//Reallocate
-	SDL_FreeSurface(tmpSurface);
-
-	//Add texture to texture list
-	textures.push_back(new Texture(texture, path));
-
-	return texture;
-}
-
-int View::InitSDLImage()
-{
-	int imgFlags = IMG_INIT_PNG;
-
-	if ((IMG_Init(imgFlags) & imgFlags) == 0)
-	{
-		printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
-		return -1;
-	}
-
-	return 0;
-}                               

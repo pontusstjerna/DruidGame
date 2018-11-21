@@ -7,6 +7,7 @@
 #include "GameView.h"
 #include "GUI.h"
 #include "Texture.h"
+#include "TextureHandler.h"
 
 class View
 {
@@ -19,9 +20,6 @@ class View
 		~View();
 
 		int init(Model* model);
-		int LoadMap(Model* map);
-		int LoadPlayer(AnimatedPlayer* player);
-		int InitGUI();
 		void Update(float);
 		void Start();
 
@@ -31,13 +29,16 @@ class View
 
 		Model* activeMap;
 
-		std::vector<Texture*> textures;
-
+        TextureHandler* textureHandler;
+    
+        int LoadMap(Model* map);
+        int LoadPlayer(AnimatedPlayer* player);
+        int InitGUI();
+    
 		int CreateWindow();
 		int CreateSurface();
 		int CreateRenderer();
 		SDL_Texture* LoadTexture(char*);
-		int InitSDLImage();
 		void LoadTextures();
 
 		char* WINDOW_TITLE;

@@ -24,6 +24,8 @@
 		1645461C219347880005B0DD /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1645460D219347880005B0DD /* PlayerController.cpp */; };
 		16454620219347D60005B0DD /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1645461E219347D60005B0DD /* SDL2_image.framework */; };
 		16454621219347D60005B0DD /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1645461F219347D60005B0DD /* SDL2.framework */; };
+		1666AD6B21A5BD390044F8D4 /* SDLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1666AD6A21A5BD390044F8D4 /* SDLUtils.cpp */; };
+		1666AD6E21A5C0960044F8D4 /* TextureHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1666AD6C21A5C0960044F8D4 /* TextureHandler.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -76,6 +78,10 @@
 		1645461E219347D60005B0DD /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
 		1645461F219347D60005B0DD /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		1645462221934B140005B0DD /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
+		1666AD6921A5BC290044F8D4 /* SDLUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDLUtils.h; sourceTree = "<group>"; };
+		1666AD6A21A5BD390044F8D4 /* SDLUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SDLUtils.cpp; sourceTree = "<group>"; };
+		1666AD6C21A5C0960044F8D4 /* TextureHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextureHandler.cpp; sourceTree = "<group>"; };
+		1666AD6D21A5C0960044F8D4 /* TextureHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureHandler.h; sourceTree = "<group>"; };
 		16E7AA2221A46DE300764A53 /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
 		16F50D422193471C0026270F /* druidgame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = druidgame; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -130,6 +136,8 @@
 				164545F9219347860005B0DD /* AnimatedObjectView.cpp */,
 				164545F6219347850005B0DD /* AnimatedObjectView.h */,
 				164545FC219347860005B0DD /* AnimatedPlayer.h */,
+				1666AD6C21A5C0960044F8D4 /* TextureHandler.cpp */,
+				1666AD6D21A5C0960044F8D4 /* TextureHandler.h */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -149,6 +157,8 @@
 		160FE8FC21940DD700F292C3 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				1666AD6921A5BC290044F8D4 /* SDLUtils.h */,
+				1666AD6A21A5BD390044F8D4 /* SDLUtils.cpp */,
 				164545FA219347860005B0DD /* List.cpp */,
 				16454607219347870005B0DD /* List.h */,
 			);
@@ -251,8 +261,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				16454610219347880005B0DD /* View.cpp in Sources */,
+				1666AD6B21A5BD390044F8D4 /* SDLUtils.cpp in Sources */,
 				1645460F219347880005B0DD /* Enemy.cpp in Sources */,
 				16454618219347880005B0DD /* GameView.cpp in Sources */,
+				1666AD6E21A5C0960044F8D4 /* TextureHandler.cpp in Sources */,
 				1645461B219347880005B0DD /* DruidGame.cpp in Sources */,
 				16454615219347880005B0DD /* World.cpp in Sources */,
 				16454616219347880005B0DD /* Character.cpp in Sources */,
