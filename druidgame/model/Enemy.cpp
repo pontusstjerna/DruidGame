@@ -15,9 +15,9 @@ Enemy::~Enemy()
 	Character::~Character();
 }
 
-void Enemy::Update(float dTime)
+void Enemy::update(float dTime)
 {
-	Character::Update(dTime);
+	Character::update(dTime);
 
 	
 	if (CurrState != DEAD)

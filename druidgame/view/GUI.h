@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 #include "AnimatedPlayer.h"
-#include "GameObject.h"
+#include "../model/GameObject.h"
 
 class GUI
 {

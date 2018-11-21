@@ -1,15 +1,15 @@
 #pragma once
-#include "GameObject.h"
+#include "../model/GameObject.h"
 
 class Character : public GameObject
 {
 	public:
 		enum Direction {RIGHT, LEFT, TOP, BOTTOM};
 
-		Character(int x, int y, char* spriteSheet);
-		Character(int x, int y);
+		Character(int x, int y, char* name);
 		~Character();
-		void Update (float dTime);
+		void update (float dTime);
+        char* getName();
 		int getX();
 		int getY();
 		int getState();
@@ -59,7 +59,7 @@ class Character : public GameObject
 
 		bool Collisions[4];
 
-		char* SpriteSheetPath;
+		char* name;
 		SDL_Texture* SpriteSheet;
 
 		void Die();

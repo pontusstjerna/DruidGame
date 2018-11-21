@@ -1,11 +1,14 @@
 #pragma once
 #include <SDL2/SDL.h>
-class Block
+#include "Entity.h"
+
+class Block : Entity
 {
 	public:
 		Block(int x, int y, int width, int height, char* texture);
 		~Block();
 
+        char* getName();
 		int GetX();
 		int GetY();
 		int GetWidth();
@@ -18,7 +21,7 @@ class Block
 		const int MIN_HEIGHT = 10;
 
 	private:
-		char* TexturePath;
+		char* name;
 		int X, Y, W, H;
 		SDL_Texture* Texture;
 };

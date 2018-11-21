@@ -47,30 +47,9 @@ void MainController::start()
 	Controller = new PlayerController(world);
 	view = new View(1200, 700, "Druid Game");
 
-	if (view->InitView() == -1)
+	if (view->init(world->getMap()) == -1)
 	{
 		printf("Unable to initialize view. Aborting.\n");
-		SDL_Delay(10000);
-		return;
-	}
-
-	if (view->LoadMap(world->GetMap()) == -1)
-	{
-		printf("Unable to load map. Aborting.\n");
-		SDL_Delay(10000);
-		return;
-	}
-
-	if (view->LoadPlayer(world->GetPlayer()) == -1)
-	{
-		printf("Unable to load player. Aborting.\n");
-		SDL_Delay(10000);
-		return;
-	}
-
-	if (view->InitGUI() == -1)
-	{
-		printf("Unable to load GUI. Aborting.\n");
 		SDL_Delay(10000);
 		return;
 	}

@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "../model/GameObject.h"
 
 class AnimatedObjectView
 {

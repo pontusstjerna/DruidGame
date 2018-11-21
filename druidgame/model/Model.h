@@ -1,6 +1,7 @@
 #pragma once
 #include "Block.h"
 #include "GameObject.h"
+#include "../view/AnimatedPlayer.h"
 
 class Model 
 {
@@ -12,5 +13,6 @@ class Model
 		virtual Block** GetBlocks() = 0;
 		virtual int GetNumberofObjects() = 0;
 		virtual GameObject** GetObjects() = 0;
+        virtual AnimatedPlayer* getPlayer() = 0;
 };
 

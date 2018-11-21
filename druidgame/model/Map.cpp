@@ -1,7 +1,7 @@
 #include "Map.h"
 #include <stdio.h>
 
-Map::Map(char* json, char* name, Player* player) : name(name)
+Map::Map(char* name, Player* player) : name(name), player(player)
 {
 	//Blocks = JsonParser.Parse(json);
 
@@ -65,7 +65,7 @@ void Map::Update(float dTime)
 	for (int i = 0; i < nObjects; i++)
 	{
 		if(characters[i]->getState() != GameObject::DEAD)
-			characters[i]->Update(dTime);
+			characters[i]->update(dTime);
 	}
 }
 
@@ -97,4 +97,8 @@ GameObject** Map::GetObjects()
 Character** Map::GetCharacters()
 {
 	return characters;
+}
+
+AnimatedPlayer* Map::getPlayer() {
+    return player;
 }

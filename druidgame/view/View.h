@@ -18,7 +18,7 @@ class View
 		View(unsigned int, unsigned int, char*);
 		~View();
 
-		int InitView();
+		int init(Model* model);
 		int LoadMap(Model* map);
 		int LoadPlayer(AnimatedPlayer* player);
 		int InitGUI();

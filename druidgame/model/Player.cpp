@@ -1,7 +1,7 @@
 #include "Player.h"
 #include <stdio.h>
 
-Player::Player(int x, int y, char** spriteSheets) : Character(x, y)
+Player::Player(int x, int y, char** spriteSheets) : Character(x, y, spriteSheets[0])
 {
 	NumSpriteSheets = 2;
 
@@ -33,7 +33,7 @@ void Player::Shapeshift(Forms form)
 {
 	if (tryShift && !(Collisions[LEFT] || Collisions[RIGHT]))
 	{
-		Form = form;
+		form = form;
 		SetStats(form);
 		tryShift = false;
 	}
@@ -47,14 +47,18 @@ void Player::Shapeshift(Forms form)
 		else
 		{
 			//Reverse the stats, you can't shapeshift too close to a wall!
-			SetStats(Form);
+			SetStats(form);
 		}
 	}
 }
 
-void Player::Update(float dTime)
+char* Player::getName() {
+    return SpriteSheetPaths[0];
+}
+
+void Player::update(float dTime)
 {
-	Character::Update(dTime);
+	Character::update(dTime);
 
 	if (CurrState == HUMAN)
 	{
@@ -87,7 +91,7 @@ int Player::GetLevel()
 
 int Player::GetActiveSpriteSheet()
 {
-	return Form;
+	return form;
 }
 
 int Player::GetNumSpriteSheets()

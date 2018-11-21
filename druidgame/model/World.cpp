@@ -6,7 +6,7 @@ World::World()
 	char* sheets[2] = { "data/spritesheets/player_human.png", "data/spritesheets/player_cat.png" };
 
 	activePlayer = new Player(100, 0, sheets);
-	activeMap = new Map("none", "map1", activePlayer);
+	activeMap = new Map("map1", activePlayer);
 }
 
 World::World(char* savedGame)
@@ -33,7 +33,7 @@ Player* World::GetPlayer()
 	return activePlayer;
 }
 
-Model* World::GetMap()
+Model* World::getMap()
 {
 	return activeMap;
 }

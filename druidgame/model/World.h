@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "../model/GameObject.h"
 #include "Map.h"
 #include "Player.h"
 #include "Character.h"
@@ -17,7 +17,7 @@ class World
 		//void SaveGame(char* saveName);
 
 		Player* GetPlayer();
-		Model* GetMap(); 
+		Model* getMap(); 
 
 	private:
 		Player* activePlayer;

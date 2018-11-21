@@ -76,6 +76,7 @@
 		1645461E219347D60005B0DD /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
 		1645461F219347D60005B0DD /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		1645462221934B140005B0DD /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
+		16E7AA2221A46DE300764A53 /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
 		16F50D422193471C0026270F /* druidgame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = druidgame; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -95,6 +96,7 @@
 		160FE8F621940C7D00F292C3 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				164545F3219347850005B0DD /* GameObject.h */,
 				164545F1219347850005B0DD /* Model.h */,
 				164545FF219347860005B0DD /* Character.cpp */,
 				164545ED219347850005B0DD /* Character.h */,
@@ -109,6 +111,7 @@
 				164545FE219347860005B0DD /* World.cpp */,
 				164545EB219347850005B0DD /* World.h */,
 				160FE8F721940CAF00F292C3 /* Player.h */,
+				16E7AA2221A46DE300764A53 /* Entity.h */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -124,7 +127,6 @@
 				16454603219347870005B0DD /* GameView.h */,
 				16454608219347870005B0DD /* GUI.cpp */,
 				16454600219347860005B0DD /* GUI.h */,
-				164545F3219347850005B0DD /* GameObject.h */,
 				164545F9219347860005B0DD /* AnimatedObjectView.cpp */,
 				164545F6219347850005B0DD /* AnimatedObjectView.h */,
 				164545FC219347860005B0DD /* AnimatedPlayer.h */,

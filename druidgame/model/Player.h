@@ -17,9 +17,11 @@ class Player : public AnimatedPlayer, public Character
 		int GetMaxStamina();
 		int GetXP();
 		int GetLevel();
+    
+        void update(float dTime);
+        char* getName();
 
 		//Refer these functions to character base class
-		void Update(float dTime);
 		int getX() { return Character::getX(); };
 		int getY() { return Character::getY(); };
 		int getState() { return Character::getState(); };
@@ -46,7 +48,7 @@ class Player : public AnimatedPlayer, public Character
 		float Stamina = MaxStamina;
 		bool tryShift = false;
 
-		Forms Form = HUMAN;
+		Forms form = HUMAN;
 
 		int Experience = 0;
 		int Level = 20;

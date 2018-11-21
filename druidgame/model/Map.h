@@ -1,6 +1,6 @@
 #pragma once
 #include "Block.h"
-#include "GameObject.h"
+#include "../model/GameObject.h"
 #include "AnimatedPlayer.h"
 #include "Character.h"
 #include "Player.h"
@@ -10,7 +10,7 @@
 class Map : public Model
 {
 	public:
-		Map(char* json, char* name, Player* player);
+		Map(char* name, Player* player);
 		~Map();
 
 		void Update(float dTime);
@@ -22,6 +22,7 @@ class Map : public Model
 		int GetNumberofObjects();
 		GameObject** GetObjects();
 		Character** GetCharacters();
+        AnimatedPlayer* getPlayer();
 
 	private:
 		char* name;
@@ -30,6 +31,7 @@ class Map : public Model
 		Block** blocks;
 		int nObjects;
 		Character** characters;
+        Player* player;
 		//Enemy** Enemies;
 		//Enemies
 		

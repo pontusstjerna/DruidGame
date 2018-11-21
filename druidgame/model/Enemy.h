@@ -9,7 +9,7 @@ class Enemy : public Character
 		Enemy(int x, int y, char* json, int seedSeparator);
 		~Enemy();
 
-		void Update(float dTime);
+		void update(float dTime);
 
 	private:
 		int startX, startY;

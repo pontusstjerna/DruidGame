@@ -30,8 +30,7 @@ View::~View()
 	delete gView;
 	delete gui;
 
-	for (int i = 0; i < textures.size(); i++)
-	{
+	for (int i = 0; i < textures.size(); i++) {
 		delete textures.at(i);
 	}
 
@@ -40,7 +39,7 @@ View::~View()
 	SDL_Quit();
 }
 
-int View::InitView()
+int View::init(Model* model)
 {
 
 	if (CreateWindow() == -1)
@@ -51,6 +50,15 @@ int View::InitView()
 
 	if (InitSDLImage() == -1)
 		return -1;
+    
+    if (LoadMap(model) == -1)
+        return -1;
+    
+    if (LoadPlayer(model->getPlayer()))
+        return -1;
+    
+    if (InitGUI())
+        return -1;
 
 	printf("View successfully initialized.\n");
 	return 0;

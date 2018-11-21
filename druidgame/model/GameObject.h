@@ -1,13 +1,13 @@
 #pragma once
 #include <SDL2/SDL.h>
+#include "Entity.h"
 
-class GameObject
+class GameObject : Entity
 {
 	public:
 		enum States { STANDING, RUNNING, JUMPING, FALLING, ATTACKING, DEAD };
 
-		virtual void Update(float dTime) = 0;
-        virtual char* getName();
+		virtual void update(float dTime) = 0;
 		virtual int getX() = 0;
 		virtual int getY() = 0;
 		virtual int getState() = 0;

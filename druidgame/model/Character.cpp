@@ -1,20 +1,17 @@
 #include "Character.h"
 #include <stdio.h>
 
-Character::Character(int x, int y, char* spriteSheet) : X(x), Y(y), SpriteSheetPath(spriteSheet)
+Character::Character(int x, int y, char* spriteSheet) : X(x), Y(y), name(spriteSheet)
 {
 	
 }
 
-//Constructor for more than one spritesheets
-Character::Character(int x, int y) : X(x), Y(y) {}
-
 Character::~Character()
 {
-	printf("Character destroyed at pos (%i, %i).\n", X, Y);
+	printf("Character destroyed at pos (%f, %f).\n", X, Y);
 }
 
-void Character::Update(float dTime)
+void Character::update(float dTime)
 {
 	DeltaTime = dTime;
 
@@ -48,6 +45,10 @@ void Character::Collide(Direction dir, bool collide)
 	Collisions[dir] = collide;
 }
 
+char* Character::getName() {
+    return name;
+}
+
 int Character::getX()
 {
 	return (int)X;
@@ -70,7 +71,7 @@ int Character::getDir()
 
 char* Character::GetSpriteSheetPath()
 {
-	return SpriteSheetPath;
+	return name;
 }
 
 SDL_Texture* Character::GetSpriteSheet()
