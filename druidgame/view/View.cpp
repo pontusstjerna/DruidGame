@@ -84,8 +84,6 @@ int View::LoadMap(Model* map)
 		return -1;
 	}
 
-	LoadTextures();
-
 	return 0;
 }
 
@@ -100,22 +98,6 @@ int View::LoadPlayer(AnimatedPlayer* player)
 	}
 
 	return 0;
-}
-
-void View::LoadTextures()
-{
-	for (int i = 1; i < activeMap->GetNumberofObjects(); i++)
-	{
-		char* currTexture = activeMap->GetObjects()[i]->GetSpriteSheetPath();
-		for (int j = 1; j < activeMap->GetNumberofObjects(); j++)
-		{
-					
-			if (activeMap->GetObjects()[j]->GetSpriteSheetPath() == currTexture)
-			{
-				activeMap->GetObjects()[j]->SetSpriteSheet(textureHandler->getTexture(currTexture)->getTexture());
-			}
-		}
-	}
 }
 
 void View::Start()

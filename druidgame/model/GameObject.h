@@ -8,6 +8,7 @@ class GameObject : Entity
 		enum States { STANDING, RUNNING, JUMPING, FALLING, ATTACKING, DEAD };
 
 		virtual void update(float dTime) = 0;
+        virtual char* getName() = 0;
 		virtual int getX() = 0;
 		virtual int getY() = 0;
 		virtual int getState() = 0;

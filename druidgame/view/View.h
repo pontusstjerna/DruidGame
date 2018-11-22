@@ -38,8 +38,6 @@ class View
 		int CreateWindow();
 		int CreateSurface();
 		int CreateRenderer();
-		SDL_Texture* LoadTexture(char*);
-		void LoadTextures();
 
 		char* WINDOW_TITLE;
 

@@ -141,8 +141,10 @@ void GameView::DrawAnimatedObject(AnimatedObjectView* object, SDL_Renderer* rend
 
 	//The State*height*2 is for frame index, frame height and 2 for number of directions
 	SDL_Rect sRect = { object->GetFrame()*w, object->GetObject()->getState()*h * 2 + object->GetObject()->getDir()*h , w, h };
+    
+    SDL_Texture* texture = textureHandler->getTexture(object->GetObject()->getName())->getTexture();
 	SDL_Rect dRect = { x, y, (int)(w*scale), (int)(h*scale) };
-	SDL_RenderCopy(renderer, object->GetObject()->GetSpriteSheet(), &sRect, &dRect);
+	SDL_RenderCopy(renderer, texture, &sRect, &dRect);
 
 	//If it has health, otherwise it's either dead or for example grass
 	if (object->GetObject()->getHealth() > 0)
