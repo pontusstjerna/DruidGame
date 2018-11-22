@@ -6,8 +6,8 @@
 //  Copyright © 2018 nocroft. All rights reserved.
 //
 
-#ifndef TextureHandler_hpp
-#define TextureHandler_hpp
+#ifndef TextureHandler_h
+#define TextureHandler_h
 
 #include <stdio.h>
 #include <map>
@@ -28,4 +28,4 @@ private:
     SDL_Renderer* renderer;
 };
 
-#endif /* TextureHandler_hpp */
+#endif /* TextureHandler_h */

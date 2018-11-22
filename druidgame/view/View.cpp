@@ -96,7 +96,7 @@ int View::LoadPlayer(AnimatedPlayer* player)
     // TODO: Simply always use textureHandler for this
 	for (int i = 0; i < player->GetNumSpriteSheets(); i++)
 	{
-		Player->SetSpriteSheet(textureHandler->getTexture(Player->GetSpriteSheetPaths()[i])->getTexture(), i);
+		//Player->SetSpriteSheet(textureHandler->getTexture(Player->GetSpriteSheetPaths()[i])->getTexture(), i);
 	}
 
 	return 0;
@@ -104,18 +104,6 @@ int View::LoadPlayer(AnimatedPlayer* player)
 
 void View::LoadTextures()
 {
-	for (int i = 0; i < activeMap->GetNumberofBlocks(); i++)
-	{
-		char* currTexture = activeMap->GetBlocks()[i]->GetTexturePath();
-		for (int j = 0; j < activeMap->GetNumberofBlocks(); j++)
-		{
-			if (activeMap->GetBlocks()[j]->GetTexturePath() == currTexture)
-			{
-				activeMap->GetBlocks()[j]->SetTexture(textureHandler->getTexture(currTexture)->getTexture());
-			}
-		}
-	}
-
 	for (int i = 1; i < activeMap->GetNumberofObjects(); i++)
 	{
 		char* currTexture = activeMap->GetObjects()[i]->GetSpriteSheetPath();
@@ -132,7 +120,7 @@ void View::LoadTextures()
 
 void View::Start()
 {
-	gView = new GameView(WINDOW_WIDTH, WINDOW_HEIGHT, activeMap, Player);
+	gView = new GameView(WINDOW_WIDTH, WINDOW_HEIGHT, activeMap, Player, textureHandler);
 
 	printf("View started.\n");
 }

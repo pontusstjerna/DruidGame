@@ -4,6 +4,7 @@
 #include "../model/Model.h"
 #include "AnimatedPlayer.h"
 #include "AnimatedObjectView.h"
+#include "TextureHandler.h"
 
 class GameView
 {
@@ -11,7 +12,7 @@ class GameView
 		const int NUMBEROF_FRAMES = 8;
 		const float STD_UPDATE_INTERVAL = 0.05f;
 
-		GameView(int winWidth, int winHeight, Model* map, AnimatedPlayer* player);
+		GameView(int winWidth, int winHeight, Model* map, AnimatedPlayer* player, TextureHandler* textureHandler);
 		~GameView();
 
 		void IncrementFrames(float dTime);
@@ -27,6 +28,7 @@ class GameView
 		Model* activeMap;
 		AnimatedPlayer* player;
 		AnimatedObjectView** objects;
+        TextureHandler* textureHandler;
 
 		int winWidth = 0;
 		int winHeight = 0;
