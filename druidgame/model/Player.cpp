@@ -53,7 +53,7 @@ void Player::Shapeshift(Forms form)
 }
 
 char* Player::getName() {
-    return SpriteSheetPaths[0];
+    return SpriteSheetPaths[form];
 }
 
 void Player::update(float dTime)
