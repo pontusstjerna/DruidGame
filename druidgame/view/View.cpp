@@ -53,9 +53,6 @@ int View::init(Model* model)
     if (LoadMap(model) == -1)
         return -1;
     
-    if (LoadPlayer(model->getPlayer()))
-        return -1;
-    
     if (InitGUI())
         return -1;
 
@@ -70,7 +67,7 @@ int View::InitGUI()
 	SDL_Texture* textures[GUI::nTextures];
 	for (int i = 0; i < GUI::nTextures; i++)
 	{
-		textures[i] = textureHandler->getTexture((char*)gui->GUI_TEXTURES[i])->getTexture();
+		textures[i] = textureHandler->getTexture((char*)gui->GUI_TEXTURES[i]);
 	}
 	return gui->LoadGUI(textures, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
@@ -78,23 +75,10 @@ int View::InitGUI()
 int View::LoadMap(Model* map)
 {
 	activeMap = map;
-	background = textureHandler->getTexture(map->GetBackground())->getTexture();
+	background = textureHandler->getTexture(map->GetBackground());
 	if (background == NULL)
 	{
 		return -1;
-	}
-
-	return 0;
-}
-
-int View::LoadPlayer(AnimatedPlayer* player)
-{
-	Player = player;
-    
-    // TODO: Simply always use textureHandler for this
-	for (int i = 0; i < player->GetNumSpriteSheets(); i++)
-	{
-		//Player->SetSpriteSheet(textureHandler->getTexture(Player->GetSpriteSheetPaths()[i])->getTexture(), i);
 	}
 
 	return 0;

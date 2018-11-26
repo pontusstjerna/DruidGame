@@ -6,7 +6,6 @@
 #include "AnimatedPlayer.h"
 #include "GameView.h"
 #include "GUI.h"
-#include "Texture.h"
 #include "TextureHandler.h"
 
 class View

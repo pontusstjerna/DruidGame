@@ -13,10 +13,16 @@ TextureHandler::TextureHandler(SDL_Renderer* renderer) : renderer(renderer) {
 }
 
 TextureHandler::~TextureHandler() {
+    
+    for (const auto& texture : textures) {
+        SDL_DestroyTexture(texture.second);
+        printf("Destroyed texture %s.\n", texture.first);
+    }
+    
     textures.clear();
 }
 
-Texture* TextureHandler::getTexture(char *name) {
+SDL_Texture* TextureHandler::getTexture(char *name) {
     
     auto search = textures.find(name);
     if (search != textures.end()) { // Found it
@@ -26,23 +32,21 @@ Texture* TextureHandler::getTexture(char *name) {
     return load(name);
 }
 
-Texture* TextureHandler::load(char* name) {
+SDL_Texture* TextureHandler::load(char* name) {
     
-    SDL_Texture* sdlTexture = NULL;
+    SDL_Texture* texture = NULL;
     
     SDL_Surface* tmpSurface = IMG_Load(name);
     
     if (tmpSurface == NULL)
         printf("Unable to load image: %s. \nCause: %s\n", name, SDL_GetError());
     
-    sdlTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-    if (sdlTexture == NULL)
+    texture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+    if (texture == NULL)
         printf("Unable to load texture. \nCause: %s\n", SDL_GetError());
     
     //Reallocate
     SDL_FreeSurface(tmpSurface);
-    
-    Texture* texture = new Texture(sdlTexture, name);
     
     //Add texture to texture list
     textures[name] = texture;

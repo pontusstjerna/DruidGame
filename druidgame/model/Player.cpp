@@ -1,32 +1,13 @@
 #include "Player.h"
 #include <stdio.h>
 
-Player::Player(int x, int y, char** spriteSheets) : Character(x, y, spriteSheets[0])
+Player::Player(int x, int y) : Character(x, y, "player")
 {
-	NumSpriteSheets = 2;
-
-	SpriteSheetPaths = new char*[NumSpriteSheets];
-	for (int i = 0; i < NumSpriteSheets; i++)
-	{
-		SpriteSheetPaths[i] = spriteSheets[i];
-	}
-
-	SpriteSheets = new SDL_Texture*[NumSpriteSheets];
-
 	SetStats(HUMAN);
 	health = MaxHealth;
 	Stamina = MaxStamina;
 
 	printf("Player created at pos (%i,%i) with stats: \n\tHP: %i\n\tStamina: %i\n", x, y, MaxHealth, MaxStamina);
-}
-
-Player::~Player()
-{
-	for (int i = 0; i < NumSpriteSheets; i++)
-	{
-		SDL_DestroyTexture(SpriteSheets[i]);
-	}
-	printf("Player destroyed.\n");
 }
 
 void Player::Shapeshift(Forms form)
@@ -53,7 +34,7 @@ void Player::Shapeshift(Forms form)
 }
 
 char* Player::getName() {
-    return SpriteSheetPaths[form];
+    return "data/spritesheets/player_human.png";
 }
 
 void Player::update(float dTime)
@@ -87,31 +68,6 @@ int Player::GetXP()
 int Player::GetLevel()
 {
 	return Level;
-}
-
-int Player::GetActiveSpriteSheet()
-{
-	return form;
-}
-
-int Player::GetNumSpriteSheets()
-{
-	return NumSpriteSheets;
-}
-
-SDL_Texture** Player::GetSpriteSheets()
-{
-	return SpriteSheets;
-}
-
-void Player::SetSpriteSheet(SDL_Texture* spriteSheet, int index)
-{
-	SpriteSheets[index] = spriteSheet;
-}
-
-char** Player::GetSpriteSheetPaths()
-{
-	return SpriteSheetPaths;
 }
 
 void Player::Jump()

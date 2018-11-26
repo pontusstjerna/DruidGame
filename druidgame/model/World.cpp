@@ -5,7 +5,7 @@ World::World()
 {
 	char* sheets[2] = { "data/spritesheets/player_human.png", "data/spritesheets/player_cat.png" };
 
-	activePlayer = new Player(100, 0, sheets);
+	activePlayer = new Player(100, 0);
 	activeMap = new Map("map1", activePlayer);
 }
 

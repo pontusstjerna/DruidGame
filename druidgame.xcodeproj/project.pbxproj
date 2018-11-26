@@ -17,7 +17,6 @@
 		16454614219347880005B0DD /* List.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 164545FA219347860005B0DD /* List.cpp */; };
 		16454615219347880005B0DD /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 164545FE219347860005B0DD /* World.cpp */; };
 		16454616219347880005B0DD /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 164545FF219347860005B0DD /* Character.cpp */; };
-		16454617219347880005B0DD /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16454601219347860005B0DD /* Texture.cpp */; };
 		16454618219347880005B0DD /* GameView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16454602219347860005B0DD /* GameView.cpp */; };
 		16454619219347880005B0DD /* GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16454608219347870005B0DD /* GUI.cpp */; };
 		1645461B219347880005B0DD /* DruidGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1645460B219347870005B0DD /* DruidGame.cpp */; };
@@ -64,7 +63,6 @@
 		164545FE219347860005B0DD /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World.cpp; sourceTree = "<group>"; };
 		164545FF219347860005B0DD /* Character.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Character.cpp; sourceTree = "<group>"; };
 		16454600219347860005B0DD /* GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUI.h; sourceTree = "<group>"; };
-		16454601219347860005B0DD /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		16454602219347860005B0DD /* GameView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameView.cpp; sourceTree = "<group>"; };
 		16454603219347870005B0DD /* GameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameView.h; sourceTree = "<group>"; };
 		16454604219347870005B0DD /* View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = View.h; sourceTree = "<group>"; };
@@ -73,7 +71,6 @@
 		16454608219347870005B0DD /* GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUI.cpp; sourceTree = "<group>"; };
 		1645460A219347870005B0DD /* PlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerController.h; sourceTree = "<group>"; };
 		1645460B219347870005B0DD /* DruidGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DruidGame.cpp; sourceTree = "<group>"; };
-		1645460C219347870005B0DD /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
 		1645460D219347880005B0DD /* PlayerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerController.cpp; sourceTree = "<group>"; };
 		1645461E219347D60005B0DD /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
 		1645461F219347D60005B0DD /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
@@ -125,8 +122,6 @@
 		160FE8FA21940D5300F292C3 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				16454601219347860005B0DD /* Texture.cpp */,
-				1645460C219347870005B0DD /* Texture.h */,
 				164545EF219347850005B0DD /* View.cpp */,
 				16454604219347870005B0DD /* View.h */,
 				16454602219347860005B0DD /* GameView.cpp */,
@@ -275,7 +270,6 @@
 				16454614219347880005B0DD /* List.cpp in Sources */,
 				16454611219347880005B0DD /* Block.cpp in Sources */,
 				16454613219347880005B0DD /* AnimatedObjectView.cpp in Sources */,
-				16454617219347880005B0DD /* Texture.cpp in Sources */,
 				160FE8F921940CAF00F292C3 /* Player.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,8 +7,7 @@ class Player : public AnimatedPlayer, public Character
 	public:
 		enum Forms {HUMAN, CAT, BEAR, FISH, BIRD};
 
-		Player(int x, int y, char**);
-		~Player();
+		Player(int x, int y);
 
 		void Jump();
 
@@ -26,20 +25,10 @@ class Player : public AnimatedPlayer, public Character
 		int getY() { return Character::getY(); };
 		int getState() { return Character::getState(); };
 		int getDir() { return Character::getDir(); };
-		char* GetSpriteSheetPath() { return Character::GetSpriteSheetPath(); };
-		SDL_Texture* GetSpriteSheet() { return Character::GetSpriteSheet(); };
-		void SetSpriteSheet(SDL_Texture* texture, int);
 		int getWidth() { return Character::getWidth(); };
 		int getHeight() { return Character::getHeight(); };
 		float getHealth() { return Character::getHealth(); };
-		int getMaxHealth() { return Character::getMaxHealth(); };
-		void SetSpriteSheet(SDL_Texture* texture) { Character::SetSpriteSheet(texture); };
-
-		int GetActiveSpriteSheet();
-
-		SDL_Texture** GetSpriteSheets();
-		int GetNumSpriteSheets();
-		char** GetSpriteSheetPaths();
+        int getMaxHealth() { return Character::getMaxHealth(); };
 		
 	private:
 		const int RequiredLevels[5] = { 1, 3, 5, 7, 15 };
@@ -56,8 +45,4 @@ class Player : public AnimatedPlayer, public Character
 		void SetStats(Forms form);
 		void HealthRegen();
 		void StaminaRegen();
-
-		char** SpriteSheetPaths;
-		SDL_Texture** SpriteSheets;
-		int NumSpriteSheets;
 };

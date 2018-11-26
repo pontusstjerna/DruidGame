@@ -11,8 +11,8 @@
 
 #include <stdio.h>
 #include <map>
-
-#include "Texture.h"
+#include <SDL2/SDL.h>
+#include <SDL2_image/SDL_image.h>
 
 class TextureHandler {
 public:
@@ -20,11 +20,11 @@ public:
     ~TextureHandler();
     
     // void loadTextures();
-    Texture* getTexture(char* name);
+    SDL_Texture* getTexture(char* name);
     
 private:
-    std::map<char*, Texture*> textures;
-    Texture* load(char* name);
+    std::map<char*, SDL_Texture*> textures;
+    SDL_Texture* load(char* name);
     SDL_Renderer* renderer;
 };
 

@@ -1,7 +1,7 @@
 #include "Character.h"
 #include <stdio.h>
 
-Character::Character(int x, int y, char* spriteSheet) : X(x), Y(y), name(spriteSheet)
+Character::Character(int x, int y, char* name) : X(x), Y(y), name(name)
 {
 	
 }
@@ -67,21 +67,6 @@ int Character::getState()
 int Character::getDir()
 {
 	return Dir;
-}
-
-char* Character::GetSpriteSheetPath()
-{
-	return name;
-}
-
-SDL_Texture* Character::GetSpriteSheet()
-{
-	return SpriteSheet;
-}
-
-void Character::SetSpriteSheet(SDL_Texture* texture)
-{
-	SpriteSheet = texture;
 }
 
 void Character::MoveLeft()

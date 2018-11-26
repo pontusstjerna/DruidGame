@@ -14,9 +14,6 @@ class Character : public GameObject
 		int getY();
 		int getState();
 		int getDir();
-		char* GetSpriteSheetPath();
-		SDL_Texture* GetSpriteSheet();
-		void SetSpriteSheet(SDL_Texture* texture);
 		int getWidth();
 		int getHeight();
 		float getHealth();
@@ -60,7 +57,6 @@ class Character : public GameObject
 		bool Collisions[4];
 
 		char* name;
-		SDL_Texture* SpriteSheet;
 
 		void Die();
 
