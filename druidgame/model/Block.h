@@ -9,7 +9,7 @@ class Block : Entity
 	public:
 		Block(int x, int y, int width, int height, char* name);
 
-        char* getName();
+        char const* getName();
 		int GetX();
 		int GetY();
 		int GetWidth();

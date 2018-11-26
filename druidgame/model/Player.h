@@ -18,7 +18,7 @@ class Player : public AnimatedPlayer, public Character
 		int GetLevel();
     
         void update(float dTime);
-        char* getName();
+        char const* getName();
 
 		//Refer these functions to character base class
 		int getX() { return Character::getX(); };

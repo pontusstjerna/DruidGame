@@ -1,7 +1,7 @@
 #include "Player.h"
 #include <stdio.h>
 
-Player::Player(int x, int y) : Character(x, y, "player")
+Player::Player(int x, int y) : Character(x, y, "data/spritesheets/player_human.png")
 {
 	SetStats(HUMAN);
 	health = MaxHealth;
@@ -33,7 +33,7 @@ void Player::Shapeshift(Forms form)
 	}
 }
 
-char* Player::getName() {
+char const* Player::getName() {
     return "data/spritesheets/player_human.png";
 }
 

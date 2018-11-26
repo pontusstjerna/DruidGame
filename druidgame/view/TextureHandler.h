@@ -20,11 +20,11 @@ public:
     ~TextureHandler();
     
     // void loadTextures();
-    SDL_Texture* getTexture(char* name);
+    SDL_Texture* getTexture(char const* name);
     
 private:
-    std::map<char*, SDL_Texture*> textures;
-    SDL_Texture* load(char* name);
+    std::map<char const*, SDL_Texture*> textures;
+    SDL_Texture* load(char const* name);
     SDL_Renderer* renderer;
 };
 

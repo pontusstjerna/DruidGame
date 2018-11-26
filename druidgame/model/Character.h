@@ -6,10 +6,10 @@ class Character : public GameObject
 	public:
 		enum Direction {RIGHT, LEFT, TOP, BOTTOM};
 
-		Character(int x, int y, char* name);
+		Character(int x, int y, char const* name);
 		~Character();
 		void update (float dTime);
-        char* getName();
+        char const* getName();
 		int getX();
 		int getY();
 		int getState();
@@ -56,7 +56,7 @@ class Character : public GameObject
 
 		bool Collisions[4];
 
-		char* name;
+		char const* name;
 
 		void Die();
 

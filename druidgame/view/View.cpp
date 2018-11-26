@@ -8,9 +8,6 @@ SDL_Window* window = NULL;
 SDL_Texture* background = NULL;
 SDL_Renderer* renderer = NULL;
 
-AnimatedPlayer* Player;
-
-
 View::View(unsigned int width, unsigned int height, char* title) :
 //This is called initializer list and is requred for const variables
 WINDOW_WIDTH(width), WINDOW_HEIGHT(height), WINDOW_TITLE(title) {
@@ -40,7 +37,6 @@ View::~View()
 
 int View::init(Model* model)
 {
-
 	if (CreateWindow() == -1)
 		return -1;
 
@@ -62,7 +58,7 @@ int View::init(Model* model)
 
 int View::InitGUI()
 {
-	gui = new GUI(Player, activeMap->GetNumberofObjects(), activeMap->GetObjects());
+	gui = new GUI(activeMap->getPlayer(), activeMap->GetNumberofObjects(), activeMap->GetObjects());
 
 	SDL_Texture* textures[GUI::nTextures];
 	for (int i = 0; i < GUI::nTextures; i++)
@@ -86,7 +82,7 @@ int View::LoadMap(Model* map)
 
 void View::Start()
 {
-	gView = new GameView(WINDOW_WIDTH, WINDOW_HEIGHT, activeMap, Player, textureHandler);
+	gView = new GameView(WINDOW_WIDTH, WINDOW_HEIGHT, activeMap, activeMap->getPlayer(), textureHandler);
 
 	printf("View started.\n");
 }

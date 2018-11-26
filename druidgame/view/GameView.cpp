@@ -185,6 +185,7 @@ void GameView::UpdateActiveObjects(float scale)
 
 bool GameView::IsInsideView(SDL_Rect rect, float scale)
 {
+    return true;
 	int x = (int)((rect.x - player->getX())*scale) + winWidth / 2;
 	int y = (int)((rect.y - player->getY())*scale) + winHeight / 2;
 	int w = (int)(rect.w*scale);

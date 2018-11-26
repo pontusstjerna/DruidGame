@@ -21,7 +21,7 @@ Block::Block(int x, int y, int width, int height, char* name) : name(name)
 	H = height * MIN_HEIGHT;
 }
 
-char* Block::getName() {
+char const* Block::getName() {
     return name;
 }
 

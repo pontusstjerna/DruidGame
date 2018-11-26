@@ -1,13 +1,12 @@
 #include "Character.h"
 #include <stdio.h>
+#include <cmath>
 
-Character::Character(int x, int y, char* name) : X(x), Y(y), name(name)
-{
-	
+Character::Character(int x, int y, char const* name) : X(x), Y(y), name(name) {
+
 }
 
-Character::~Character()
-{
+Character::~Character() {
 	printf("Character destroyed at pos (%f, %f).\n", X, Y);
 }
 
@@ -45,7 +44,7 @@ void Character::Collide(Direction dir, bool collide)
 	Collisions[dir] = collide;
 }
 
-char* Character::getName() {
+char const* Character::getName() {
     return name;
 }
 

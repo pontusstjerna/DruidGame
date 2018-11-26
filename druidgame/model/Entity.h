@@ -12,7 +12,7 @@
 class Entity {
 
 public:
-    virtual char* getName() = 0;
+    virtual char const* getName() = 0;
     
 };
 
