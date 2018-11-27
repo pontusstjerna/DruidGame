@@ -6,7 +6,6 @@ Player::Player(int x, int y) : Character(x, y, "data/spritesheets/player_human.p
 	setStats(HUMAN);
 	health = MaxHealth;
 	maxStamina = stamina;
-    meleeWeapon = new MeleeWeapon(20, 200, 0, 1000);
 
 	printf("Player created at pos (%i,%i) with stats: \n\tHP: %i\n\tStamina: %i\n", x, y, MaxHealth, stamina);
 }
@@ -98,7 +97,8 @@ void Player::setStats(Forms form)
 		Speed = 70;
 		Width = 20;
 		Height = 40;
-		attackDmg = 3;
+        // Dmg, range, haste, strength
+        meleeWeapon = new MeleeWeapon(10, 15, 200, 0);
 		break;
 	case Player::CAT:
 		MaxHealth = 30;
@@ -107,7 +107,7 @@ void Player::setStats(Forms form)
 		Speed = 150;
 		Width = 50;
 		Height = 25;
-		attackDmg = 20;
+        meleeWeapon = new MeleeWeapon(20, 30, 500, 0);
 		break;
 	case Player::BEAR:
 		MaxHealth = 300;

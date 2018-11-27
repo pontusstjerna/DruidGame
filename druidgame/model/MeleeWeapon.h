@@ -21,7 +21,6 @@ public:
     float getDmg();
     float getRange();
     float getStrength();
-    bool getOnCooldown();
     
 private:
     float const ATTACK_POINT = 100;
@@ -32,7 +31,7 @@ private:
     float haste;
     
     float timer;
-    bool onCooldown = false;
+    bool attacked = false;
 };
 
 #endif /* Weapon_h */

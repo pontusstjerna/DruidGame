@@ -15,12 +15,12 @@ dmg(dmg), range(range), haste(haste), strength(strength) {
 }
 
 void MeleeWeapon::update(float dTime) {
-    timer -= dTime;
-    
+    //printf("Timer: %f\n", timer);
     if (timer < ATTACK_POINT) {
-        timer += dTime * haste * 0.2;
+        timer += dTime * haste;
     } else {
         timer = ATTACK_POINT;
+        attacked = false;
     }
 }
 
@@ -34,7 +34,8 @@ bool MeleeWeapon::attack() {
 }
 
 float MeleeWeapon::getDoneDmg(float distance) {
-    if (timer >= distance <= range) {
+    if (!attacked && timer < ATTACK_POINT && distance <= range) {
+        attacked = true;
         return dmg;
     }
     
@@ -51,8 +52,4 @@ float MeleeWeapon::getRange() {
 
 float MeleeWeapon::getStrength() {
     return strength;
-}
-
-bool MeleeWeapon::getOnCooldown() {
-    return onCooldown;
 }
