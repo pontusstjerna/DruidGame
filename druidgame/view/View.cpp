@@ -56,8 +56,7 @@ int View::init(Model* model)
 	return 0;
 }
 
-int View::InitGUI()
-{
+int View::InitGUI() {
 	gui = new GUI(activeMap->getPlayer(), activeMap->GetNumberofObjects(), activeMap->GetObjects());
 
 	SDL_Texture* textures[GUI::nTextures];

@@ -12,19 +12,20 @@ class World
 		~World();
 
 		void Update(float dTime);
-		Character* GetClosestCharacter(Character* character);
+		Character* getClosestCharacter(Character* character);
 
 		//void SaveGame(char* saveName);
 
-		Player* GetPlayer();
+		Player* getPlayer();
 		Model* getMap(); 
 
 	private:
 		Player* activePlayer;
 		Map* activeMap;
 
-		void CollideCharacters(float dTime);
-		void CollideCharacter(Character* object, float dTime);
+		void interactObjects(float dTime);
+		void collideCharacter(Character* object, float dTime);
+        void interactCharacters(Character* a, Character* b);
 
 		/*
 		{

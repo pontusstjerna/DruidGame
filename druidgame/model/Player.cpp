@@ -3,38 +3,32 @@
 
 Player::Player(int x, int y) : Character(x, y, "data/spritesheets/player_human.png")
 {
-	SetStats(HUMAN);
+	setStats(HUMAN);
 	health = MaxHealth;
-	Stamina = MaxStamina;
+	maxStamina = stamina;
+    meleeWeapon = new MeleeWeapon(20, 200, 0, 1000);
 
-	printf("Player created at pos (%i,%i) with stats: \n\tHP: %i\n\tStamina: %i\n", x, y, MaxHealth, MaxStamina);
+	printf("Player created at pos (%i,%i) with stats: \n\tHP: %i\n\tStamina: %i\n", x, y, MaxHealth, stamina);
 }
 
-void Player::Shapeshift(Forms form)
+void Player::shapeShift(Forms newForm)
 {
-	if (tryShift && !(Collisions[LEFT] || Collisions[RIGHT]))
-	{
-		form = form;
-		SetStats(form);
-		tryShift = false;
-	}
-	else if (Level >= RequiredLevels[form])
-	{
-		if (!tryShift)
-		{
-			SetStats(form);
-			tryShift = true;
-		}
-		else
-		{
-			//Reverse the stats, you can't shapeshift too close to a wall!
-			SetStats(form);
-		}
+    printf("Shapeshifting from %i to %i\n", this->form, newForm);
+	if (!(Collisions[LEFT] || Collisions[RIGHT]) && level > formLevels[newForm]) {
+		form = newForm;
+		setStats(newForm);
 	}
 }
 
 char const* Player::getName() {
-    return "data/spritesheets/player_human.png";
+    switch (form) {
+        case HUMAN:
+            return "player_human";
+        case CAT:
+            return "player_cat";
+        default:
+            return "player_human";
+    }
 }
 
 void Player::update(float dTime)
@@ -43,43 +37,43 @@ void Player::update(float dTime)
 
 	if (CurrState == HUMAN)
 	{
-		HealthRegen();
+		healthRegen();
 	}
 
 	if (Collisions[BOTTOM])
-		StaminaRegen();
+		staminaRegen();
 }
 
-int Player::GetStamina()
+int Player::getStamina()
 {
-	return Stamina;
+	return maxStamina;
 }
 
-int Player::GetMaxStamina()
+int Player::getMaxStamina()
 {
-	return MaxStamina;
+	return stamina;
 }
 
-int Player::GetXP()
+int Player::getXP()
 {
-	return Experience;
+	return experience;
 }
 
-int Player::GetLevel()
+int Player::getLevel()
 {
-	return Level;
+	return level;
 }
 
-void Player::Jump()
+void Player::jump()
 {
-	if (Stamina > 0)
+	if (maxStamina > 0)
 	{
 		if (CurrState == JUMPING)
 		{
 			const int multiplier = 20;
-			Stamina -= DeltaTime*multiplier;
-			if (Stamina < 0)
-				Stamina = 0;
+			maxStamina -= deltaTime*multiplier;
+			if (maxStamina < 0)
+				maxStamina = 0;
 		}
 	}
 	else 
@@ -90,7 +84,7 @@ void Player::Jump()
 	Character::Jump();
 }
 
-void Player::SetStats(Forms form)
+void Player::setStats(Forms form)
 {
 	float oldHeight = Height;
 
@@ -99,35 +93,35 @@ void Player::SetStats(Forms form)
 	{
 	case Player::HUMAN:
 		MaxHealth = 50;
-		MaxStamina = 50;
+		stamina = 50;
 		JumpVel = 250;
 		Speed = 70;
 		Width = 20;
 		Height = 40;
-		AttackDmg = 3;
+		attackDmg = 3;
 		break;
 	case Player::CAT:
 		MaxHealth = 30;
-		MaxStamina = 50;
+		stamina = 50;
 		JumpVel = 500;
 		Speed = 150;
 		Width = 50;
 		Height = 25;
-		AttackDmg = 20;
+		attackDmg = 20;
 		break;
 	case Player::BEAR:
 		MaxHealth = 300;
-		MaxStamina = 100;
+		stamina = 100;
 		JumpVel = 400;
 		Speed = 90;
-		AttackDmg = 10;
+		attackDmg = 10;
 		break;
 	case Player::BIRD:
 		MaxHealth = 10;
-		MaxStamina = 30;
+		stamina = 30;
 		JumpVel = 0;
 		Speed = 400;
-		AttackDmg = 1;
+		attackDmg = 1;
 		break;
 	case Player::FISH:
 		break;
@@ -141,15 +135,15 @@ void Player::SetStats(Forms form)
 	if (health > MaxHealth)
 		health = MaxHealth;
 
-	if (Stamina > MaxStamina)
-		Stamina = MaxStamina;
+	if (maxStamina > stamina)
+		maxStamina = stamina;
 }
 
-void Player::HealthRegen()
+void Player::healthRegen()
 {
 	if (health < MaxHealth)
 	{
-		health += DeltaTime;
+		health += deltaTime;
 	}
 	else
 	{
@@ -157,15 +151,15 @@ void Player::HealthRegen()
 	}
 }
 
-void Player::StaminaRegen()
+void Player::staminaRegen()
 {
 	const int multiplier = 3;
-	if (Stamina < MaxStamina)
+	if (maxStamina < stamina)
 	{
-		Stamina += DeltaTime*multiplier;
+		maxStamina += deltaTime*multiplier;
 	}
 	else
 	{
-		Stamina = MaxStamina;
+		maxStamina = stamina;
 	}
 }

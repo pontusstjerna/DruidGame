@@ -5,7 +5,7 @@
 
 PlayerController::PlayerController(World* world) : world(world)
 {
-	player = world->GetPlayer();
+	player = world->getPlayer();
 }
 
 void PlayerController::checkInputs(SDL_Event e)
@@ -22,24 +22,24 @@ void PlayerController::checkInputs(SDL_Event e)
 
 void PlayerController::update()
 {
-	if (Presses[RIGHT])
+	if (presses[RIGHT])
 	{
 		player->MoveRight();
 	}
-	else if (Presses[LEFT])
+	else if (presses[LEFT])
 	{
 		player->MoveLeft();
 	}
 
-	if (Presses[UP])
+	if (presses[UP])
 	{
-		player->Jump();
+		player->jump();
 	}
 
 	bool empty = true;
-	for (int i = 0; i < sizeof(Presses); i++)
+	for (int i = 0; i < sizeof(presses); i++)
 	{
-		if (i != UP && Presses[i])
+		if (i != UP && presses[i])
 			empty = false;
 	}
 
@@ -50,16 +50,16 @@ void PlayerController::update()
 void PlayerController::addKeyPress(SDL_Keycode code) {
 	switch (code) {
 		case SDLK_RIGHT:
-			if (!Presses[RIGHT])
-				Presses[RIGHT] = true;
+			if (!presses[RIGHT])
+				presses[RIGHT] = true;
 			break;
 		case SDLK_LEFT:
-			if (!Presses[LEFT])
-				Presses[LEFT] = true;
+			if (!presses[LEFT])
+				presses[LEFT] = true;
 			break;
 		case SDLK_UP:
-			if (!Presses[UP])
-				Presses[UP] = true;
+			if (!presses[UP])
+				presses[UP] = true;
 			break;
 	}
 }
@@ -69,32 +69,32 @@ void PlayerController::RemoveKeyPress(SDL_Keycode code)
 	switch (code)
 	{
 		case SDLK_RIGHT:
-				Presses[RIGHT] = false;
+				presses[RIGHT] = false;
 			break;
 		case SDLK_LEFT:
-				Presses[LEFT] = false;
+				presses[LEFT] = false;
 			break;
 		case SDLK_UP:
-				Presses[UP] = false;
+				presses[UP] = false;
 				player->StopJump();
 			break;
 		case SDLK_SPACE:
-			player->Attack(world->GetClosestCharacter(player));
+			player->attack();
 			break;
 		case SDLK_1:
-			player->Shapeshift(Player::HUMAN);
+			player->shapeShift(Player::HUMAN);
 			break;
 		case SDLK_2:
-			player->Shapeshift(Player::CAT);
+			player->shapeShift(Player::CAT);
 			break;
 		case SDLK_3:
-			player->Shapeshift(Player::BEAR);
+			player->shapeShift(Player::BEAR);
 			break;
 		case SDLK_4:
-			player->Shapeshift(Player::FISH);
+			player->shapeShift(Player::FISH);
 			break;
 		case SDLK_5:
-			player->Shapeshift(Player::BIRD);
+			player->shapeShift(Player::BIRD);
 			break;
 	}
 }

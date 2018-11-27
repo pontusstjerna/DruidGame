@@ -13,7 +13,7 @@ class PlayerController
 		enum KeyPos { RIGHT, LEFT, UP, SPACE};
 		Player* player;
 		World* world;
-		bool Presses[4] = {false, false, false, false};
+		bool presses[4] = {false, false, false, false};
 
 		void addKeyPress(SDL_Keycode code);
 		void RemoveKeyPress(SDL_Keycode code);

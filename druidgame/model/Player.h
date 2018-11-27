@@ -9,13 +9,13 @@ class Player : public AnimatedPlayer, public Character
 
 		Player(int x, int y);
 
-		void Jump();
+		void jump();
 
-		void Shapeshift(Forms form);
-		int GetStamina();
-		int GetMaxStamina();
-		int GetXP();
-		int GetLevel();
+		void shapeShift(Forms form);
+		int getStamina();
+		int getMaxStamina();
+		int getXP();
+		int getLevel();
     
         void update(float dTime);
         char const* getName();
@@ -31,18 +31,17 @@ class Player : public AnimatedPlayer, public Character
         int getMaxHealth() { return Character::getMaxHealth(); };
 		
 	private:
-		const int RequiredLevels[5] = { 1, 3, 5, 7, 15 };
+		const int formLevels[5] = { 1, 3, 5, 7, 15 };
 
-		int MaxStamina = 100;
-		float Stamina = MaxStamina;
-		bool tryShift = false;
+		int stamina = 100;
+		float maxStamina = stamina;
 
 		Forms form = HUMAN;
 
-		int Experience = 0;
-		int Level = 20;
+		int experience = 0;
+		int level = 20;
 
-		void SetStats(Forms form);
-		void HealthRegen();
-		void StaminaRegen();
+		void setStats(Forms form);
+		void healthRegen();
+		void staminaRegen();
 };

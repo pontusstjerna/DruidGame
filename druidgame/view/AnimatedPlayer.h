@@ -4,10 +4,10 @@
 class AnimatedPlayer : public GameObject
 {
 	public:
-		virtual int GetStamina() = 0;
-		virtual int GetMaxStamina() = 0;
-		virtual int GetLevel() = 0;
-		virtual int GetXP() = 0;
+		virtual int getStamina() = 0;
+		virtual int getMaxStamina() = 0;
+		virtual int getLevel() = 0;
+		virtual int getXP() = 0;
     
         // From GameObject.h
         /*virtual void update(float dTime) = 0;

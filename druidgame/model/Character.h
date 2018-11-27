@@ -1,5 +1,6 @@
 #pragma once
 #include "../model/GameObject.h"
+#include "MeleeWeapon.h"
 
 class Character : public GameObject
 {
@@ -26,26 +27,31 @@ class Character : public GameObject
 		void Jump();
 		void Stop();
 		void StopJump();
-		void Attack(Character* target);
+        MeleeWeapon* getMeleeWeapon();
+		void attack(Character* target);
+        void attack();
 		void Damage(float dmg);
 		void SetGravity(bool gravity);
 		int GetFallingVel();
 
 	protected:
 		float X, Y;
-		float DeltaTime = 0;
+		float deltaTime = 0;
 
 		int MaxHealth = 100;
 		float health = MaxHealth;
 		int Speed = 100;
 		int JumpVel = 300;
 		float ConsumedJumpPwr = 0;
-		float AttackDmg = 3;
-		float AttackRange = 30;
+    
+        MeleeWeapon* meleeWeapon = NULL;
+    
+		float attackDmg = 3;
+		float attackRange = 30;
 		float attackCooldown = 0.5;
 		float attackTimer = 0;
 
-		bool GravityEnabled = true;
+		bool gravityEnabled = true;
 
 		int Width = 20;
 		int Height = 40;
@@ -66,6 +72,6 @@ class Character : public GameObject
 		bool JumpLock = false;
 		int Gravity = 0;
 
-		void ApplyGravity();
+		void applyGravity();
 		void SetState(States state);
 };

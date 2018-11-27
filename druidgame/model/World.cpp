@@ -1,10 +1,9 @@
 #include "World.h"
 #include <stdio.h>
+#include "../util/Geometry.h"
 
 World::World()
 {
-	char* sheets[2] = { "data/spritesheets/player_human.png", "data/spritesheets/player_cat.png" };
-
 	activePlayer = new Player(100, 0);
 	activeMap = new Map("map1", activePlayer);
 }
@@ -21,14 +20,14 @@ World::~World()
 
 void World::Update(float dTime)
 {
-	CollideCharacters(dTime);
+	interactObjects(dTime);
 	activeMap->Update(dTime);
 
 }
 
 //void SaveGame(char* saveName);
 
-Player* World::GetPlayer()
+Player* World::getPlayer()
 {
 	return activePlayer;
 }
@@ -38,7 +37,7 @@ Model* World::getMap()
 	return activeMap;
 }
 
-Character* World::GetClosestCharacter(Character* character)
+Character* World::getClosestCharacter(Character* character)
 {
 	Character* closest = activeMap->GetCharacters()[0];
 
@@ -64,16 +63,28 @@ Character* World::GetClosestCharacter(Character* character)
 	return closest;
 }
 
-void World::CollideCharacters(float dTime)
-{
-	for (int i = 0; i < activeMap->GetNumberofObjects(); i++)
-	{
-		CollideCharacter(activeMap->GetCharacters()[i], dTime);
+void World::interactObjects(float dTime) {
+    Character** characters = activeMap->GetCharacters();
+    
+	for (int i = 0; i < activeMap->GetNumberofObjects(); i++) {
+		collideCharacter(characters[i], dTime);
+        
+        for (int j = 0; j < activeMap->GetNumberofObjects(); j++) {
+            if (j != i) { // Don't interact with yourself
+                interactCharacters(characters[i], characters[j]);
+            }
+        }
 	}
 }
 
-void World::CollideCharacter(Character* object, float dTime)
-{
+void World::interactCharacters(Character* a, Character* b) {
+    if (a->getMeleeWeapon() != NULL) {
+        float dist = Geometry::distance(a->getX(), a->getY(), b->getX(), b->getY());
+        b->Damage(a->getMeleeWeapon()->getDoneDmg(dist));
+    }
+}
+
+void World::collideCharacter(Character* object, float dTime) {
 	int pLeft = object->getX();
 	int pRight = object->getX() + object->getWidth();
 	int pTop = object->getY();

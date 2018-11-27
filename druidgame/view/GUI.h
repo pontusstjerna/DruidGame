@@ -9,9 +9,9 @@ class GUI
 	public:
 		static const int nTextures = 3;
 		const char* GUI_TEXTURES[nTextures] { 
-			"data/gui/GUI_background.png",
-			"data/gui/GUI_healthbar.png",
-			"data/gui/GUI_stabar.png"
+			"GUI_background",
+			"GUI_healthbar",
+			"GUI_stabar"
 		};
 		static const enum Textures {BACKGROUND, HEALTH_BAR, STA_BAR};
 

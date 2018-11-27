@@ -14,7 +14,25 @@
 class MeleeWeapon {
     
 public:
-    Weapon(int dmg, int range, int haste)
-}
+    MeleeWeapon(float dmg, float range, float strength, float haste);
+    void update(float dTime);
+    bool attack();
+    float getDoneDmg(float distance);
+    float getDmg();
+    float getRange();
+    float getStrength();
+    bool getOnCooldown();
+    
+private:
+    float const ATTACK_POINT = 100;
+    
+    float dmg;
+    float range;
+    float strength;
+    float haste;
+    
+    float timer;
+    bool onCooldown = false;
+};
 
 #endif /* Weapon_h */

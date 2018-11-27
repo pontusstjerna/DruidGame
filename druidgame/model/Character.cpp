@@ -1,6 +1,6 @@
 #include "Character.h"
 #include <stdio.h>
-#include <cmath>
+#include "../util/Geometry.h";
 
 Character::Character(int x, int y, char const* name) : X(x), Y(y), name(name) {
 
@@ -8,20 +8,25 @@ Character::Character(int x, int y, char const* name) : X(x), Y(y), name(name) {
 
 Character::~Character() {
 	printf("Character destroyed at pos (%f, %f).\n", X, Y);
+    delete meleeWeapon;
 }
 
 void Character::update(float dTime)
 {
-	DeltaTime = dTime;
+	deltaTime = dTime;
 
 	if (Collisions[BOTTOM])
 	{
 		Gravity = 0;
 		ConsumedJumpPwr = 0;
-	}	
+	}
+    
+    if (meleeWeapon != NULL) {
+        meleeWeapon->update(dTime);
+    }
 
-	if (GravityEnabled)
-		ApplyGravity();
+	if (gravityEnabled)
+		applyGravity();
 
 	//printf("State: %i\n", CurrState);
 	if (attackTimer > 0)
@@ -72,7 +77,7 @@ void Character::MoveLeft()
 {
 	if (!Collisions[LEFT])
 	{
-		X -= DeltaTime*Speed;
+		X -= deltaTime*Speed;
 
 		if (Collisions[BOTTOM])
 			SetState(RUNNING);
@@ -85,7 +90,7 @@ void Character::MoveRight()
 {
 	if (!Collisions[RIGHT])
 	{
-		X += DeltaTime*Speed;
+		X += deltaTime*Speed;
 		if (Collisions[BOTTOM])
 			SetState(RUNNING);
 
@@ -101,9 +106,9 @@ void Character::Jump()
 	if (CurrState != FALLING && !JumpLock)
 	{
 		if(!Collisions[TOP])
-			Y -= DeltaTime*(JumpVel - ConsumedJumpPwr);
+			Y -= deltaTime*(JumpVel - ConsumedJumpPwr);
 
-		ConsumedJumpPwr += GRAVITY_INCREASE * DeltaTime;
+		ConsumedJumpPwr += GRAVITY_INCREASE * deltaTime;
 
 		if (ConsumedJumpPwr > JumpVel || Collisions[TOP])
 		{
@@ -138,7 +143,11 @@ void Character::StopJump()
 		CurrState = FALLING;
 }
 
-void Character::Attack(Character* target)
+MeleeWeapon* Character::getMeleeWeapon() {
+    return meleeWeapon;
+}
+
+void Character::attack(Character* target)
 {
 	if (attackTimer == 0)
 	{
@@ -150,8 +159,14 @@ void Character::Attack(Character* target)
 	if (Dir == RIGHT)
 		x += Width;
 
-	if(target->Distance(x,Y) < AttackRange)
-		target->Damage(AttackDmg);
+	if(target->Distance(x,Y) < attackRange)
+		target->Damage(attackDmg);
+}
+
+void Character::attack() {
+    if (meleeWeapon != NULL) {
+        meleeWeapon->attack();
+    }
 }
 
 void Character::Damage(float dmg)
@@ -161,7 +176,7 @@ void Character::Damage(float dmg)
 
 void Character::SetGravity(bool gravity)
 {
-	GravityEnabled = gravity;
+	gravityEnabled = gravity;
 }
 
 int Character::getMaxHealth()
@@ -184,12 +199,12 @@ int Character::getHeight()
 	return Height;
 }
 
-void Character::ApplyGravity()
+void Character::applyGravity()
 {
 	if (!Collisions[BOTTOM] && CurrState != JUMPING)
 	{
-		Y += DeltaTime*Gravity;
-		Gravity += GRAVITY_INCREASE * DeltaTime;
+		Y += deltaTime*Gravity;
+		Gravity += GRAVITY_INCREASE * deltaTime;
 	}
 }
 
@@ -200,7 +215,7 @@ int Character::GetFallingVel()
 
 float Character::Distance(float x, float y)
 {
-	return sqrt(pow(x - X, 2) + pow(y - Y, 2));
+    return Geometry::distance(X, Y, x, y);
 }
 
 void Character::SetState(States state)
