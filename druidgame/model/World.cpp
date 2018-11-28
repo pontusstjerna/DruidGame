@@ -69,11 +69,15 @@ void World::interactObjects(float dTime) {
 	for (int i = 0; i < activeMap->GetNumberofObjects(); i++) {
 		collideCharacter(characters[i], dTime);
         
-        for (int j = 0; j < activeMap->GetNumberofObjects(); j++) {
+        if (i != 0) { // Don't interact with yourself
+            interactCharacters(activePlayer, characters[i]);
+        }
+        
+        /*for (int j = 0; j < activeMap->GetNumberofObjects(); j++) {
             if (j != i) { // Don't interact with yourself
                 interactCharacters(characters[i], characters[j]);
             }
-        }
+        }*/
 	}
 }
 
