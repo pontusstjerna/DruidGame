@@ -53,3 +53,7 @@ float MeleeWeapon::getRange() {
 float MeleeWeapon::getStrength() {
     return strength;
 }
+
+float MeleeWeapon::getTimer() {
+    return timer;
+}

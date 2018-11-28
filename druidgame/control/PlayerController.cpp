@@ -76,7 +76,7 @@ void PlayerController::RemoveKeyPress(SDL_Keycode code)
 			break;
 		case SDLK_UP:
 				presses[UP] = false;
-				player->StopJump();
+				player->stopJump();
 			break;
 		case SDLK_SPACE:
 			player->attack();

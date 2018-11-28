@@ -25,7 +25,7 @@ class World
 
 		void interactObjects(float dTime);
 		void collideCharacter(Character* object, float dTime);
-        void interactCharacters(Character* a, Character* b);
+        void interactPlayerCharacter(Character* a, Character* b);
 
 		/*
 		{

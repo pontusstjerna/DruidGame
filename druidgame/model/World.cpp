@@ -70,21 +70,17 @@ void World::interactObjects(float dTime) {
 		collideCharacter(characters[i], dTime);
         
         if (i != 0) { // Don't interact with yourself
-            interactCharacters(activePlayer, characters[i]);
+            interactPlayerCharacter(activePlayer, characters[i]);
         }
-        
-        /*for (int j = 0; j < activeMap->GetNumberofObjects(); j++) {
-            if (j != i) { // Don't interact with yourself
-                interactCharacters(characters[i], characters[j]);
-            }
-        }*/
 	}
 }
 
-void World::interactCharacters(Character* a, Character* b) {
-    if (a->getMeleeWeapon() != NULL) {
-        float dist = Geometry::distance(a->getX(), a->getY(), b->getX(), b->getY());
-        b->Damage(a->getMeleeWeapon()->getDoneDmg(dist));
+void World::interactPlayerCharacter(Character* player, Character* character) {
+    if (player->getMeleeWeapon() != NULL) {
+        int dir = player->getDir() == Character::LEFT ? -1 : 1;
+        float playerX = player->getX() + dir * (player->getWidth() / 2);
+        float dist = Geometry::distance(playerX, player->getY(), character->getX(), character->getY());
+        character->damage(player->getMeleeWeapon()->getDoneDmg(dist));
     }
 }
 

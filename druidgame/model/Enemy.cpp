@@ -20,7 +20,7 @@ void Enemy::update(float dTime)
 	Character::update(dTime);
 
 	
-	if (CurrState != DEAD)
+	if (currState != DEAD)
 	{
 		timer += dTime * 1000;
 

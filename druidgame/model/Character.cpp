@@ -34,12 +34,12 @@ void Character::update(float dTime)
 	else if (attackTimer < 0)
 	{
 		attackTimer = 0;
-		CurrState = TempState;
+		currState = TempState;
 	}
 		
 	if (health <= 0)
 	{
-		CurrState = DEAD;
+		currState = DEAD;
 	}
 
 }
@@ -65,7 +65,7 @@ int Character::getY()
 
 int Character::getState()
 {
-	return CurrState;
+	return currState;
 }
 
 int Character::getDir()
@@ -100,10 +100,10 @@ void Character::MoveRight()
 
 void Character::Jump()
 {
-	if (ConsumedJumpPwr == 0 && CurrState != FALLING)
-		TempState = CurrState;
+	if (ConsumedJumpPwr == 0 && currState != FALLING)
+		TempState = currState;
 
-	if (CurrState != FALLING && !JumpLock)
+	if (currState != FALLING && !JumpLock)
 	{
 		if(!Collisions[TOP])
 			Y -= deltaTime*(JumpVel - ConsumedJumpPwr);
@@ -112,17 +112,17 @@ void Character::Jump()
 
 		if (ConsumedJumpPwr > JumpVel || Collisions[TOP])
 		{
-			CurrState = FALLING;
+			currState = FALLING;
 			JumpLock = true;
 		}
 		else
 		{
-			CurrState = JUMPING;
+			currState = JUMPING;
 		}
 	}
 	else if(Collisions[BOTTOM])
 	{
-		CurrState = TempState;
+		currState = TempState;
 		TempState = STANDING;
 	}
 }
@@ -135,12 +135,12 @@ void Character::Stop()
 		SetState(FALLING);
 }
 
-void Character::StopJump()
+void Character::stopJump()
 {
 	JumpLock = false;
 
 	if(!Collisions[BOTTOM])
-		CurrState = FALLING;
+		currState = FALLING;
 }
 
 MeleeWeapon* Character::getMeleeWeapon() {
@@ -151,7 +151,7 @@ void Character::attack(Character* target)
 {
 	if (attackTimer == 0)
 	{
-		CurrState = ATTACKING;
+		currState = ATTACKING;
 		attackTimer = attackCooldown;
 	}
 	
@@ -160,7 +160,7 @@ void Character::attack(Character* target)
 		x += Width;
 
 	if(target->Distance(x,Y) < attackRange)
-		target->Damage(attackDmg);
+		target->damage(attackDmg);
 }
 
 void Character::attack() {
@@ -169,7 +169,7 @@ void Character::attack() {
     }
 }
 
-void Character::Damage(float dmg)
+void Character::damage(float dmg)
 {
 	health -= dmg;
 }
@@ -201,7 +201,7 @@ int Character::getHeight()
 
 void Character::applyGravity()
 {
-	if (!Collisions[BOTTOM] && CurrState != JUMPING)
+	if (!Collisions[BOTTOM] && currState != JUMPING)
 	{
 		Y += deltaTime*Gravity;
 		Gravity += GRAVITY_INCREASE * deltaTime;
@@ -220,17 +220,17 @@ float Character::Distance(float x, float y)
 
 void Character::SetState(States state)
 {
-	if (state == STANDING && CurrState == ATTACKING)
+	if (state == STANDING && currState == ATTACKING)
 		return;
 
-	if (CurrState != ATTACKING && TempState != STANDING)
+	if (currState != ATTACKING && TempState != STANDING)
 	{
-		CurrState = TempState;
+		currState = TempState;
 		TempState = STANDING;
 	}
 		
 	 if(state != TempState)
 		TempState = state;
 	 else
-		 CurrState = state;
+		 currState = state;
 }

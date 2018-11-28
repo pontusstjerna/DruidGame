@@ -14,6 +14,8 @@
 class MeleeWeapon {
     
 public:
+    float const ATTACK_POINT = 100;
+    
     MeleeWeapon(float dmg, float range, float strength, float haste);
     void update(float dTime);
     bool attack();
@@ -21,10 +23,9 @@ public:
     float getDmg();
     float getRange();
     float getStrength();
+    float getTimer();
     
 private:
-    float const ATTACK_POINT = 100;
-    
     float dmg;
     float range;
     float strength;

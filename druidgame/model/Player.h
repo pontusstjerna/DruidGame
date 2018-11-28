@@ -12,6 +12,7 @@ class Player : public AnimatedPlayer, public Character
 		void jump();
 
 		void shapeShift(Forms form);
+        void attack();
 		int getStamina();
 		int getMaxStamina();
 		int getXP();

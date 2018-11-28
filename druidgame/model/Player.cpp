@@ -34,10 +34,17 @@ void Player::update(float dTime)
 {
 	Character::update(dTime);
 
-	if (CurrState == HUMAN)
-	{
+	if (form == HUMAN) {
 		healthRegen();
 	}
+    
+    if (form == CAT) { // Jump for half of the attack in cat form
+        if (meleeWeapon->getTimer() < meleeWeapon->ATTACK_POINT / 2) {
+            jump();
+        } else if (meleeWeapon->getTimer() < meleeWeapon->ATTACK_POINT) {
+            Character::stopJump();
+        }
+    }
 
 	if (Collisions[BOTTOM])
 		staminaRegen();
@@ -63,11 +70,15 @@ int Player::getLevel()
 	return level;
 }
 
+void Player::attack() {
+    return Character::attack();
+}
+
 void Player::jump()
 {
 	if (maxStamina > 0)
 	{
-		if (CurrState == JUMPING)
+		if (currState == JUMPING)
 		{
 			const int multiplier = 20;
 			maxStamina -= deltaTime*multiplier;
@@ -98,7 +109,7 @@ void Player::setStats(Forms form)
 		Width = 20;
 		Height = 40;
         // Dmg, range, haste, strength
-        meleeWeapon = new MeleeWeapon(10, 15, 200, 0);
+        meleeWeapon = new MeleeWeapon(10, 10, 200, 0);
 		break;
 	case Player::CAT:
 		MaxHealth = 30;
@@ -107,7 +118,7 @@ void Player::setStats(Forms form)
 		Speed = 150;
 		Width = 50;
 		Height = 25;
-        meleeWeapon = new MeleeWeapon(20, 30, 500, 0);
+        meleeWeapon = new MeleeWeapon(20, 15, 500, 0);
 		break;
 	case Player::BEAR:
 		MaxHealth = 300;

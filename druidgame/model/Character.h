@@ -26,11 +26,11 @@ class Character : public GameObject
 		void MoveRight();
 		void Jump();
 		void Stop();
-		void StopJump();
+		void stopJump();
         MeleeWeapon* getMeleeWeapon();
 		void attack(Character* target);
         void attack();
-		void Damage(float dmg);
+		void damage(float dmg);
 		void SetGravity(bool gravity);
 		int GetFallingVel();
 
@@ -56,7 +56,7 @@ class Character : public GameObject
 		int Width = 20;
 		int Height = 40;
 
-		States CurrState = STANDING;
+		States currState = STANDING;
 		States TempState = STANDING;
 		Direction Dir = RIGHT;
 
