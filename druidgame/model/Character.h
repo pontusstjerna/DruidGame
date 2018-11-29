@@ -22,13 +22,12 @@ class Character : public GameObject
 		float Distance(float x, float y);
 
 		void Collide(Direction dir, bool collide);
-		void MoveLeft();
-		void MoveRight();
-		void Jump();
+		void left();
+		void right();
+		void jump();
 		void Stop();
 		void stopJump();
         MeleeWeapon* getMeleeWeapon();
-		void attack(Character* target);
         void attack();
 		void damage(float dmg);
 		void SetGravity(bool gravity);
@@ -41,15 +40,10 @@ class Character : public GameObject
 		int MaxHealth = 100;
 		float health = MaxHealth;
 		int Speed = 100;
-		int JumpVel = 300;
-		float ConsumedJumpPwr = 0;
+		int jumpVel = 300;
+		float consumedJumpPwr = 0;
     
         MeleeWeapon* meleeWeapon = NULL;
-    
-		float attackDmg = 3;
-		float attackRange = 30;
-		float attackCooldown = 0.5;
-		float attackTimer = 0;
 
 		bool gravityEnabled = true;
 
@@ -57,21 +51,21 @@ class Character : public GameObject
 		int Height = 40;
 
 		States currState = STANDING;
-		States TempState = STANDING;
+		States lastState = STANDING;
 		Direction Dir = RIGHT;
 
-		bool Collisions[4];
+		bool collisions[4];
 
 		char const* name;
 
 		void Die();
 
 	private:
-		const int GRAVITY_INCREASE = 1500;
+		const int GRAVITY = 30;
 		
-		bool JumpLock = false;
-		int Gravity = 0;
+		bool jumpLock = false;
+		int yVel = 0;
 
 		void applyGravity();
-		void SetState(States state);
+		void setState(States state);
 };

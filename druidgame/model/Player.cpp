@@ -12,8 +12,7 @@ Player::Player(int x, int y) : Character(x, y, "data/spritesheets/player_human.p
 
 void Player::shapeShift(Forms newForm)
 {
-    printf("Shapeshifting from %i to %i\n", this->form, newForm);
-	if (!(Collisions[LEFT] || Collisions[RIGHT]) && level > formLevels[newForm]) {
+	if (!(collisions[LEFT] || collisions[RIGHT]) && level > formLevels[newForm]) {
 		form = newForm;
 		setStats(newForm);
 	}
@@ -39,14 +38,14 @@ void Player::update(float dTime)
 	}
     
     if (form == CAT) { // Jump for half of the attack in cat form
-        if (meleeWeapon->getTimer() < meleeWeapon->ATTACK_POINT / 2) {
+        if (meleeWeapon->getTimer() < meleeWeapon->ATTACK_POINT / 3) {
             jump();
         } else if (meleeWeapon->getTimer() < meleeWeapon->ATTACK_POINT) {
             Character::stopJump();
         }
     }
 
-	if (Collisions[BOTTOM])
+	if (collisions[BOTTOM])
 		staminaRegen();
 }
 
@@ -88,10 +87,10 @@ void Player::jump()
 	}
 	else 
 	{
-		ConsumedJumpPwr = JumpVel;
+		consumedJumpPwr = jumpVel;
 	}
 
-	Character::Jump();
+	Character::jump();
 }
 
 void Player::setStats(Forms form)
@@ -104,7 +103,7 @@ void Player::setStats(Forms form)
 	case Player::HUMAN:
 		MaxHealth = 50;
 		stamina = 50;
-		JumpVel = 250;
+		jumpVel = 250;
 		Speed = 70;
 		Width = 20;
 		Height = 40;
@@ -114,25 +113,24 @@ void Player::setStats(Forms form)
 	case Player::CAT:
 		MaxHealth = 30;
 		stamina = 50;
-		JumpVel = 500;
+		jumpVel = 500;
 		Speed = 150;
 		Width = 50;
 		Height = 25;
-        meleeWeapon = new MeleeWeapon(20, 15, 500, 0);
+        meleeWeapon = new MeleeWeapon(100, 20, 200, 0);
+        //meleeWeapon = new MeleeWeapon(20, 15, 200, 0);
 		break;
 	case Player::BEAR:
 		MaxHealth = 300;
 		stamina = 100;
-		JumpVel = 400;
+		jumpVel = 400;
 		Speed = 90;
-		attackDmg = 10;
 		break;
 	case Player::BIRD:
 		MaxHealth = 10;
 		stamina = 30;
-		JumpVel = 0;
+		jumpVel = 0;
 		Speed = 400;
-		attackDmg = 1;
 		break;
 	case Player::FISH:
 		break;

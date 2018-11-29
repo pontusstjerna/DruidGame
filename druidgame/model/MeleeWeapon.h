@@ -31,7 +31,7 @@ private:
     float strength;
     float haste;
     
-    float timer;
+    float timer = ATTACK_POINT;
     bool attacked = false;
 };
 

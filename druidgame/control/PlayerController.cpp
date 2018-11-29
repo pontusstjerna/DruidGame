@@ -16,7 +16,7 @@ void PlayerController::checkInputs(SDL_Event e)
 	}
 	else if (e.type == SDL_KEYUP)
 	{
-		RemoveKeyPress(e.key.keysym.sym);
+		removeKeyPress(e.key.keysym.sym);
 	}
 }
 
@@ -24,11 +24,11 @@ void PlayerController::update()
 {
 	if (presses[RIGHT])
 	{
-		player->MoveRight();
+		player->right();
 	}
 	else if (presses[LEFT])
 	{
-		player->MoveLeft();
+		player->left();
 	}
 
 	if (presses[UP])
@@ -64,7 +64,7 @@ void PlayerController::addKeyPress(SDL_Keycode code) {
 	}
 }
 
-void PlayerController::RemoveKeyPress(SDL_Keycode code)
+void PlayerController::removeKeyPress(SDL_Keycode code)
 {
 	switch (code)
 	{
@@ -96,5 +96,8 @@ void PlayerController::RemoveKeyPress(SDL_Keycode code)
 		case SDLK_5:
 			player->shapeShift(Player::BIRD);
 			break;
+        case SDLK_ESCAPE:
+            printf("Quit?");
+            break;
 	}
 }

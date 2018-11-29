@@ -16,5 +16,5 @@ class PlayerController
 		bool presses[4] = {false, false, false, false};
 
 		void addKeyPress(SDL_Keycode code);
-		void RemoveKeyPress(SDL_Keycode code);
+		void removeKeyPress(SDL_Keycode code);
 };

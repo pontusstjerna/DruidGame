@@ -31,11 +31,11 @@ void Enemy::update(float dTime)
 
 void Enemy::DecideDir()
 {
-	if (X - startX > maxDistX || Collisions[RIGHT])
+	if (X - startX > maxDistX || collisions[RIGHT])
 	{
 		direction = LEFT;
 	}
-	else if (startX - X > maxDistX || Collisions[LEFT])
+	else if (startX - X > maxDistX || collisions[LEFT])
 	{
 		direction = RIGHT;
 	}
@@ -56,10 +56,10 @@ void Enemy::Walk(int dir)
 	switch (dir)
 	{
 		case LEFT:
-			MoveLeft();
+			left();
 			break;
 		case RIGHT:
-			MoveRight();
+			right();
 			break;
 	}
 }

@@ -15,10 +15,10 @@ void Character::update(float dTime)
 {
 	deltaTime = dTime;
 
-	if (Collisions[BOTTOM])
+	if (collisions[BOTTOM])
 	{
-		Gravity = 0;
-		ConsumedJumpPwr = 0;
+		yVel = 0;
+		consumedJumpPwr = 0;
 	}
     
     if (meleeWeapon != NULL) {
@@ -27,26 +27,16 @@ void Character::update(float dTime)
 
 	if (gravityEnabled)
 		applyGravity();
-
-	//printf("State: %i\n", CurrState);
-	if (attackTimer > 0)
-		attackTimer -= dTime;
-	else if (attackTimer < 0)
-	{
-		attackTimer = 0;
-		currState = TempState;
-	}
 		
-	if (health <= 0)
-	{
-		currState = DEAD;
+	if (health <= 0) {
+        setState(DEAD);
 	}
 
 }
 
 void Character::Collide(Direction dir, bool collide)
 {
-	Collisions[dir] = collide;
+	collisions[dir] = collide;
 }
 
 char const* Character::getName() {
@@ -73,94 +63,75 @@ int Character::getDir()
 	return Dir;
 }
 
-void Character::MoveLeft()
+void Character::left()
 {
-	if (!Collisions[LEFT])
+	if (!collisions[LEFT])
 	{
 		X -= deltaTime*Speed;
 
-		if (Collisions[BOTTOM])
-			SetState(RUNNING);
+		if (collisions[BOTTOM])
+			setState(RUNNING);
 
 		Dir = LEFT;
 	}
 }
 
-void Character::MoveRight()
+void Character::right()
 {
-	if (!Collisions[RIGHT])
+	if (!collisions[RIGHT])
 	{
 		X += deltaTime*Speed;
-		if (Collisions[BOTTOM])
-			SetState(RUNNING);
+		if (collisions[BOTTOM])
+			setState(RUNNING);
 
 		Dir = RIGHT;
 	}
 }
 
-void Character::Jump()
+void Character::jump()
 {
-	if (ConsumedJumpPwr == 0 && currState != FALLING)
-		TempState = currState;
-
-	if (currState != FALLING && !JumpLock)
+    
+    // Basic conditions
+	if (currState != FALLING && !jumpLock)
 	{
-		if(!Collisions[TOP])
-			Y -= deltaTime*(JumpVel - ConsumedJumpPwr);
+        
+        // The actual jumping
+        if(!collisions[TOP]) {
+            Y -= deltaTime*(jumpVel - consumedJumpPwr);
+        }
 
-		ConsumedJumpPwr += GRAVITY_INCREASE * deltaTime;
+		consumedJumpPwr += GRAVITY;
 
-		if (ConsumedJumpPwr > JumpVel || Collisions[TOP])
-		{
-			currState = FALLING;
-			JumpLock = true;
+		if (consumedJumpPwr > jumpVel || collisions[TOP]) {
+            setState(FALLING);
+			jumpLock = true;
+		} else {
+            setState(JUMPING);
 		}
-		else
-		{
-			currState = JUMPING;
-		}
-	}
-	else if(Collisions[BOTTOM])
-	{
-		currState = TempState;
-		TempState = STANDING;
+	} else if(collisions[BOTTOM]) {
+		currState = lastState;
+		lastState = STANDING;
 	}
 }
 
 void Character::Stop()
 {
-	if (Collisions[BOTTOM] || Collisions[LEFT] || Collisions[RIGHT])
-		SetState(STANDING);
+	if (collisions[BOTTOM] || collisions[LEFT] || collisions[RIGHT])
+		setState(STANDING);
 	else
-		SetState(FALLING);
+		setState(FALLING);
 }
 
 void Character::stopJump()
 {
-	JumpLock = false;
+	jumpLock = false;
 
-	if(!Collisions[BOTTOM])
+	if(!collisions[BOTTOM])
 		currState = FALLING;
 }
 
 MeleeWeapon* Character::getMeleeWeapon() {
     return meleeWeapon;
-}
-
-void Character::attack(Character* target)
-{
-	if (attackTimer == 0)
-	{
-		currState = ATTACKING;
-		attackTimer = attackCooldown;
-	}
-	
-	int x = X;
-	if (Dir == RIGHT)
-		x += Width;
-
-	if(target->Distance(x,Y) < attackRange)
-		target->damage(attackDmg);
 }
 
 void Character::attack() {
@@ -201,16 +172,16 @@ int Character::getHeight()
 
 void Character::applyGravity()
 {
-	if (!Collisions[BOTTOM] && currState != JUMPING)
+	if (!collisions[BOTTOM] && currState != JUMPING)
 	{
-		Y += deltaTime*Gravity;
-		Gravity += GRAVITY_INCREASE * deltaTime;
+		Y += deltaTime * yVel;
+		yVel += GRAVITY;
 	}
 }
 
 int Character::GetFallingVel()
 {
-	return Gravity;
+	return yVel;
 }
 
 float Character::Distance(float x, float y)
@@ -218,19 +189,10 @@ float Character::Distance(float x, float y)
     return Geometry::distance(X, Y, x, y);
 }
 
-void Character::SetState(States state)
+void Character::setState(States state)
 {
-	if (state == STANDING && currState == ATTACKING)
-		return;
-
-	if (currState != ATTACKING && TempState != STANDING)
-	{
-		currState = TempState;
-		TempState = STANDING;
-	}
-		
-	 if(state != TempState)
-		TempState = state;
-	 else
-		 currState = state;
+    if (currState != DEAD) {
+        lastState = currState;
+        currState = state;
+    }
 }
