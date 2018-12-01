@@ -22,24 +22,20 @@ void PlayerController::checkInputs(SDL_Event e)
 
 void PlayerController::update()
 {
-	if (presses[RIGHT])
-	{
+	if (presses[RIGHT]) {
 		player->right();
-	}
-	else if (presses[LEFT])
-	{
+	} else if (presses[LEFT]) {
 		player->left();
 	}
 
-	if (presses[UP])
-	{
+	if (presses[UP]) {
 		player->jump();
 	}
 
 	bool empty = true;
 	for (int i = 0; i < sizeof(presses); i++)
 	{
-		if (i != UP && presses[i])
+		if (presses[i])
 			empty = false;
 	}
 

@@ -15,8 +15,7 @@ void Character::update(float dTime)
 {
 	deltaTime = dTime;
 
-	if (collisions[BOTTOM])
-	{
+	if (collisions[BOTTOM])	{
 		yVel = 0;
 		consumedJumpPwr = 0;
 	}
@@ -34,8 +33,7 @@ void Character::update(float dTime)
 
 }
 
-void Character::Collide(Direction dir, bool collide)
-{
+void Character::collide(Direction dir, bool collide) {
 	collisions[dir] = collide;
 }
 
@@ -76,10 +74,8 @@ void Character::left()
 	}
 }
 
-void Character::right()
-{
-	if (!collisions[RIGHT])
-	{
+void Character::right() {
+	if (!collisions[RIGHT]) {
 		X += deltaTime*Speed;
 		if (collisions[BOTTOM])
 			setState(RUNNING);
@@ -88,29 +84,28 @@ void Character::right()
 	}
 }
 
-void Character::jump()
-{
+int jumps = 0;
+
+void Character::jump() {
     
     // Basic conditions
-	if (currState != FALLING && !jumpLock)
-	{
+	if (currState != FALLING && !jumpLock) {
         
         // The actual jumping
         if(!collisions[TOP]) {
-            Y -= deltaTime*(jumpVel - consumedJumpPwr);
+            Y -= deltaTime * (jumpVel - consumedJumpPwr);
+            jumps++;
         }
-
+        
 		consumedJumpPwr += GRAVITY;
-
-		if (consumedJumpPwr > jumpVel || collisions[TOP]) {
+        
+		if (consumedJumpPwr >= jumpVel || collisions[TOP]) {
             setState(FALLING);
 			jumpLock = true;
 		} else {
             setState(JUMPING);
+            printf("Setstate JUMPING\n");
 		}
-	} else if(collisions[BOTTOM]) {
-		currState = lastState;
-		lastState = STANDING;
 	}
 }
 

@@ -21,7 +21,7 @@ class Character : public GameObject
 		int getMaxHealth();
 		float Distance(float x, float y);
 
-		void Collide(Direction dir, bool collide);
+		void collide(Direction dir, bool collide);
 		void left();
 		void right();
 		void jump();

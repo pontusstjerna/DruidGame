@@ -26,15 +26,15 @@ Map::Map(char* name, Player* player) : name(name), player(player)
 			background = "map1_bg2";
 
 
-			nObjects = 5;
+			nObjects = 1;
 			characters = new Character*[nObjects];
 			characters[0] = player;
-			characters[1] = new Enemy(125, 25, "enemy_human1", 1);
+			//characters[1] = new Enemy(125, 25, "enemy_human1", 1);
 
-			for (int i = 2; i < nObjects; i++)
+			/*for (int i = 2; i < nObjects; i++)
 			{
 				characters[i] = new Enemy(150 + i * 20, 25, "enemy_human1", i);
-			}
+			}*/
 
 		}
 

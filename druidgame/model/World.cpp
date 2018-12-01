@@ -123,9 +123,9 @@ void World::collideCharacter(Character* object, float dTime) {
 
 	}
 
-	object->Collide(Character::LEFT, left);
-	object->Collide(Character::RIGHT, right);
-	object->Collide(Character::TOP, top);
-	object->Collide(Character::BOTTOM, bottom);
+	object->collide(Character::LEFT, left);
+	object->collide(Character::RIGHT, right);
+	object->collide(Character::TOP, top);
+	object->collide(Character::BOTTOM, bottom);
 
 }
