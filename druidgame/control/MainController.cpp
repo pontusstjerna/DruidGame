@@ -70,8 +70,7 @@ void runGame()
 
 	float printCounter = 0;
 
-	while (running)
-	{
+	while (running) {
 		
 		while (SDL_PollEvent(&event) != 0)
 		{
@@ -81,7 +80,7 @@ void runGame()
 			}
 			Controller->checkInputs(event);
 		}
-
+        
 		Controller->update();
 		world->Update(dTime);
 		view->Update(dTime);
@@ -90,6 +89,7 @@ void runGame()
 
 		cTime = (float)SDL_GetTicks()/1000;
 		dTime = cTime - tTime;
+        //dTime = 0.01;
 		tTime = cTime;
 		printCounter += dTime;
 

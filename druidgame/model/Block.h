@@ -10,10 +10,10 @@ class Block : Entity
 		Block(int x, int y, int width, int height, char* name);
 
         char const* getName();
-		int GetX();
-		int GetY();
-		int GetWidth();
-		int GetHeight();
+		int getX();
+		int getY();
+		int getWidth();
+		int getHeight();
 
 		const int MIN_WIDTH = 10;
 		const int MIN_HEIGHT = 10;

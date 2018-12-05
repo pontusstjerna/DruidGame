@@ -7,7 +7,7 @@ Enemy::Enemy(int x, int y, char* texture, int seedSeparator) : Character(x,y,tex
 	direction = rand() % 2;
 	turnTime = (rand() + minDirTime) % maxDirTime;
 
-	Speed = 50;
+	speed = 50;
 }
 
 Enemy::~Enemy()

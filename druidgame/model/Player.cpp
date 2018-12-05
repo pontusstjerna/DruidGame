@@ -104,7 +104,7 @@ void Player::setStats(Forms form)
 		MaxHealth = 50;
 		stamina = 50;
 		jumpVel = 250;
-		Speed = 70;
+		speed = 70;
 		Width = 20;
 		Height = 40;
         // Dmg, range, haste, strength
@@ -114,7 +114,7 @@ void Player::setStats(Forms form)
 		MaxHealth = 30;
 		stamina = 50;
 		jumpVel = 500;
-		Speed = 150;
+		speed = 150;
 		Width = 50;
 		Height = 25;
         meleeWeapon = new MeleeWeapon(100, 20, 200, 0);
@@ -124,13 +124,13 @@ void Player::setStats(Forms form)
 		MaxHealth = 300;
 		stamina = 100;
 		jumpVel = 400;
-		Speed = 90;
+		speed = 90;
 		break;
 	case Player::BIRD:
 		MaxHealth = 10;
 		stamina = 30;
 		jumpVel = 0;
-		Speed = 400;
+		speed = 400;
 		break;
 	case Player::FISH:
 		break;

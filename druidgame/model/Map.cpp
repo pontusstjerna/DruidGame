@@ -36,7 +36,18 @@ Map::Map(char* name, Player* player) : name(name), player(player)
 				characters[i] = new Enemy(150 + i * 20, 25, "enemy_human1", i);
 			}*/
 
-		}
+        } else if (name == "coll_test") {
+            NumberOfBlocks = 1;
+            
+            blocks = new Block*[NumberOfBlocks];
+            blocks[0] = new Block(0, 30, 1000, 1, "block_grass1");
+            background = "map1_bg2";
+            
+            
+            nObjects = 1;
+            characters = new Character*[nObjects];
+            characters[0] = player;
+        }
 
 		printf("Map %s initialized with %i blocks.\n", name, NumberOfBlocks);
 	}
@@ -74,12 +85,12 @@ char* Map::GetBackground()
 	return background;
 }
 
-int Map::GetNumberofBlocks()
+int Map::getNumberBlocks()
 {
 	return NumberOfBlocks;
 }
 
-Block** Map::GetBlocks()
+Block** Map::getBlocks()
 {
 	return blocks;
 }

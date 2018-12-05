@@ -25,21 +25,21 @@ char const* Block::getName() {
     return name;
 }
 
-int Block::GetX()
+int Block::getX()
 {
 	return X;
 }
-int Block::GetY()
+int Block::getY()
 {
 	return Y;
 }
 
-int Block::GetWidth()
+int Block::getWidth()
 {
 	return W;
 }
 
-int Block::GetHeight()
+int Block::getHeight()
 {
 	return H;
 }

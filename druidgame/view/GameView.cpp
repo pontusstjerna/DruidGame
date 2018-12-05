@@ -39,19 +39,19 @@ void GameView::DrawBackground(SDL_Renderer* renderer, SDL_Texture* background, f
 
 void GameView::DrawBlocks(SDL_Renderer* renderer, float scale)
 {
-	for (int i = 0; i < activeMap->GetNumberofBlocks(); i++)
+	for (int i = 0; i < activeMap->getNumberBlocks(); i++)
 	{
 		//TODO: Check if inside view rect
-		if (IsInsideView(activeMap->GetBlocks()[i], scale))
-			DrawBlock(activeMap->GetBlocks()[i], renderer, scale);
+		if (IsInsideView(activeMap->getBlocks()[i], scale))
+			DrawBlock(activeMap->getBlocks()[i], renderer, scale);
 	}
 }
 
 void GameView::DrawBlock(Block* block, SDL_Renderer* renderer, float scale)
 {
-	int x = (int)((block->GetX() - objects[0]->GetObject()->getX())*scale) + winWidth / 2;
-	int y = (int)((block->GetY() - objects[0]->GetObject()->getY())*scale) + winHeight / 2;
-	int h = block->GetHeight();
+	int x = (int)((block->getX() - objects[0]->GetObject()->getX())*scale) + winWidth / 2;
+	int y = (int)((block->getY() - objects[0]->GetObject()->getY())*scale) + winHeight / 2;
+	int h = block->getHeight();
 	int mh = block->MIN_HEIGHT;
 
 	//Top row
@@ -74,8 +74,8 @@ void GameView::DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos po
 {
 
 	
-	int w = block->GetWidth();// -player->GetY();
-	int h = block->GetHeight();
+	int w = block->getWidth();// -player->GetY();
+	int h = block->getHeight();
 	int mw = block->MIN_WIDTH;
 	int mh = block->MIN_HEIGHT;
     
@@ -164,10 +164,10 @@ void GameView::DrawAnimatedObject(AnimatedObjectView* object, SDL_Renderer* rend
 
 bool GameView::IsInsideView(Block* block, float scale)
 {
-	int x = (int)((block->GetX() - player->getX())*scale) + winWidth / 2;
-	int y = (int)((block->GetY() - player->getY())*scale) + winHeight / 2;
-	int w = (int)(block->GetWidth()*scale);
-	int h = (int)(block->GetHeight()*scale);
+	int x = (int)((block->getX() - player->getX())*scale) + winWidth / 2;
+	int y = (int)((block->getY() - player->getY())*scale) + winHeight / 2;
+	int w = (int)(block->getWidth()*scale);
+	int h = (int)(block->getHeight()*scale);
 	return x + w > 0 && x < winWidth && y + h > 0 && y < winHeight;
 }
 

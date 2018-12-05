@@ -24,6 +24,7 @@ class World
 		Map* activeMap;
 
 		void interactObjects(float dTime);
+        void resolveCollision(Character* object, Block* block, bool collisions[4]);
 		void collideCharacter(Character* object, float dTime);
         void interactPlayerCharacter(Character* a, Character* b);
 

@@ -21,7 +21,8 @@ class Character : public GameObject
 		int getMaxHealth();
 		float Distance(float x, float y);
 
-		void collide(Direction dir, bool collide);
+		void collide(bool collisions[4], float correction);
+        void clearCollisions();
 		void left();
 		void right();
 		void jump();
@@ -31,7 +32,7 @@ class Character : public GameObject
         void attack();
 		void damage(float dmg);
 		void SetGravity(bool gravity);
-		int GetFallingVel();
+		int getYVel();
 
 	protected:
 		float X, Y;
@@ -39,7 +40,7 @@ class Character : public GameObject
 
 		int MaxHealth = 100;
 		float health = MaxHealth;
-		int Speed = 100;
+		int speed = 100;
 		int jumpVel = 300;
 		float consumedJumpPwr = 0;
     

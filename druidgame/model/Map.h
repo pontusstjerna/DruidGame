@@ -17,8 +17,8 @@ class Map : public Model
 
 		char* GetBackground();
 
-		int GetNumberofBlocks();
-		Block** GetBlocks();
+		int getNumberBlocks();
+		Block** getBlocks();
 		int GetNumberofObjects();
 		GameObject** GetObjects();
 		Character** GetCharacters();

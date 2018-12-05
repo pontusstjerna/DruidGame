@@ -8,8 +8,7 @@ World::World()
 	activeMap = new Map("map1", activePlayer);
 }
 
-World::World(char* savedGame)
-{
+World::World(char* savedGame) {
 	
 }
 
@@ -87,45 +86,64 @@ void World::interactPlayerCharacter(Character* player, Character* character) {
 void World::collideCharacter(Character* object, float dTime) {
 	int pLeft = object->getX();
 	int pRight = object->getX() + object->getWidth();
-	int pTop = object->getY();
-	int pBottom = object->getY() + object->getHeight() + object->GetFallingVel()*dTime;
-
-	bool left = false;
-	bool right = false;
-	bool top = false;
-	bool bottom = false;
+	int pTop = object->getY() - object->getYVel() * dTime;
+    int pBottom = object->getY() + object->getHeight() + object->getYVel() * dTime;
 
 	//printf("LS: %i\n", pLeft);
+    bool intersection = false;
 
 	//Loop through all blocks
-	for (int i = 0; i < activeMap->GetNumberofBlocks(); i++)
-	{
+	for (int i = 0; i < activeMap->getNumberBlocks() && !intersection; i++) {
+        Block* block = activeMap->getBlocks()[i];
+        
 		//Nexts
-		int bLeft = activeMap->GetBlocks()[i]->GetX();
-		int bRight = activeMap->GetBlocks()[i]->GetX() + activeMap->GetBlocks()[i]->GetWidth();
-		int bTop = activeMap->GetBlocks()[i]->GetY();
-		int bBottom = activeMap->GetBlocks()[i]->GetY() + activeMap->GetBlocks()[i]->GetHeight();
+		int bLeft = block->getX();
+		int bRight = block->getX() + block->getWidth();
+		int bTop = block->getY();
+		int bBottom = block->getY() + block->getHeight();
 
 		bool betweenVertical = bTop < pBottom && bBottom > pTop;
 		bool betweenHorizontal = bLeft < pRight && bRight > pLeft;
 
-		if(!left)
-			left = (pLeft <= bRight && pRight >= bRight && betweenVertical);
-
-		if(!right)
-			right = (pRight >= bLeft && pLeft <= bLeft && betweenVertical);
-
-		if(!top)
-			top = (pTop <= bBottom && pBottom >= bBottom && betweenHorizontal);
-
-		if (!bottom)
-			bottom = (pBottom >= bTop && pTop <= bTop && betweenHorizontal);
-
+        bool collisions[4];
+        
+        collisions[Character::LEFT] = pLeft <= bRight && pRight >= bRight && betweenVertical;
+        collisions[Character::RIGHT] = pRight >= bLeft && pLeft <= bLeft && betweenVertical;
+        collisions[Character::TOP] = pTop <= bBottom && pBottom >= bBottom && betweenHorizontal;
+        collisions[Character::BOTTOM] = pBottom >= bTop && pTop <= bTop && betweenHorizontal;
+        
+        intersection = collisions[0] || collisions[1] || collisions[2] || collisions[3];
+        
+        if (intersection) {
+            resolveCollision(object, block, collisions);
+        } else {
+            object->clearCollisions();
+        }
 	}
+}
 
-	object->collide(Character::LEFT, left);
-	object->collide(Character::RIGHT, right);
-	object->collide(Character::TOP, top);
-	object->collide(Character::BOTTOM, bottom);
-
+void World::resolveCollision(Character* object, Block* block, bool collisions[4]) {
+    float objCenterX = object->getX() + object->getWidth() / 2;
+    float objCenterY = object->getY() + (object->getHeight() / 2);
+    
+    float blockCenterX = block->getX() + block->getWidth() / 2;
+    float blockCenterY = block->getY() + block->getHeight() / 2;
+    
+    float vectorX = objCenterX - blockCenterX;
+    float vectorY = objCenterY - blockCenterY;
+    
+    // Is the vector y longer than vector x?
+    if (vectorY * vectorY < vectorX * vectorX) { // Collision top or bottom
+        if (vectorY > 0) { // VectorY pointing down
+            object->collide(collisions, block->getY() + block->getHeight() + 1);
+        } else { // VectorY pointing up
+            object->collide(collisions, block->getY() - object->getHeight());
+        }
+    } else {
+        if (vectorX > 0) { // VectorY pointing right
+            object->collide(collisions, block->getX() + block->getWidt() + 1);
+        } else { // VectorY pointing up
+            object->collide(collisions, block->getY() - object->getHeight());
+        }
+    }
 }

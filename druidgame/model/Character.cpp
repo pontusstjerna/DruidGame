@@ -30,11 +30,26 @@ void Character::update(float dTime)
 	if (health <= 0) {
         setState(DEAD);
 	}
-
+    
+    // TODO remove?
+    //collisions[BOTTOM] = false;
 }
 
-void Character::collide(Direction dir, bool collide) {
-	collisions[dir] = collide;
+void Character::clearCollisions() {
+    collisions[BOTTOM] = false;
+}
+
+void Character::collide(bool newCollisions[4], float correction) {
+    for (int i = 0; i < 4; i++) {
+        collisions[i] = newCollisions[i];
+    }
+
+    
+    if (collisions[TOP] || collisions[BOTTOM]) {
+        Y = correction;
+    } else {
+        X = correction;
+    }
 }
 
 char const* Character::getName() {
@@ -65,7 +80,7 @@ void Character::left()
 {
 	if (!collisions[LEFT])
 	{
-		X -= deltaTime*Speed;
+		X -= deltaTime * speed;
 
 		if (collisions[BOTTOM])
 			setState(RUNNING);
@@ -76,9 +91,13 @@ void Character::left()
 
 void Character::right() {
 	if (!collisions[RIGHT]) {
-		X += deltaTime*Speed;
-		if (collisions[BOTTOM])
-			setState(RUNNING);
+        
+		X += deltaTime * speed;
+        
+        if (collisions[BOTTOM]) {
+            setState(RUNNING);
+        }
+			
 
 		Dir = RIGHT;
 	}
@@ -93,7 +112,8 @@ void Character::jump() {
         
         // The actual jumping
         if(!collisions[TOP]) {
-            Y -= deltaTime * (jumpVel - consumedJumpPwr);
+            yVel = jumpVel - consumedJumpPwr;
+            Y -= deltaTime * yVel;
             jumps++;
         }
         
@@ -174,7 +194,7 @@ void Character::applyGravity()
 	}
 }
 
-int Character::GetFallingVel()
+int Character::getYVel()
 {
 	return yVel;
 }
