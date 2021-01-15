@@ -5,14 +5,13 @@
 #include "../model/World.h"
 #include "PlayerController.h"
 
-
 using namespace std;
 
 void runGame(void);
 
-View* view;
-World* world;
-PlayerController* Controller;
+View *view;
+World *world;
+PlayerController *Controller;
 
 MainController::MainController()
 {
@@ -25,7 +24,6 @@ MainController::~MainController()
 	delete view;
 	delete Controller;
 	delete world;
-	
 
 	printf("Done!");
 	SDL_Delay(3000);
@@ -70,8 +68,9 @@ void runGame()
 
 	float printCounter = 0;
 
-	while (running) {
-		
+	while (running)
+	{
+
 		while (SDL_PollEvent(&event) != 0)
 		{
 			if (event.type == SDL_QUIT)
@@ -80,22 +79,22 @@ void runGame()
 			}
 			Controller->checkInputs(event);
 		}
-        
+
 		Controller->update();
 		world->Update(dTime);
 		view->Update(dTime);
 
 		SDL_Delay(10);
 
-		cTime = (float)SDL_GetTicks()/1000;
+		cTime = (float)SDL_GetTicks() / 1000;
 		dTime = cTime - tTime;
-        //dTime = 0.01;
+		//dTime = 0.01;
 		tTime = cTime;
 		printCounter += dTime;
 
 		if (printCounter > 1)
 		{
-			printf("FPS: %f\n", 1/dTime);
+			printf("FPS: %f\n", 1 / dTime);
 			printCounter = 0;
 		}
 	}

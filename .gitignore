@@ -1,1 +1,4 @@
 druidgame.xcodeproj
+.vscode
+out
+*.DS_Store

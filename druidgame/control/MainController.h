@@ -1,11 +1,11 @@
 #pragma once
 
-class MainController {
-	public:
-		MainController();
-		~MainController();
-		void start();
+class MainController
+{
+public:
+	MainController();
+	~MainController();
+	void start();
 
-	private:
-    
+private:
 };

@@ -1,10 +1,11 @@
-#include "MainController.h"
+#include "control/MainController.h"
 
-int main()
+int main(int argc, char *argv[])
 {
-	MainController* mainController = new MainController();
+	MainController *mainController = new MainController();
 	mainController->start();
 
 	delete mainController;
+
 	return 0;
 }
