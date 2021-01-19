@@ -1,34 +1,38 @@
-#pragma once
+#ifndef WORLD_H
+#define WORLD_H
 #include "../model/GameObject.h"
 #include "Map.h"
 #include "Player.h"
 #include "Character.h"
+#include <box2d/box2d.h>
 
 class World
 {
-	public:
-		World();
-		World(char* savedGame);
-		~World();
+public:
+	World();
+	World(char *savedGame);
+	~World();
 
-		void Update(float dTime);
-		Character* getClosestCharacter(Character* character);
+	void Update(float dTime);
+	Character *getClosestCharacter(Character *character);
 
-		//void SaveGame(char* saveName);
+	//void SaveGame(char* saveName);
 
-		Player* getPlayer();
-		Model* getMap(); 
+	Player *getPlayer();
+	Model *getMap();
 
-	private:
-		Player* activePlayer;
-		Map* activeMap;
+private:
+	Player *activePlayer;
+	Map *activeMap;
+	b2World *world;
+	float accumulator = 0;
 
-		void interactObjects(float dTime);
-        void resolveCollision(Character* object, Block* block, bool collisions[4]);
-		void collideCharacter(Character* object, float dTime);
-        void interactPlayerCharacter(Character* a, Character* b);
+	void interactObjects(float dTime);
+	void resolveCollision(Character *object, Block *block, bool collisions[4]);
+	void collideCharacter(Character *object, float dTime);
+	void interactPlayerCharacter(Character *a, Character *b);
 
-		/*
+	/*
 		{
 		"LevelName" : "Level1",
 		"Objects" : [
@@ -50,3 +54,4 @@ class World
 		}
 		*/
 };
+#endif /* WORLD_H */

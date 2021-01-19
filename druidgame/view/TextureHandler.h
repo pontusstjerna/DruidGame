@@ -14,18 +14,19 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-class TextureHandler {
+class TextureHandler
+{
 public:
-    TextureHandler(SDL_Renderer* renderer);
+    TextureHandler(SDL_Renderer *renderer);
     ~TextureHandler();
-    
+
     // void loadTextures();
-    SDL_Texture* getTexture(char const* name);
-    
+    SDL_Texture *getTexture(char const *name);
+
 private:
-    std::map<char const*, SDL_Texture*> textures;
-    SDL_Texture* load(char const* name);
-    SDL_Renderer* renderer;
+    std::map<char const *, SDL_Texture *> textures;
+    SDL_Texture *load(char const *name);
+    SDL_Renderer *renderer;
 };
 
 #endif /* TextureHandler_h */

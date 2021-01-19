@@ -4,13 +4,13 @@
 #include "../util/SDLUtils.h"
 #include "TextureHandler.h"
 
-SDL_Window* window = NULL;
-SDL_Texture* background = NULL;
-SDL_Renderer* renderer = NULL;
+SDL_Window *window = NULL;
+SDL_Texture *background = NULL;
+SDL_Renderer *renderer = NULL;
 
-View::View(unsigned int width, unsigned int height, char* title) :
-//This is called initializer list and is requred for const variables
-WINDOW_WIDTH(width), WINDOW_HEIGHT(height), WINDOW_TITLE(title) {
+View::View(unsigned int width, unsigned int height, char *title) : //This is called initializer list and is requred for const variables
+																																	 WINDOW_WIDTH(width), WINDOW_HEIGHT(height), WINDOW_TITLE(title)
+{
 	//Bla bla constructor code
 	scale = 3;
 }
@@ -29,13 +29,13 @@ View::~View()
 
 	delete gView;
 	delete gui;
-    delete textureHandler;
-    
+	delete textureHandler;
+
 	IMG_Quit();
 	SDL_Quit();
 }
 
-int View::init(Model* model)
+int View::init(Model *model)
 {
 	if (CreateWindow() == -1)
 		return -1;
@@ -43,31 +43,32 @@ int View::init(Model* model)
 	if (CreateRenderer() == -1)
 		return -1;
 
-    if (SDLUtils::initSDLImage() == -1)
+	if (SDLUtils::initSDLImage() == -1)
 		return -1;
-    
-    if (LoadMap(model) == -1)
-        return -1;
-    
-    if (InitGUI())
-        return -1;
+
+	if (LoadMap(model) == -1)
+		return -1;
+
+	if (InitGUI())
+		return -1;
 
 	printf("View successfully initialized.\n");
 	return 0;
 }
 
-int View::InitGUI() {
+int View::InitGUI()
+{
 	gui = new GUI(activeMap->getPlayer(), activeMap->GetNumberofObjects(), activeMap->GetObjects());
 
-	SDL_Texture* textures[GUI::nTextures];
+	SDL_Texture *textures[GUI::nTextures];
 	for (int i = 0; i < GUI::nTextures; i++)
 	{
-		textures[i] = textureHandler->getTexture((char*)gui->GUI_TEXTURES[i]);
+		textures[i] = textureHandler->getTexture((char *)gui->GUI_TEXTURES[i]);
 	}
 	return gui->LoadGUI(textures, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
-int View::LoadMap(Model* map)
+int View::LoadMap(Model *map)
 {
 	activeMap = map;
 	background = textureHandler->getTexture(map->GetBackground());
@@ -107,12 +108,12 @@ void View::Update(float dTime)
 int View::CreateWindow()
 {
 	window = SDL_CreateWindow(
-		WINDOW_TITLE,
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
-		WINDOW_WIDTH,
-		WINDOW_HEIGHT,
-		SDL_WINDOW_SHOWN);
+			WINDOW_TITLE,
+			SDL_WINDOWPOS_UNDEFINED,
+			SDL_WINDOWPOS_UNDEFINED,
+			WINDOW_WIDTH,
+			WINDOW_HEIGHT,
+			SDL_WINDOW_SHOWN);
 
 	if (window == NULL)
 	{
@@ -144,8 +145,8 @@ int View::CreateRenderer()
 		return -1;
 
 	SDL_SetRenderDrawColor(renderer, 100, 100, 255, 255);
-    
-    textureHandler = new TextureHandler(renderer);
+
+	textureHandler = new TextureHandler(renderer);
 
 	return 0;
 }

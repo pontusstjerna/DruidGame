@@ -1,6 +1,9 @@
-#pragma once
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include "Character.h"
 #include "../view/AnimatedPlayer.h"
+#include <box2d/box2d.h>
 
 class Player : public AnimatedPlayer, public Character
 {
@@ -14,7 +17,7 @@ public:
 		BIRD
 	};
 
-	Player(int x, int y);
+	Player(int x, int y, b2World *world);
 
 	void jump();
 
@@ -33,8 +36,8 @@ public:
 	int getY() { return Character::getY(); };
 	int getState() { return Character::getState(); };
 	int getDir() { return Character::getDir(); };
-	int getWidth() { return Character::getWidth(); };
-	int getHeight() { return Character::getHeight(); };
+	float getWidth() { return Character::getWidth(); };
+	float getHeight() { return Character::getHeight(); };
 	float getHealth() { return Character::getHealth(); };
 	int getMaxHealth() { return Character::getMaxHealth(); };
 
@@ -53,3 +56,4 @@ private:
 	void healthRegen();
 	void staminaRegen();
 };
+#endif /* PLAYER_H */

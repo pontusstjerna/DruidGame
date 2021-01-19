@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef MAINCONTROLLER
+#define MAINCONTROLLER
 class MainController
 {
 public:
@@ -9,3 +9,4 @@ public:
 
 private:
 };
+#endif /* MAINCONTROLLER */

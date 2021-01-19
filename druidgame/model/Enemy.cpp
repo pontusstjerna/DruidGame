@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int x, int y, char* texture, int seedSeparator) : Character(x,y,texture), startX(x), startY(y)
+Enemy::Enemy(int x, int y, b2World *world, char *texture, int seedSeparator) : Character(x, y, world, texture), startX(x), startY(y)
 {
 
 	srand(time(NULL) + seedSeparator);
@@ -19,7 +19,6 @@ void Enemy::update(float dTime)
 {
 	Character::update(dTime);
 
-	
 	if (currState != DEAD)
 	{
 		timer += dTime * 1000;
@@ -31,35 +30,35 @@ void Enemy::update(float dTime)
 
 void Enemy::DecideDir()
 {
-	if (X - startX > maxDistX || collisions[RIGHT])
-	{
-		direction = LEFT;
-	}
-	else if (startX - X > maxDistX || collisions[LEFT])
-	{
-		direction = RIGHT;
-	}
-	else if (timer > turnTime)
-	{
-		turnTime = (rand() + minDirTime) % maxDirTime;
-		timer = 0;
+	// if (X - startX > maxDistX || collisions[RIGHT])
+	// {
+	// 	direction = LEFT;
+	// }
+	// else if (startX - X > maxDistX || collisions[LEFT])
+	// {
+	// 	direction = RIGHT;
+	// }
+	// else if (timer > turnTime)
+	// {
+	// 	turnTime = (rand() + minDirTime) % maxDirTime;
+	// 	timer = 0;
 
-		if (direction == LEFT)
-			direction = RIGHT;
-		else
-			direction = LEFT;
-	}
+	// 	if (direction == LEFT)
+	// 		direction = RIGHT;
+	// 	else
+	// 		direction = LEFT;
+	// }
 }
 
 void Enemy::Walk(int dir)
 {
 	switch (dir)
 	{
-		case LEFT:
-			left();
-			break;
-		case RIGHT:
-			right();
-			break;
+	case LEFT:
+		left();
+		break;
+	case RIGHT:
+		right();
+		break;
 	}
 }

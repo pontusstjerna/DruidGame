@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MAP_H
+#define MAP_H
+
 #include "Block.h"
 #include "../model/GameObject.h"
 #include "../view/AnimatedPlayer.h"
@@ -10,7 +12,7 @@
 class Map : public Model
 {
 public:
-	Map(char *name, Player *player);
+	Map(char *name, Player *player, b2World *world);
 	~Map();
 
 	void Update(float dTime);
@@ -35,3 +37,4 @@ private:
 	//Enemy** Enemies;
 	//Enemies
 };
+#endif /* MAP_H */
