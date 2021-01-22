@@ -42,21 +42,21 @@ char const *Block::getName()
 	return name;
 }
 
-int Block::getX()
+float Block::getX()
 {
 	return X;
 }
-int Block::getY()
+float Block::getY()
 {
 	return Y;
 }
 
-int Block::getWidth()
+float Block::getWidth()
 {
 	return W;
 }
 
-int Block::getHeight()
+float Block::getHeight()
 {
 	return H;
 }

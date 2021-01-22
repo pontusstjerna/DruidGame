@@ -64,12 +64,12 @@ char const *Character::getName()
 
 float Character::getX()
 {
-	return (int)body->GetPosition().x;
+	return body->GetPosition().x;
 }
 
 float Character::getY()
 {
-	return (int)body->GetPosition().y;
+	return body->GetPosition().y;
 }
 
 int Character::getState()

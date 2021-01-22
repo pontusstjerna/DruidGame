@@ -1,5 +1,6 @@
 #include "GameView.h"
 #include "TextureSizes.h"
+#include <cmath>
 
 using namespace std;
 
@@ -33,7 +34,7 @@ void GameView::DrawBackground(SDL_Renderer *renderer, SDL_Texture *background, s
 	int bgHeight = sourceRect.height * backgroundScale;
 	while (totWidth < winWidth + 200)
 	{
-		int x = (int)((-player->getX() / 4) * backgroundScale) % bgWidth; // +WinWidth / 2;
+		int x = (int)(-player->getX() / 3.0f * scale) % bgWidth; // +WinWidth / 2;
 
 		SDL_Rect sRect = {0, 0, sourceRect.width, sourceRect.height};
 		SDL_Rect dRect = {x + totWidth, 0, bgWidth, winHeight};
@@ -55,10 +56,10 @@ void GameView::DrawBlocks(SDL_Renderer *renderer, float scale)
 
 void GameView::DrawBlock(Block *block, SDL_Renderer *renderer, float scale)
 {
-	int x = (int)((block->getX() - objects[0]->GetObject()->getX() - (block->getWidth() / 2.0f)) * scale) + winWidth / 2;
-	int y = (int)((block->getY() - objects[0]->GetObject()->getY() - (block->getHeight() / 2.0f)) * scale) + winHeight / 2;
-	int h = block->getHeight();
-	int mh = block->MIN_HEIGHT;
+	int x = round((block->getX() - objects[0]->GetObject()->getX() - (block->getWidth() / 2.0f)) * scale) + winWidth / 2;
+	int y = round((block->getY() - objects[0]->GetObject()->getY() - (block->getHeight() / 2.0f)) * scale) + winHeight / 2;
+	float h = block->getHeight();
+	float mh = block->MIN_HEIGHT;
 
 	//Top row
 	DrawBlockRow(block, renderer, top, x, y, scale);
@@ -66,23 +67,23 @@ void GameView::DrawBlock(Block *block, SDL_Renderer *renderer, float scale)
 	if (h > mh)
 	{
 		//Middle vertical
-		for (int i = mh; i < h - mh; i += mh)
+		for (float i = mh; i < h - mh; i += mh)
 		{
-			DrawBlockRow(block, renderer, middle, x, y + (int)(i * scale), scale);
+			DrawBlockRow(block, renderer, middle, x, y + round(i * scale), scale);
 		}
 
 		//Bottom
-		DrawBlockRow(block, renderer, bottom, x, y + (int)((h - mh) * scale), scale);
+		DrawBlockRow(block, renderer, bottom, x, y + round((h - mh) * scale), scale);
 	}
 }
 
 void GameView::DrawBlockRow(Block *block, SDL_Renderer *renderer, VerticalPos pos, int x, int y, float scale)
 {
 
-	int w = block->getWidth();
-	int h = block->getHeight();
-	int mw = block->MIN_WIDTH;
-	int mh = block->MIN_HEIGHT;
+	float w = block->getWidth();
+	float h = block->getHeight();
+	float mw = block->MIN_WIDTH;
+	float mh = block->MIN_HEIGHT;
 
 	Rect sourceRect = TEXTURE_SIZES.at(block->getName());
 	int sw = sourceRect.width;
@@ -94,7 +95,7 @@ void GameView::DrawBlockRow(Block *block, SDL_Renderer *renderer, VerticalPos po
 	{
 		//Draw top left
 		SDL_Rect sRect = {0, pos * sh, sw, sh};
-		SDL_Rect dRect = {x, y, (int)(mw * scale), (int)(mh * scale)};
+		SDL_Rect dRect = {x, y, (int)round(mw * scale), (int)round(mh * scale)};
 		SDL_RenderCopy(renderer, texture, &sRect, &dRect);
 	}
 
@@ -102,17 +103,17 @@ void GameView::DrawBlockRow(Block *block, SDL_Renderer *renderer, VerticalPos po
 	if (w > 2 * mw)
 	{
 		//Repeat middle texture for every width bigger than 2.
-		for (int i = mw; i < w - mw; i += mw)
+		for (float i = mw; i < w - mw; i += mw)
 		{
 			SDL_Rect sRect = {sw, pos * sh, sw, sh};
-			SDL_Rect dRect = {x + (int)(i * scale), y, (int)(mw * scale), (int)(mh * scale)};
+			SDL_Rect dRect = {x + (int)round(i * scale), y, (int)round(mw * scale), (int)round(mh * scale)};
 			SDL_RenderCopy(renderer, texture, &sRect, &dRect);
 		}
 	}
 
 	//Top right, always paint
 	SDL_Rect sRect = {sw * 2, pos * sh, sw, sh};
-	SDL_Rect dRect = {x + (int)((w - mw) * scale), y, (int)(mw * scale), (int)(mh * scale)};
+	SDL_Rect dRect = {x + (int)round((w - mw) * scale), y, (int)round(mw * scale), (int)round(mh * scale)};
 	SDL_RenderCopy(renderer, texture, &sRect, &dRect);
 }
 

@@ -12,18 +12,18 @@ public:
 	~Block();
 
 	char const *getName();
-	int getX();
-	int getY();
-	int getWidth();
-	int getHeight();
+	float getX();
+	float getY();
+	float getWidth();
+	float getHeight();
 	b2Body *getBody();
 
-	const int MIN_WIDTH = 1;
-	const int MIN_HEIGHT = 1;
+	const float MIN_WIDTH = 0.4f;
+	const float MIN_HEIGHT = 0.4f;
 
 private:
 	char *name;
-	int X, Y, W, H;
+	float X, Y, W, H;
 	b2Body *body;
 };
 
