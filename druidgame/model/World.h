@@ -6,6 +6,8 @@
 #include "Character.h"
 #include <box2d/box2d.h>
 
+const float GRAVITY = 9.81;
+
 class World
 {
 public:

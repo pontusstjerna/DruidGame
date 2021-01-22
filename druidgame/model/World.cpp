@@ -10,7 +10,7 @@ float timeStep = 1.0f / 60.0f;
 
 World::World()
 {
-    b2Vec2 gravity(0.0f, 9.81f);
+    b2Vec2 gravity(0.0f, GRAVITY);
     world = new b2World(gravity);
 
     activePlayer = new Player(10, 20, world);

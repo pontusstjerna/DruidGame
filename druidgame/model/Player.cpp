@@ -109,7 +109,7 @@ void Player::setStats(Forms form)
 	case Player::HUMAN:
 		MaxHealth = 50;
 		stamina = 50;
-		jumpVel = 250;
+		jumpVel = 10;
 		speed = 7;
 		Width = 0.9;
 		Height = 1.8;
@@ -119,10 +119,10 @@ void Player::setStats(Forms form)
 	case Player::CAT:
 		MaxHealth = 30;
 		stamina = 50;
-		jumpVel = 500;
-		speed = 150;
-		Width = 50;
-		Height = 25;
+		jumpVel = 20;
+		speed = 12;
+		Width = 2.25;
+		Height = 1.125;
 		meleeWeapon = new MeleeWeapon(100, 20, 200, 0);
 		//meleeWeapon = new MeleeWeapon(20, 15, 200, 0);
 		break;

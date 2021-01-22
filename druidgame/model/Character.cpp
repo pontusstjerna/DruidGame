@@ -1,6 +1,7 @@
 #include "Character.h"
 #include <stdio.h>
-#include "../util/Geometry.h";
+#include "../util/Geometry.h"
+#include "World.h"
 
 Character::Character(int x, int y, b2World *world, char const *name) : name(name)
 {
@@ -37,6 +38,31 @@ void Character::update(float dTime)
 		yVel = 0;
 		consumedJumpPwr = 0;
 	}*/
+
+	b2Vec2 vel = body->GetLinearVelocity();
+
+	if (vel.y > 0.3f)
+	{
+		setState(FALLING);
+	}
+	else if (vel.y < -0.3f)
+	{
+		setState(JUMPING);
+	}
+	else if (vel.x < -0.3f)
+	{
+		Dir = LEFT;
+		setState(RUNNING);
+	}
+	else if (vel.x > 0.3f)
+	{
+		Dir = RIGHT;
+		setState(RUNNING);
+	}
+	else
+	{
+		setState(STANDING);
+	}
 
 	if (meleeWeapon != NULL)
 	{
@@ -85,7 +111,7 @@ int Character::getDir()
 void Character::left()
 {
 	body->SetLinearVelocity(b2Vec2(-speed, body->GetLinearVelocity().y));
-	Dir = LEFT;
+
 	/*if (!collisions[LEFT])
 	{
 		X -= deltaTime * speed;
@@ -100,7 +126,6 @@ void Character::left()
 void Character::right()
 {
 	body->SetLinearVelocity(b2Vec2(speed, body->GetLinearVelocity().y));
-	Dir = RIGHT;
 
 	/*if (!collisions[RIGHT])
 	{
@@ -116,11 +141,13 @@ void Character::right()
 	}*/
 }
 
-int jumps = 0;
-
 void Character::jump()
 {
-	body->ApplyForce(b2Vec2(0.0f, -50.0f), body->GetWorldCenter(), true);
+	if (body->GetLinearVelocity().y < 0.3f)
+	{
+		//body->ApplyForce(b2Vec2(0.0f, -jumpVel), body->GetWorldCenter(), true);
+		body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x, -jumpVel));
+	}
 
 	/*
 	// Basic conditions
@@ -132,7 +159,6 @@ void Character::jump()
 		{
 			yVel = jumpVel - consumedJumpPwr;
 			Y -= deltaTime * yVel;
-			jumps++;
 		}
 
 		consumedJumpPwr += GRAVITY;
@@ -161,8 +187,6 @@ void Character::Stop()
 
 void Character::stopJump()
 {
-	// jumpLock = false;
-
 	// if (!collisions[BOTTOM])
 	// 	currState = FALLING;
 }
