@@ -13,7 +13,7 @@ World::World()
     b2Vec2 gravity(0.0f, 9.81f);
     world = new b2World(gravity);
 
-    activePlayer = new Player(100, 0, world);
+    activePlayer = new Player(10, 20, world);
     activeMap = new Map("map1", activePlayer, world);
 }
 

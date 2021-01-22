@@ -1,4 +1,7 @@
 #include "GameView.h"
+#include "TextureSizes.h"
+
+using namespace std;
 
 GameView::GameView(int winWidth, int winHeight, Model *map, AnimatedPlayer *player, TextureHandler *textureHandler) : winWidth(winWidth), winHeight(winHeight), activeMap(map), player(player), textureHandler(textureHandler)
 {
@@ -19,17 +22,20 @@ GameView::~GameView()
 	delete objects;
 }
 
-void GameView::DrawBackground(SDL_Renderer *renderer, SDL_Texture *background, float scale)
+void GameView::DrawBackground(SDL_Renderer *renderer, SDL_Texture *background, string name, float scale)
 {
 	int totWidth = 0;
 
-	int bgWidth = 200 * scale;
-	int bgHeight = 150 * scale;
+	Rect sourceRect = TEXTURE_SIZES.at(name);
+
+	float backgroundScale = 3.0f;
+	int bgWidth = sourceRect.width * backgroundScale;
+	int bgHeight = sourceRect.height * backgroundScale;
 	while (totWidth < winWidth + 200)
 	{
-		int x = (int)((-player->getX() / 4) * scale) % bgWidth; // +WinWidth / 2;
+		int x = (int)((-player->getX() / 4) * backgroundScale) % bgWidth; // +WinWidth / 2;
 
-		SDL_Rect sRect = {0, 0, bgWidth, bgHeight};
+		SDL_Rect sRect = {0, 0, sourceRect.width, sourceRect.height};
 		SDL_Rect dRect = {x + totWidth, 0, bgWidth, winHeight};
 		SDL_RenderCopy(renderer, background, &sRect, &dRect);
 
@@ -73,20 +79,22 @@ void GameView::DrawBlock(Block *block, SDL_Renderer *renderer, float scale)
 void GameView::DrawBlockRow(Block *block, SDL_Renderer *renderer, VerticalPos pos, int x, int y, float scale)
 {
 
-	int w = block->getWidth(); // -player->GetY();
+	int w = block->getWidth();
 	int h = block->getHeight();
 	int mw = block->MIN_WIDTH;
 	int mh = block->MIN_HEIGHT;
 
-	SDL_Texture *texture = textureHandler->getTexture(block->getName());
+	Rect sourceRect = TEXTURE_SIZES.at(block->getName());
+	int sw = sourceRect.width;
+	int sh = sourceRect.height;
 
-	float zoom = 3;
+	SDL_Texture *texture = textureHandler->getTexture(block->getName());
 
 	if (w > 1 * mw)
 	{
 		//Draw top left
-		SDL_Rect sRect = {0, pos * mh, mw, mh};
-		SDL_Rect dRect = {x, y, (int)(mw * zoom), (int)(mh * zoom)};
+		SDL_Rect sRect = {0, pos * sh, sw, sh};
+		SDL_Rect dRect = {x, y, (int)(mw * scale), (int)(mh * scale)};
 		SDL_RenderCopy(renderer, texture, &sRect, &dRect);
 	}
 
@@ -96,27 +104,30 @@ void GameView::DrawBlockRow(Block *block, SDL_Renderer *renderer, VerticalPos po
 		//Repeat middle texture for every width bigger than 2.
 		for (int i = mw; i < w - mw; i += mw)
 		{
-			SDL_Rect sRect = {mw, pos * mh, mw, mh};
-			SDL_Rect dRect = {x + (int)(i * zoom), y, (int)(mw * zoom), (int)(mh * zoom)};
+			SDL_Rect sRect = {sw, pos * sh, sw, sh};
+			SDL_Rect dRect = {x + (int)(i * scale), y, (int)(mw * scale), (int)(mh * scale)};
 			SDL_RenderCopy(renderer, texture, &sRect, &dRect);
 		}
 	}
 
 	//Top right, always paint
-	SDL_Rect sRect = {mw * 2, pos * mh, mw, mh};
-	SDL_Rect dRect = {x + (int)((w - mw) * zoom), y, (int)(mw * zoom), (int)(mh * zoom)};
+	SDL_Rect sRect = {sw * 2, pos * sh, sw, sh};
+	SDL_Rect dRect = {x + (int)((w - mw) * scale), y, (int)(mw * scale), (int)(mh * scale)};
 	SDL_RenderCopy(renderer, texture, &sRect, &dRect);
 }
 
 void GameView::DrawPlayer(SDL_Renderer *renderer, float scale)
 {
-	int w = player->getWidth();
-	int h = player->getHeight();
+	Rect sourceRect = TEXTURE_SIZES.at(player->getName());
+	int sw = sourceRect.width;
+	int sh = sourceRect.height;
+	float w = player->getWidth();
+	float h = player->getHeight();
 
 	SDL_Texture *texture = textureHandler->getTexture(player->getName());
 
 	//The State*height*2 is for frame index, frame height and 2 for number of directions
-	SDL_Rect sRect = {objects[0]->GetFrame() * w, player->getState() * h * 2 + player->getDir() * h, w, h};
+	SDL_Rect sRect = {objects[0]->GetFrame() * sw, player->getState() * sh * 2 + player->getDir() * sh, sw, sh};
 	SDL_Rect dRect = {winWidth / 2 - (int)(w / 2.0f * scale), winHeight / 2 - (int)(h / 2.0f * scale), (int)(w * scale), (int)(h * scale)};
 	SDL_RenderCopy(renderer, texture, &sRect, &dRect);
 }
@@ -133,10 +144,12 @@ void GameView::DrawAnimatedObjects(SDL_Renderer *renderer, float scale)
 
 void GameView::DrawAnimatedObject(AnimatedObjectView *object, SDL_Renderer *renderer, float scale)
 {
+	Rect sourceRect = TEXTURE_SIZES.at(object->GetObject()->getName());
+
 	int x = (int)((object->GetObject()->getX() - activeMap->GetObjects()[0]->getX()) * scale) + winWidth / 2;
 	int y = (int)((object->GetObject()->getY() - activeMap->GetObjects()[0]->getY()) * scale) + winHeight / 2;
-	int w = object->GetObject()->getWidth();
-	int h = object->GetObject()->getHeight();
+	int w = sourceRect.width;
+	int h = sourceRect.height;
 
 	//The State*height*2 is for frame index, frame height and 2 for number of directions
 	SDL_Rect sRect = {object->GetFrame() * w, object->GetObject()->getState() * h * 2 + object->GetObject()->getDir() * h, w, h};
@@ -175,21 +188,20 @@ void GameView::UpdateActiveObjects(float scale)
 {
 	for (int i = 1; i < activeMap->GetNumberofObjects(); i++)
 	{
-		SDL_Rect objRect = {objects[i]->GetObject()->getX(), objects[i]->GetObject()->getY(), (int)objects[i]->GetObject()->getWidth(), (int)objects[i]->GetObject()->getHeight()};
-		if (IsInsideView(objRect, scale))
+		if (IsInsideView(objects[i]->GetObject()->getX(), objects[i]->GetObject()->getY(), (int)objects[i]->GetObject()->getWidth(), (int)objects[i]->GetObject()->getHeight(), scale))
 			objects[i]->insideView = true;
 		else
 			objects[i]->insideView = false;
 	}
 }
 
-bool GameView::IsInsideView(SDL_Rect rect, float scale)
+bool GameView::IsInsideView(float tx, float ty, float tw, float th, float scale)
 {
 	return true;
-	int x = (int)((rect.x - player->getX()) * scale) + winWidth / 2;
-	int y = (int)((rect.y - player->getY()) * scale) + winHeight / 2;
-	int w = (int)(rect.w * scale);
-	int h = (int)(rect.h * scale);
+	int x = (int)((tx - player->getX()) * scale) + winWidth / 2;
+	int y = (int)((ty - player->getY()) * scale) + winHeight / 2;
+	int w = (int)(tw * scale);
+	int h = (int)(th * scale);
 	return x + w > 0 && x < winWidth && y + h > 0 && y < winHeight;
 }
 

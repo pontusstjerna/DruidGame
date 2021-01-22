@@ -18,8 +18,8 @@ public:
 	int getHeight();
 	b2Body *getBody();
 
-	const int MIN_WIDTH = 10;
-	const int MIN_HEIGHT = 10;
+	const int MIN_WIDTH = 1;
+	const int MIN_HEIGHT = 1;
 
 private:
 	char *name;

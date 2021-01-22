@@ -110,9 +110,9 @@ void Player::setStats(Forms form)
 		MaxHealth = 50;
 		stamina = 50;
 		jumpVel = 250;
-		speed = 70;
-		Width = 20;
-		Height = 40;
+		speed = 7;
+		Width = 0.9;
+		Height = 1.8;
 		// Dmg, range, haste, strength
 		meleeWeapon = new MeleeWeapon(10, 10, 200, 0);
 		break;

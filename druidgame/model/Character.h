@@ -21,8 +21,8 @@ public:
 	void update(float dTime);
 	b2Body *getBody();
 	char const *getName();
-	int getX();
-	int getY();
+	float getX();
+	float getY();
 	int getState();
 	int getDir();
 	float getWidth();
@@ -51,8 +51,8 @@ protected:
 
 	MeleeWeapon *meleeWeapon = NULL;
 
-	float Width = 20.0f;
-	float Height = 40.0f;
+	float Width = 0.9f;
+	float Height = 1.8f;
 
 	States currState = STANDING;
 	States lastState = STANDING;

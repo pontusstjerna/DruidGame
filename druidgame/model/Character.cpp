@@ -62,12 +62,12 @@ char const *Character::getName()
 	return name;
 }
 
-int Character::getX()
+float Character::getX()
 {
 	return (int)body->GetPosition().x;
 }
 
-int Character::getY()
+float Character::getY()
 {
 	return (int)body->GetPosition().y;
 }

@@ -5,37 +5,44 @@
 #include "AnimatedPlayer.h"
 #include "AnimatedObjectView.h"
 #include "TextureHandler.h"
+#include <string>
 
+using namespace std;
 class GameView
 {
-	public:
-		const int NUMBEROF_FRAMES = 8;
-		const float STD_UPDATE_INTERVAL = 0.05f;
+public:
+	const int NUMBEROF_FRAMES = 8;
+	const float STD_UPDATE_INTERVAL = 0.05f;
 
-		GameView(int winWidth, int winHeight, Model* map, AnimatedPlayer* player, TextureHandler* textureHandler);
-		~GameView();
+	GameView(int winWidth, int winHeight, Model *map, AnimatedPlayer *player, TextureHandler *textureHandler);
+	~GameView();
 
-		void IncrementFrames(float dTime);
-		void DrawBackground(SDL_Renderer* renderer, SDL_Texture* background, float scale);
-		void DrawBlocks(SDL_Renderer* renderer, float scale);
-		void DrawPlayer(SDL_Renderer* renderer, float scale);
-		void DrawAnimatedObjects(SDL_Renderer* renderer, float scale);
-		void UpdateActiveObjects(float scale);
+	void IncrementFrames(float dTime);
+	void DrawBackground(SDL_Renderer *renderer, SDL_Texture *background, string name, float scale);
+	void DrawBlocks(SDL_Renderer *renderer, float scale);
+	void DrawPlayer(SDL_Renderer *renderer, float scale);
+	void DrawAnimatedObjects(SDL_Renderer *renderer, float scale);
+	void UpdateActiveObjects(float scale);
 
-	private:
-		enum VerticalPos { top, middle, bottom };
+private:
+	enum VerticalPos
+	{
+		top,
+		middle,
+		bottom
+	};
 
-		Model* activeMap;
-		AnimatedPlayer* player;
-		AnimatedObjectView** objects;
-        TextureHandler* textureHandler;
+	Model *activeMap;
+	AnimatedPlayer *player;
+	AnimatedObjectView **objects;
+	TextureHandler *textureHandler;
 
-		int winWidth = 0;
-		int winHeight = 0;
+	int winWidth = 0;
+	int winHeight = 0;
 
-		void DrawBlock(Block* block, SDL_Renderer* renderer, float scale);
-		void DrawBlockRow(Block* block, SDL_Renderer* renderer, VerticalPos pos, int x, int y, float scale);
-		void DrawAnimatedObject(AnimatedObjectView* object, SDL_Renderer* renderer, float scale);
-		bool IsInsideView(Block* block, float );
-		bool IsInsideView(SDL_Rect rect, float scale);
+	void DrawBlock(Block *block, SDL_Renderer *renderer, float scale);
+	void DrawBlockRow(Block *block, SDL_Renderer *renderer, VerticalPos pos, int x, int y, float scale);
+	void DrawAnimatedObject(AnimatedObjectView *object, SDL_Renderer *renderer, float scale);
+	bool IsInsideView(Block *block, float);
+	bool IsInsideView(float x, float y, float w, float h, float scale);
 };

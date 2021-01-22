@@ -18,8 +18,8 @@ public:
 
 	virtual void update(float dTime) = 0;
 	virtual char const *getName() = 0;
-	virtual int getX() = 0;
-	virtual int getY() = 0;
+	virtual float getX() = 0;
+	virtual float getY() = 0;
 	virtual int getState() = 0;
 	virtual int getDir() = 0;
 	virtual float getWidth() = 0;

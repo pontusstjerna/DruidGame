@@ -11,7 +11,7 @@ Map::Map(char *name, Player *player, b2World *world) : name(name), player(player
 
 		blocks = new Block *[NumberOfBlocks];
 		blocks[0] = new Block(45, 43, 3, 1, world, "block_grass1");
-		blocks[1] = new Block(4, 10, 200, 10, world, "block_grass1");
+		blocks[1] = new Block(4, 50, 200, 10, world, "block_grass1");
 		//Blocks[1] = new Block(4, 50, 20000, 10, world, "data/blocks/block_grass1.png");
 		blocks[2] = new Block(40, 30, 5, 3, world, "block_stonewall1");
 		blocks[3] = new Block(0, 0, 4, 100, world, "block_stonewall1");

@@ -3,16 +3,19 @@
 #include "View.h"
 #include "../util/SDLUtils.h"
 #include "TextureHandler.h"
+#include <string>
 
 SDL_Window *window = NULL;
 SDL_Texture *background = NULL;
 SDL_Renderer *renderer = NULL;
 
+using namespace std;
+
 View::View(unsigned int width, unsigned int height, char *title) : //This is called initializer list and is requred for const variables
 																																	 WINDOW_WIDTH(width), WINDOW_HEIGHT(height), WINDOW_TITLE(title)
 {
 	//Bla bla constructor code
-	scale = 3;
+	scale = 22.2 * 3;
 }
 
 View::View() : View(800, 600, "Druid Game")
@@ -93,7 +96,7 @@ void View::Update(float dTime)
 	gView->IncrementFrames(dTime);
 
 	gView->UpdateActiveObjects(scale);
-	gView->DrawBackground(renderer, background, scale);
+	gView->DrawBackground(renderer, background, string(activeMap->GetBackground()), scale);
 	gView->DrawBlocks(renderer, scale);
 	gView->DrawPlayer(renderer, scale);
 	gView->DrawAnimatedObjects(renderer, scale);

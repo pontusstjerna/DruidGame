@@ -19,8 +19,8 @@ Block::Block(int x, int y, int width, int height, b2World *world, char *name) : 
 	H = height * MIN_HEIGHT;
 
 	// Translate origin to center instead of top left corner
-	X = x * MIN_WIDTH;
-	Y = y * MIN_HEIGHT;
+	X = x * MIN_WIDTH + (W / 2);
+	Y = y * MIN_HEIGHT + (H / 2);
 
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(X, Y);

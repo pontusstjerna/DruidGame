@@ -32,8 +32,8 @@ public:
 	char const *getName();
 
 	//Refer these functions to character base class
-	int getX() { return Character::getX(); };
-	int getY() { return Character::getY(); };
+	float getX() { return Character::getX(); };
+	float getY() { return Character::getY(); };
 	int getState() { return Character::getState(); };
 	int getDir() { return Character::getDir(); };
 	float getWidth() { return Character::getWidth(); };
