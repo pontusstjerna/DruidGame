@@ -12,7 +12,7 @@ Enemy::Enemy(int x, int y, b2World *world, char *texture, int seedSeparator) : C
 
 Enemy::~Enemy()
 {
-	Character::~Character();
+	//Character::~Character();
 }
 
 void Enemy::update(float dTime)

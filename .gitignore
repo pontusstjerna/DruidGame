@@ -2,3 +2,6 @@ druidgame.xcodeproj
 .vscode
 out
 *.DS_Store
+*.dll
+*.exe
+obj

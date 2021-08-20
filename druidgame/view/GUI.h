@@ -6,46 +6,50 @@
 
 class GUI
 {
-	public:
-		static const int nTextures = 3;
-		const char* GUI_TEXTURES[nTextures] { 
+public:
+	static const int nTextures = 3;
+	const char *GUI_TEXTURES[nTextures]{
 			"GUI_background",
 			"GUI_healthbar",
-			"GUI_stabar"
-		};
-		static const enum Textures {BACKGROUND, HEALTH_BAR, STA_BAR};
+			"GUI_stabar"};
 
-		GUI(AnimatedPlayer* player, int nObjects, GameObject**);
-		~GUI();
+	enum Textures
+	{
+		BACKGROUND,
+		HEALTH_BAR,
+		STA_BAR
+	};
 
-		int LoadGUI(SDL_Texture** textures, int win_width, int win_height);
+	GUI(AnimatedPlayer *player, int nObjects, GameObject **);
+	~GUI();
 
-		void Draw(SDL_Renderer* renderer);
+	int LoadGUI(SDL_Texture **textures, int win_width, int win_height);
 
-	private:
-		const int BG_WIDTH = 240;
-		const int BG_HEIGHT = 180;
-		const int PLAYER_BAR_WIDTH = 49;
-		const int PLAYER_BAR_HEIGHT = 6;
+	void Draw(SDL_Renderer *renderer);
 
-		int WinWidth, WinHeight;
+private:
+	const int BG_WIDTH = 240;
+	const int BG_HEIGHT = 180;
+	const int PLAYER_BAR_WIDTH = 49;
+	const int PLAYER_BAR_HEIGHT = 6;
 
-		AnimatedPlayer* Player;
-		GameObject** Objects;
+	int WinWidth, WinHeight;
 
-		SDL_Texture** Textures = NULL;
+	AnimatedPlayer *Player;
+	GameObject **Objects;
 
-		int NumObjects = 0;
-		bool ShowFps = false;
+	SDL_Texture **Textures = NULL;
 
-		void DrawBackground(SDL_Renderer* renderer);
-		void DrawHealth(SDL_Renderer* renderer);
-		void DrawStamina(SDL_Renderer* renderer);
-		void DrawXP(SDL_Renderer* renderer);
-		void DrawLevel(SDL_Renderer* renderer);
-		void DrawHealthBars(SDL_Renderer* renderer);
-		void DrawHealthBar(SDL_Renderer* renderer, GameObject* obj);
-		float GetScaleX();
-		float GetScaleY();
-		
+	int NumObjects = 0;
+	bool ShowFps = false;
+
+	void DrawBackground(SDL_Renderer *renderer);
+	void DrawHealth(SDL_Renderer *renderer);
+	void DrawStamina(SDL_Renderer *renderer);
+	void DrawXP(SDL_Renderer *renderer);
+	void DrawLevel(SDL_Renderer *renderer);
+	void DrawHealthBars(SDL_Renderer *renderer);
+	void DrawHealthBar(SDL_Renderer *renderer, GameObject *obj);
+	float GetScaleX();
+	float GetScaleY();
 };
