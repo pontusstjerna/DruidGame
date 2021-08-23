@@ -34,19 +34,19 @@ $(OBJ_DIR):
 
 druidgame: $(OBJ_FILES)
 	@echo Linking...
-	$(CC) $(SYS_FLAGS) $^ $(LDFLAGS) -o game
+	$(CC) $(SYS_FLAGS) -g $^ $(LDFLAGS) -o game
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/*/%.cpp
-	$(CC) -c -o $@ $< $(CPPFLAGS)
+	$(CC) -c -o $@ -g $< $(CPPFLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CC) -c -o $@ $< $(CPPFLAGS)
+	$(CC) -c -o $@ -g $< $(CPPFLAGS)
 
 .PHONY: clean directories
 
 clean:
 ifeq ($(OS), Windows_NT)
-	rd /s obj
+	rd /s /q obj
 else
 	rm -rf $(OBJ_DIR) game
 endif

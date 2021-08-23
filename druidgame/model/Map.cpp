@@ -5,7 +5,7 @@ Map::Map(char *name, Player *player, b2World *world) : name(name), player(player
 {
 	//Blocks = JsonParser.Parse(json);
 
-	if (name == "map1")
+	if (strcmp(name, "map1") == 0)
 	{
 		NumberOfBlocks = 11;
 

@@ -42,7 +42,7 @@ SDL_Texture *TextureHandler::load(char const *name)
     SDL_Texture *texture = NULL;
 
     char path[100];
-    strcpy(path, "data/textures/");
+    strcpy(path, "assets/textures/");
     strcat(path, name);
     strcat(path, ".png");
 
@@ -50,7 +50,7 @@ SDL_Texture *TextureHandler::load(char const *name)
 
     if (tmpSurface == NULL)
     {
-        printf("Unable to load image: %s. \nCause: %s\n", path, SDL_GetError());
+        printf("Unable to load image: %s. Error: %s\n", path, IMG_GetError());
         return NULL;
     }
 
